@@ -1,17 +1,35 @@
-import { Routes, Route } from 'react-router-dom'
-import Header from './components/Header'
-import Dashboard from './pages/Dashboard'
+import { Routes, Route, Navigate } from "react-router-dom";
 
-function App() {
-  return (
-    <>
-      <Header me={null} />
+import AuthLayout from "./layouts/AuthLayout";
+import MainLayout from "./layouts/MainLayout";
 
-      <Routes>
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Routes>
-    </>
-  )
+import Login from "./pages/Login";
+// import SignUp from "./pages/SignUp";
+// import TermsOfService from "./pages/TermsOfService";
+import Dashboard from "./pages/Dashboard";
+import PrivateRoute from "./routes/PrivateRoute.tsx";
+// import PrivateRoute from "./routes/PrivateRoute";
+
+export default function App() {
+    return (
+        <Routes>
+            <Route element={<AuthLayout />}>
+                <Route path="/login" element={<Login />} />
+                {/*<Route path="/signup" element={<SignUp />} />*/}
+                {/*<Route path="/terms-of-service" element={<TermsOfService />} />*/}
+            </Route>
+
+            <Route
+                element={
+                    <PrivateRoute>
+                        <MainLayout />
+                    </PrivateRoute>
+                }
+            >
+                <Route path="/dashboard" element={<Dashboard />} />
+            </Route>
+
+            <Route path="/" element={<Navigate to="/login" replace />} />
+        </Routes>
+    );
 }
-
-export default App
