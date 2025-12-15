@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 type MemberLite = { memberId: number | string; nickname: string } | null;
 
@@ -108,9 +109,9 @@ export default function Header({ me }: { me: MemberLite }) {
       >
         <div className="d-flex align-items-center justify-content-between w-100" style={{ minWidth: 1450 }}>
           {/* 로고 */}
-          <a href="/dashboard" className="ph-logo" aria-label="대시보드로 이동">
-            <img src="/image/plantory_logo.png" alt="Plantory Logo" className="ph-logo-img" />
-          </a>
+          <Link to="/dashboard" className="ph-logo" aria-label="대시보드로 이동">
+          <img src="/image/plantory_logo.png" alt="Plantory Logo" className="ph-logo-img" />
+          </Link>
 
           {/* 중앙 메뉴 */}
           <ul className="navbar-nav d-flex flex-row gap-4 mx-3 flex-grow-1 justify-content-center ph-menu">

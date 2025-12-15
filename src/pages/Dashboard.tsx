@@ -4,7 +4,6 @@ function Dashboard() {
       {/* <Header /> */}
 
       <div className="mx-auto" style={{ width: '1470px', padding: '16px' }}>
-        {/* 배너 */}
         <div className="mb-3">
           <div
             id="plantBanner"
@@ -13,10 +12,9 @@ function Dashboard() {
             style={{ height: '200px', borderRadius: '8px', overflow: 'hidden' }}
           >
             <div className="carousel-inner" style={{ height: '100%' }}>
-              {/* 1 */}
               <div className="carousel-item active" style={{ height: '100%' }}>
                 <img
-                  src="/src/assets/images/banner_1.png"
+                  src="/image/banner_1.png"
                   className="d-block w-100"
                   alt="싱그러운 몬스테라"
                   style={{ height: '100%', objectFit: 'cover' }}
@@ -30,7 +28,6 @@ function Dashboard() {
                 </div>
               </div>
 
-              {/* 2 */}
               <div className="carousel-item" style={{ height: '100%' }}>
                 <img
                   src="/image/banner_2.png"
@@ -47,7 +44,6 @@ function Dashboard() {
                 </div>
               </div>
 
-              {/* 3 */}
               <div className="carousel-item" style={{ height: '100%' }}>
                 <img
                   src="/image/banner_3.png"
@@ -65,7 +61,6 @@ function Dashboard() {
               </div>
             </div>
 
-            {/* 컨트롤 */}
             <button
               className="carousel-control-prev"
               type="button"
@@ -88,7 +83,6 @@ function Dashboard() {
               <span className="visually-hidden">다음</span>
             </button>
 
-            {/* 인디케이터 */}
             <div className="carousel-indicators" style={{ marginBottom: '6px' }}>
               <button type="button" data-bs-target="#plantBanner" data-bs-slide-to={0} className="active" />
               <button type="button" data-bs-target="#plantBanner" data-bs-slide-to={1} />
@@ -99,7 +93,6 @@ function Dashboard() {
 
         {/* 메인 영역 */}
         <div className="d-flex flex-nowrap" style={{ gap: '20px' }}>
-          {/* 좌측 */}
           <div style={{ width: '1000px' }}>
             <div className="d-flex flex-nowrap gap-3 mb-3">
               {[
@@ -125,7 +118,6 @@ function Dashboard() {
             <div className="d-flex flex-nowrap gap-3" />
           </div>
 
-          {/* 우측 */}
           <div style={{ width: '420px' }}>
             <div className="card shadow-sm mb-3">
               <div className="card-header bg-dark text-white py-2">
