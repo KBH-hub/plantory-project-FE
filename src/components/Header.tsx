@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useAuthStore } from "../stores/useAuthStore";
 
 type MemberLite = { memberId: number | string; nickname: string } | null;
 
@@ -13,7 +14,9 @@ type AlarmItem = {
 
 type SearchResult = { id: number | string; nickname: string };
 
-export default function Header({ me }: { me: MemberLite }) {
+// export default function Header({ me }: { me: MemberLite }) {
+export default function Header() {
+  const user = useAuthStore((s) => s.user);
   const [alarms, setAlarms] = useState<AlarmItem[]>([
     { id: 1, at: "2025-10-27 10:42", text: "방토방토님의 나눔이 완료되었습니다...", href: "#" },
   ]);

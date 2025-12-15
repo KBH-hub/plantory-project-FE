@@ -1,28 +1,57 @@
-// import { create } from "zustand";
-// import { createJSONStorage, devtools, persist } from "zustand/middleware";
+import { create } from "zustand";
 
-// interface AuthStore {
-//   user: User | null;
-//   accessToken: string | null;
-//   setAuth: (user: User, accessToken: string) => void;
-//   unsetAuth: () => void;
-// }
-// export const useAuthStore = create<AuthStore>()(
-//   devtools(
-//     persist(
-//       (set) => ({
-//         user: null,
-//         accessToken: null,
-//         setAuth: (user, accessToken) => set({ user, accessToken }),
-//         unsetAuth: () => set({ user: null, accessToken: null }),
-//       }),
-//       {
-//         name: "auth-storage",
-//         storage: createJSONStorage(() => sessionStorage), // 기본 값: 로컬 스토리지
-//         partialize: (state) => ({
-//           user: state.user,
-//         }), // user만 세션 스토리지에 저장
-//       }
-//     )
-//   )
-// );
+interface User {
+    memberId: number;
+    membername: string;
+    role: string;
+}
+
+interface AuthState {
+    /** 로그인 여부 */
+    isLogin: boolean;
+
+    /** 로그인 사용자 정보 */
+    user: User | null;
+
+    /** access token (메모리) */
+    accessToken: string | null;
+
+    /** 로그인 성공 */
+    login: (payload: {
+        user: User;
+        accessToken: string;
+    }) => void;
+
+    /** access token 갱신 */
+    setAccessToken: (token: string) => void;
+
+    /** 로그아웃 */
+    logout: () => void;
+}
+
+export const useAuthStore = create<AuthState>((set) => ({
+    isLogin: false,
+    user: null,
+    accessToken: null,
+
+    login: ({ user, accessToken }) =>
+        set({
+            isLogin: true,
+            user,
+            accessToken,
+        }),
+
+    setAccessToken: (token) =>
+        set((state) => ({
+            ...state,
+            isLogin: true,
+            accessToken: token,
+        })),
+
+    logout: () =>
+        set({
+            isLogin: false,
+            user: null,
+            accessToken: null,
+        }),
+}));
