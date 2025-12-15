@@ -7,7 +7,8 @@ import Login from "./pages/Login";
 // import SignUp from "./pages/SignUp";
 // import TermsOfService from "./pages/TermsOfService";
 import Dashboard from "./pages/Dashboard";
-import PrivateRoute from "./routes/PrivateRoute.tsx";
+import MessageList from "./pages/MessageList";
+import PrivateRoute from "./routes/PrivateRoute";
 // import PrivateRoute from "./routes/PrivateRoute";
 
 export default function App() {
@@ -27,6 +28,7 @@ export default function App() {
                 }
             >
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/messageList" element={<MessageList />} />
             </Route>
 
             <Route path="/" element={<Navigate to="/login" replace />} />

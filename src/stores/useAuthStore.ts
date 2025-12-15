@@ -1,57 +1,41 @@
+// src/stores/useAuthStore.ts
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface User {
-    memberId: number;
-    membername: string;
-    role: string;
+  memberId: number;
+  membername: string;
+  role: string;
 }
-
 interface AuthState {
-    /** 로그인 여부 */
-    isLogin: boolean;
-
-    /** 로그인 사용자 정보 */
-    user: User | null;
-
-    /** access token (메모리) */
-    accessToken: string | null;
-
-    /** 로그인 성공 */
-    login: (payload: {
-        user: User;
-        accessToken: string;
-    }) => void;
-
-    /** access token 갱신 */
-    setAccessToken: (token: string) => void;
-
-    /** 로그아웃 */
-    logout: () => void;
+  isLogin: boolean;
+  user: User | null;
+  accessToken: string | null; // 메모리 보관
+  login: (p: { user: User; accessToken: string }) => void;
+  setAccessToken: (token: string) => void;
+  logout: () => void;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
-    isLogin: false,
-    user: null,
-    accessToken: null,
+export const useAuthStore = create<AuthState>()(
+  persist(
+    (set, get) => ({
+      isLogin: false,
+      user: null,
+      accessToken: null,
 
-    login: ({ user, accessToken }) =>
-        set({
-            isLogin: true,
-            user,
-            accessToken,
-        }),
+      login: ({ user, accessToken }) =>
+        set({ isLogin: true, user, accessToken }),
 
-    setAccessToken: (token) =>
-        set((state) => ({
-            ...state,
-            isLogin: true,
-            accessToken: token,
-        })),
+      // refresh 응답에는 user가 없으므로 기존 user 유지
+      setAccessToken: (token) =>
+        set({ isLogin: true, user: get().user, accessToken: token }),
 
-    logout: () =>
-        set({
-            isLogin: false,
-            user: null,
-            accessToken: null,
-        }),
-}));
+      logout: () => set({ isLogin: false, user: null, accessToken: null }),
+    }),
+    {
+      name: "auth-store",
+      // 보안상 accessToken은 저장하지 않음(메모리만). user/isLogin만 영구화
+      partialize: (state) => ({ isLogin: state.isLogin, user: state.user }),
+    }
+  )
+);
