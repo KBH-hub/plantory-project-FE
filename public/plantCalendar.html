@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,13 +8,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" th:href="@{/css/header.css}">
-    <link rel="stylesheet" th:href="@{/css/modal.css}"/>
-    <link rel="stylesheet" th:href="@{/css/alert.css}" />
-    <link rel="stylesheet" th:href="@{/css/plantCalendar.css}">
+    <link rel="stylesheet" href="/src/css/header.css">
+    <link rel="stylesheet" href="/src/css/modal.css"/>
+    <link rel="stylesheet" href="/src/css/alert.css" />
+    <link rel="stylesheet" href="/src/css/plantCalendar.css">
 </head>
-<body class="bg-light" th:data-member-id="${#authentication.principal.MemberResponse.memberId}">
-<th:block th:replace="~{fragments/header :: headerBar}"></th:block>
+<body class="bg-light" data-member-id="">
+<!-- <th:block th:replace="~{fragments/header :: headerBar}"></th:block> -->
 
 <div class="mx-auto" style="width:1470px;">
     <div class="container-fluid text-center my-4">
@@ -213,9 +213,9 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script th:src="@{/js/common/header.js}"></script>
-<script th:src="@{/js/common/modal.js}"></script>
-<script th:src="@{/js/common/alert.js}"></script>
-<script th:src="@{/js/myPlant/plantCalendar.js}"></script>
+<script src="/src/js/common/header.js"></script>
+<script src="/src/js/common/modal.js"></script>
+<script src="/src/js/common/alert.js"></script>
+<script src="/src/js/myPlant/plantCalendar.js"></script>
 </body>
 </html>
