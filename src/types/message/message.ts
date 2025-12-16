@@ -17,12 +17,32 @@ export interface MessageListResponse {
   totalCount: number;
 }
 
-export interface MessageSearchRequest {
-  memberId: number;
+export interface GetMessageListParams {
   boxType: BoxType;
-  targetType?: TargetType;
-  title?: string;
   offset: number;
   limit: number;
+  targetType?: TargetType;
+  title?: string;
 }
+
+export interface MessageDetailResponse {
+  messageId: number;
+  title: string;
+  content: string;
+  senderId: number;
+  senderNickname: string;
+  receiverId: number;
+  receiverNickname: string;
+  createdAt: string;
+  targetTitle?: string;
+  targetType?: string;
+  readFlag?: boolean | null;
+};
+
+export interface ReplyForm {
+  to: string;
+  post: string;
+  title: string;
+  content: string;
+};
 

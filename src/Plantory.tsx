@@ -7,7 +7,8 @@ import Login from "./pages/Login";
 // import SignUp from "./pages/SignUp";
 // import TermsOfService from "./pages/TermsOfService";
 import Dashboard from "./pages/Dashboard";
-import MessageList from "./pages/MessageList"
+import MessageList from "@/pages/MessageList";
+import MessageDetail from "@/pages/MessageDetail";
 import PrivateRoute from "./routes/PrivateRoute";
 import SignUp from "@/pages/SignUp";
 import AuthInitializer from "@/routes/AuthInitializer";
@@ -32,7 +33,8 @@ export default function App() {
             >
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/sharingList" element={<SharingList />} />
-                <Route path="/messageList" element={<MessageList />} />
+                <Route path="/MessageList" element={<MessageList />} />
+                <Route path="/messageDetail/:messageId" element={<MessageDetail />} />
             </Route>
 
             <Route path="/" element={<Navigate to="/login" replace />} />

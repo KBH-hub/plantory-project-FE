@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { getMessageList } from "@/services/messageService";
+import { useNavigate } from "react-router-dom";
+import { getMessageList, getMessageDetail } from "@/services/messageService";
 import type { MessageListResponse } from "src/types/message/message";
 import { createPaginator } from "@/utils/pagination";
 
 export default function MessageList() {
+  const navigate = useNavigate();
   const [data, setData] = useState<MessageListResponse[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -147,9 +149,7 @@ export default function MessageList() {
               key={item.messageId}
               data-id={item.messageId}
               className={rowClass}
-              onClick={() => {
-                // TODO: 상세 이동 하기
-              }}
+              onClick={() => navigate(`/messageDetail/${item.messageId}`)}
             >
               <td className="text-center" style={{ width: 44 }}>
                 <input
