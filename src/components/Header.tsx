@@ -248,7 +248,7 @@ export default function Header() {
                 aria-label="프로필 메뉴 열기"
               >
                 <i className="bi bi-person-circle fs-3" />
-                <span className="ms-2">{me?.nickname || "Guest"}</span>님
+                <span className="ms-2">{user?.nickname || "Guest"}</span>님
               </button>
               <ul className="dropdown-menu dropdown-menu-end ph-profile-menu">
                 <li><a className="dropdown-item" href="/profile">내 프로필</a></li>

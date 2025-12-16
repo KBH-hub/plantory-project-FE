@@ -2,7 +2,7 @@ import axios from "axios";
 import { useAuthStore } from "../stores/useAuthStore";
 
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "http://localhost:9000",
   withCredentials: true,
 });
 
@@ -14,32 +14,38 @@ axiosInstance.interceptors.request.use((config) => {
   return config;
 });
 
-let retry = false;
 axiosInstance.interceptors.response.use(
-  (response) => response,
+  res => res,
   async (error) => {
     const originalRequest = error.config;
-    if (error.response?.status === 403 && !retry) {
-      retry = true;
+
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
       try {
-        const { data, status } = await axiosInstance.post("/token");
-        if (status == 200) {
-          useAuthStore.setState({
-            user: data.user,
-            accessToken: data.accessToken,
-          });
-          retry = false;
-          originalRequest.headers[
-            "Authorization"
-          ] = `Bearer ${data.accessToken}`;
-          return axiosInstance(originalRequest);
-        } else {
-          throw new Error("토큰 업데이트 실패");
-        }
+        const refreshToken = useAuthStore.getState().refreshToken;
+
+        const { data } = await axiosInstance.post("/api/token", {
+          refreshToken,
+        });
+
+        useAuthStore.setState({
+          accessToken: data.accessToken,
+        });
+
+        originalRequest.headers.Authorization =
+          `Bearer ${data.accessToken}`;
+
+        return axiosInstance(originalRequest);
       } catch {
-        useAuthStore.setState({ user: null, accessToken: null });
+        useAuthStore.setState({
+          accessToken: null,
+          refreshToken: null,
+          user: null,
+        });
       }
     }
+
     return Promise.reject(error);
   }
 );
