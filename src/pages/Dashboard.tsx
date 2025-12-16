@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getDashboard } from "../services/dashboardService";
+import { getDashboard } from "../services/dashboard";
 import { DashboardResponse } from "../types/dashboard";
 import RecommendedList from "../components/RecommendedList";
 
@@ -112,9 +112,9 @@ function Dashboard() {
           <div style={{ width: '1000px' }}>
             <div className="d-flex flex-nowrap gap-3 mb-3">
               {[
-                { title: '내 식물', img: '/image/dashboard_1.png', value: data.myPlantsCount },
-                { title: '오늘 물 필요 식물', img: '/image/dashboard_2.png', value: data.todayWateringCount },
-                { title: '관심 필요 식물', img: '/image/dashboard_3.png', value: data.careNeededCount }
+                { title: '내 식물', img: '/images/dashboard_1.png', value: data.myPlantsCount },
+                { title: '오늘 물 필요 식물', img: '/images/dashboard_2.png', value: data.todayWateringCount },
+                { title: '관심 필요 식물', img: '/images/dashboard_3.png', value: data.careNeededCount }
               ].map((item, idx) => (
                 <div key={idx} className="card shadow-sm" style={{ width: '340px' }}>
                   <div className="card-body d-flex align-items-center p-3">

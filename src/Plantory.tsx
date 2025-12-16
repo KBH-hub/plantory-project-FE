@@ -12,6 +12,7 @@ import PrivateRoute from "./routes/PrivateRoute";
 import SignUp from "@/pages/SignUp";
 import AuthInitializer from "@/routes/AuthInitializer";
 // import PrivateRoute from "./routes/PrivateRoute";
+import SharingList from "./pages/SharingList";
 
 export default function App() {
     return (
@@ -30,6 +31,7 @@ export default function App() {
                 }
             >
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/sharingList" element={<SharingList />} />
                 <Route path="/messageList" element={<MessageList />} />
             </Route>
 
