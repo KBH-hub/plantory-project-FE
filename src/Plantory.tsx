@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./routes/PrivateRoute";
 import SignUp from "@/pages/SignUp";
 // import PrivateRoute from "./routes/PrivateRoute";
+import SharingList from "./pages/SharingList";
 
 export default function App() {
     return (
@@ -28,6 +29,7 @@ export default function App() {
                 }
             >
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/sharingList" element={<SharingList />} />
             </Route>
 
             <Route path="/" element={<Navigate to="/login" replace />} />
