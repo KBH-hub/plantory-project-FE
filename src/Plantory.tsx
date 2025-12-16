@@ -9,15 +9,16 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./routes/PrivateRoute";
 import SignUp from "@/pages/SignUp";
+import AuthInitializer from "@/routes/AuthInitializer";
 // import PrivateRoute from "./routes/PrivateRoute";
 
 export default function App() {
     return (
+        <AuthInitializer>
         <Routes>
             <Route element={<AuthLayout />}>
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
-                {/*<Route path="/terms-of-service" element={<TermsOfService />} />*/}
             </Route>
 
             <Route
@@ -32,5 +33,6 @@ export default function App() {
 
             <Route path="/" element={<Navigate to="/login" replace />} />
         </Routes>
+</AuthInitializer>
     );
 }
