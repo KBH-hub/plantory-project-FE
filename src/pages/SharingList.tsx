@@ -11,18 +11,20 @@ export default function SharingList() {
   const [interestCount, setInterestCount] = useState(0);
 
   const [keyword, setKeyword] = useState("");
-  const [userAddress, setUserAddress] = useState<string>("");
+  const [userAddress, setUserAddress] = useState("");
 
   const [offset, setOffset] = useState(0);
   const limit = 12;
   const [isLastPage, setIsLastPage] = useState(false);
 
-  const loadSharing = (append = false) => {
+  const loadSharing = (append = false, customOffset?: number) => {
+    const realOffset = customOffset ?? offset;
+
     getSharingList({
       keyword,
       userAddress: userAddress || undefined,
       limit,
-      offset,
+      offset: realOffset,
     }).then((data) => {
       setList((prev) => (append ? [...prev, ...data] : data));
       setIsLastPage(data.length < limit);
@@ -40,21 +42,22 @@ export default function SharingList() {
   };
 
   useEffect(() => {
-    loadSharing(false);
-    loadPopular();
     loadInterest();
   }, []);
+
+  useEffect(() => {
+    loadSharing(false, 0);
+    loadPopular();
+  }, [keyword, userAddress]);
 
   return (
     <div className="mx-auto" style={{ width: 1470 }}>
       <main className="py-4">
 
         <div className="container-fluid px-4">
-          <div className="col-md-3 col-12">
-            <h5 className="mb-0 fw-bold">나눔 커뮤니티</h5>
-          </div>
+          <h5 className="fw-bold">나눔 커뮤니티</h5>
 
-          <div className="row align-items-center g-2 mt-1">
+          <div className="row g-2 mt-2">
             <div className="col-md-10">
               <div className="input-group">
                 <input
@@ -62,32 +65,18 @@ export default function SharingList() {
                   placeholder="키우고 싶은 식물 검색"
                   value={keyword}
                   onChange={(e) => setKeyword(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      setOffset(0);
-                      loadSharing(false);
-                      loadPopular();
-                    }
-                  }}
                 />
                 <button
                   className="input-group-text"
-                  onClick={() => {
-                    setOffset(0);
-                    loadSharing(false);
-                    loadPopular();
-                  }}
+                  onClick={() => setKeyword(keyword.trim())}
                 >
                   <i className="bi bi-search" />
                 </button>
               </div>
             </div>
 
-            <div className="col-md-2 text-md-end mt-2 mt-md-0">
-              <Link
-                to="/createSharing"
-                className="btn btn-success fw-semibold px-3"
-              >
+            <div className="col-md-2 text-end">
+              <Link to="/createSharing" className="btn btn-success">
                 글쓰기
               </Link>
             </div>
@@ -98,9 +87,7 @@ export default function SharingList() {
           <AddressSelect
             onChange={(address) => {
               setUserAddress(address);
-              setOffset(0);
-              loadSharing(false);
-              loadPopular();
+              setOffset(0); 
             }}
           />
         </div>
@@ -108,7 +95,7 @@ export default function SharingList() {
         <div className="container-fluid px-4 mt-3">
           <h5 className="fw-bold">주목할 만한 나눔</h5>
           <RecommendedList items={popular} />
-          <hr className="mt-3" />
+          <hr />
         </div>
 
         <div className="container-fluid px-4 mt-2">
@@ -130,32 +117,32 @@ export default function SharingList() {
                     >
                       <Link
                         to={`/readSharing/${item.sharingId}`}
-                        className="card border-1 rounded-1 text-decoration-none text-reset"
+                        className="card text-reset text-decoration-none"
                       >
                         <img
                           src={item.fileUrl}
-                          className="card-img-top object-fit-cover"
-                          style={{ height: 350 }}
+                          className="card-img-top"
+                          style={{ height: 350, objectFit: "cover" }}
                         />
 
-                        <div className="card-body px-2 py-2">
+                        <div className="card-body">
                           <span
                             className={`badge ${
                               item.status === "true"
                                 ? "bg-secondary"
                                 : "bg-success"
-                            } small`}
+                            }`}
                           >
                             {item.status === "true"
                               ? "나눔완료"
                               : "나눔 중"}
                           </span>
 
-                          <div className="mt-1 mb-1 text-truncate small">
+                          <div className="mt-1 text-truncate">
                             {item.title}
                           </div>
 
-                          <div className="d-flex justify-content-between small text-muted">
+                          <div className="d-flex justify-content-between small text-muted mt-1">
                             <span>
                               {timeAgo(displayTime)}
                               {isEdited && " (수정됨)"}
@@ -174,13 +161,13 @@ export default function SharingList() {
               </div>
 
               {!isLastPage && (
-                <div className="text-center mt-3">
+                <div className="text-center my-4">
                   <button
-                    className="btn btn-outline-secondary px-4"
+                    className="btn btn-outline-secondary"
                     onClick={() => {
                       const next = offset + limit;
                       setOffset(next);
-                      loadSharing(true);
+                      loadSharing(true, next);
                     }}
                   >
                     더보기
@@ -189,18 +176,39 @@ export default function SharingList() {
               )}
             </div>
 
-            <div className="col-lg-3 mt-4 mt-lg-0">
+            <div className="col-lg-3 mt-4 mt-lg-0" id="sharingSidebar">
               <Link
                 to="/profileInsert"
-                className="text-decoration-none text-reset"
+                className="text-reset text-decoration-none"
               >
-                <div className="bg-white border p-3 mb-3 small">
+                <div className="bg-white border p-3 mb-3 text-center">
                   <div className="fw-semibold">나의 관심 나눔 식물</div>
-                  <p className="text-muted mb-0 mt-2 text-center">
+                  <p className="mt-2 mb-0">
                     <i className="bi bi-heart" /> {interestCount}
                   </p>
                 </div>
               </Link>
+
+              <div className="bg-white border p-3">
+                <div className="fw-semibold mb-2">
+                  인기 관심 나눔 식물
+                </div>
+
+                {popular.map((item) => (
+                  <Link
+                    key={item.sharingId}
+                    to={`/readSharing/${item.sharingId}`}
+                    className="d-flex justify-content-between py-2 text-reset text-decoration-none border-bottom"
+                  >
+                    <span className="text-truncate">
+                      {item.title}
+                    </span>
+                    <span>
+                      <i className="bi bi-heart" /> {item.interestNum}
+                    </span>
+                  </Link>
+                ))}
+              </div>
             </div>
 
           </div>
