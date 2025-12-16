@@ -7,7 +7,8 @@ import Login from "./pages/Login";
 // import SignUp from "./pages/SignUp";
 // import TermsOfService from "./pages/TermsOfService";
 import Dashboard from "./pages/Dashboard";
-import PrivateRoute from "./routes/PrivateRoute.tsx";
+import PrivateRoute from "./routes/PrivateRoute";
+import SignUp from "@/pages/SignUp";
 // import PrivateRoute from "./routes/PrivateRoute";
 
 export default function App() {
@@ -15,7 +16,7 @@ export default function App() {
         <Routes>
             <Route element={<AuthLayout />}>
                 <Route path="/login" element={<Login />} />
-                {/*<Route path="/signup" element={<SignUp />} />*/}
+                <Route path="/signup" element={<SignUp />} />
                 {/*<Route path="/terms-of-service" element={<TermsOfService />} />*/}
             </Route>
 
