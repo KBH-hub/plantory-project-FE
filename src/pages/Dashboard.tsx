@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { getDashboard, DashboardResponse } from "../services/dashboardService";
+import { getDashboard } from "../services/dashboardService";
+import { DashboardResponse } from "../types/dashboard";
 import RecommendedList from "../components/RecommendedList";
 
 function Dashboard() {
@@ -17,7 +18,6 @@ function Dashboard() {
 
   return (
     <div className="bg-light">
-      {/* <Header /> */}
 
       <div className="mx-auto" style={{ width: '1470px', padding: '16px' }}>
         <div className="mb-3">
