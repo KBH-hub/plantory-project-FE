@@ -1,4 +1,4 @@
-import {createPaginator} from '/js/common/pagination.js';
+import {createPaginator} from '../js/common/pagination.js';
 
 (function () {
     const state = {
