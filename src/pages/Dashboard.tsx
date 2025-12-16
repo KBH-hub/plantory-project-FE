@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { getDashboard, DashboardResponse } from "../services/dashboardService";
+import { getDashboard } from "../services/dashboardService";
+import { DashboardResponse } from "../types/dashboard";
 import RecommendedList from "../components/RecommendedList";
 
 function Dashboard() {
@@ -17,7 +18,6 @@ function Dashboard() {
 
   return (
     <div className="bg-light">
-      {/* <Header /> */}
 
       <div className="mx-auto" style={{ width: '1470px', padding: '16px' }}>
         <div className="mb-3">
@@ -159,14 +159,14 @@ function Dashboard() {
                           오늘 물주기 일정이 없습니다
                         </div>
                       ) : (
-                        data.waterings.map((item, idx) => (
-                          <div key={idx} className="border rounded p-2 mb-2 small">
-                            <div className="fw-semibold">{item.name}</div>
-                            <div className="text-muted">
-                              물 주기 간격: {item.interval}일
-                            </div>
+                        data.waterings.map(item => (
+                        <div key={`${item.name}-${item.interval}`} className="border rounded p-2 mb-2 small">
+                          <div className="fw-semibold">{item.name}</div>
+                          <div className="text-muted">
+                            {item.interval}일마다
                           </div>
-                        ))
+                        </div>
+                      ))
                       )}
                     </div>
                   </div>
