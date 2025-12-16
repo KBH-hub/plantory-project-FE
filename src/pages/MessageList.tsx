@@ -1,26 +1,40 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getMessageList } from "@/services/messageService";
-import { MessageListResponse } from "src/types/message/message";
-import "../styles/header.css";
-import "../styles/modal.css";
-import "../styles/alert.css";
+import type { MessageListResponse } from "src/types/message/message";
+import { createPaginator } from "@/utils/pagination";
 
 export default function MessageList() {
-  const [data, setData] = useState<MessageListResponse[] | null>(null);
+  const [data, setData] = useState<MessageListResponse[]>([]);
   const [loading, setLoading] = useState(true);
-  console.log(data);
 
+  const [offset, setOffset] = useState(0);
+  const [limit] = useState(10);
+  const [total, setTotal] = useState<number | null>(null);
+
+  const pagerRef = useRef<HTMLUListElement | null>(null);
+  const paginatorRef = useRef<{ update: (p?: any) => void } | null>(null);
+
+  const current = Math.floor(offset / limit) + 1;
+
+  // 1) 목록 조회 (offset/limit 바뀌면 재조회)
   useEffect(() => {
     let alive = true;
+    // setLoading(true);
 
-    getMessageList({ boxType: "RECEIVED", offset: 0, limit: 10 })
+    getMessageList({ boxType: "RECEIVED", offset, limit })
       .then((res) => {
         if (!alive) return;
-        setData(res);
+
+        const items = Array.isArray(res) ? res : [];
+        const tc = Number(items[0]?.totalCount);
+        setData(items);
+        setTotal(Number.isFinite(tc) ? tc : null);
       })
       .catch((e) => {
         if (!alive) return;
         console.error(e);
+        setData([]);
+        setTotal(null);
       })
       .finally(() => {
         if (!alive) return;
@@ -30,11 +44,40 @@ export default function MessageList() {
     return () => {
       alive = false;
     };
-  }, []);
+  }, [offset, limit]);
+
+  // 2) paginator 최초 생성 (container 생긴 후 1회)
+  useEffect(() => {
+    if (loading) return;
+    if (!pagerRef.current) return;
+    if (paginatorRef.current) return;
+
+    paginatorRef.current = createPaginator({
+      container: pagerRef.current,
+      current,
+      totalItems: total,
+      pageSize: limit,
+      windowSize: 5,
+      modeWhenUnknown: "next-only",
+      onChange: (page: number) => {
+        setOffset((page - 1) * limit);
+      },
+    });
+  }, [loading]); // mount 1회
+
+  // 3) paging 값 변경 시 update
+  useEffect(() => {
+    if (!paginatorRef.current) return;
+
+    paginatorRef.current.update({
+      current,
+      totalItems: total,
+      pageSize: limit,
+    });
+  }, [current, total, limit]);
 
   if (loading) return <div>로딩중...</div>;
-  if (!data) return <div>데이터 없음</div>;
-
+console.log("total:", total, "dataLen:", data.length);
   const formatDateTime = (iso: string) => {
     const d = new Date(iso);
     if (Number.isNaN(d.getTime())) return iso;
@@ -224,7 +267,7 @@ export default function MessageList() {
 
           <div className="d-flex justify-content-center py-3">
             <nav aria-label="쪽지함 페이지">
-              <ul className="pagination pagination-sm mb-0" id="pager"></ul>
+              <ul className="pagination pagination-sm mb-0" ref={pagerRef}></ul>
             </nav>
           </div>
         </div>
