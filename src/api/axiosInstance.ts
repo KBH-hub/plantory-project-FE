@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useAuthStore } from "@/stores/useAuthStore";
+import { authAxios } from "@/api/authAxios";
 
 export const axiosInstance = axios.create({
   baseURL: "http://localhost:9000",
@@ -21,19 +22,19 @@ axiosInstance.interceptors.response.use(
 
       if (
           error.response?.status === 401 &&
-          !originalRequest._retry
+          !originalRequest._retry &&
+          !originalRequest.url?.includes("/api/auth")
       ) {
         originalRequest._retry = true;
 
         try {
-          const { data } = await axiosInstance.post(
-              "/api/auth/reissue"
-          );
+          const { data } = await authAxios.post("/api/auth/reissue");
 
           useAuthStore.getState().setAccessToken(data.accessToken);
 
-          originalRequest.headers.Authorization =
-              `Bearer ${data.accessToken}`;
+            originalRequest.headers = originalRequest.headers || {};
+            originalRequest.headers.Authorization =
+                `Bearer ${data.accessToken}`;
 
           return axiosInstance(originalRequest);
         } catch {
