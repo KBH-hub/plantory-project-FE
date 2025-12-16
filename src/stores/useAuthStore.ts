@@ -1,12 +1,12 @@
+// src/stores/useAuthStore.ts
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface User {
-    memberId: number;
-    membername: string;
-    role: string;
+  memberId: number;
+  membername: string;
+  role: string;
 }
-
 interface AuthState {
     isLogin: boolean;
     user: User | null;
