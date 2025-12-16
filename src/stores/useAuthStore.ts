@@ -9,24 +9,28 @@ interface AuthState {
     isLogin: boolean;
     user: User | null;
     accessToken: string | null;
+    initialized: boolean;
     login: (payload: {
         user: User;
         accessToken: string;
     }) => void;
     setAccessToken: (token: string) => void;
     logout: () => void;
+    setInitialized: () => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
     isLogin: false,
     user: null,
     accessToken: null,
+    initialized: false,
 
     login: ({ user, accessToken }) =>
         set({
             isLogin: true,
             user,
             accessToken,
+            initialized: true,
         }),
 
     setAccessToken: (token) =>
@@ -41,6 +45,11 @@ export const useAuthStore = create<AuthState>((set) => ({
             isLogin: false,
             user: null,
             accessToken: null,
-        })
+            initialized: true,
+        }),
+
+    setInitialized: () =>
+        set({ initialized: true }),
 }));
+
 
