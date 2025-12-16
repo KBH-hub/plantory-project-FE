@@ -1,7 +1,10 @@
 import "../styles/login.css";
 import { login as loginApi } from "../api/auth";
-import { useAuthStore } from "../stores/useAuthStore";
+import { useAuthStore } from "@/stores/useAuthStore";
 import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import fixmeImg from '@/assets/images/fixme.png';
+import fixmeImg2 from '@/assets/images/fixme2.png';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -40,7 +43,6 @@ export default function Login() {
         <div className="container-fluid bg-dark min-vh-100">
             <div className="row min-vh-100">
 
-                {/* LEFT */}
                 <div className="col-12 col-md-6 bg-success bg-opacity-50 login-panel d-flex flex-column justify-content-center align-items-start px-5">
 
                     <h2 className="fw-bold mb-3 text-white">🌿 Plantory</h2>
@@ -68,7 +70,6 @@ export default function Login() {
                                 placeholder="비밀번호 입력"
                                 required
                             />
-
                             <div className="form-check text-white mb-3">
                                 <input
                                     type="checkbox"
@@ -90,14 +91,13 @@ export default function Login() {
 
                         <p className="text-center text-white">
                             아직 회원이 아니신가요?{" "}
-                            <a href="/signup" className="text-warning fw-bold">
+                            <Link to="/signup" className="text-warning fw-bold">
                                 회원가입
-                            </a>
+                            </Link>
                         </p>
                     </div>
                 </div>
 
-                {/* RIGHT */}
                 <div className="col-12 col-md-6 bg-white d-flex flex-column justify-content-center align-items-center">
                     <h4 className="fw-bold text-center mb-4 px-4">
                         식물 관리와 커뮤니티 참여를 통해 함께 성장해요 🌱
@@ -106,7 +106,7 @@ export default function Login() {
                     <div className="d-flex flex-wrap justify-content-center gap-4">
                         <div className="preview-img-box shadow">
                             <img
-                                src="/src/assets/images/fixme.png"
+                                src={fixmeImg}
                                 className="preview-img"
                                 alt="preview"
                             />
@@ -114,7 +114,7 @@ export default function Login() {
 
                         <div className="preview-img-box shadow">
                             <img
-                                src="/src/assets/images/fixme.png"
+                                src={fixmeImg2}
                                 className="preview-img"
                                 alt="preview"
                             />

@@ -30,7 +30,7 @@ function Dashboard() {
             <div className="carousel-inner" style={{ height: '100%' }}>
               <div className="carousel-item active" style={{ height: '100%' }}>
                 <img
-                  src="/image/banner_1.png"
+                  src="/images/banner_1.png"
                   className="d-block w-100"
                   alt="싱그러운 몬스테라"
                   style={{ height: '100%', objectFit: 'cover' }}
@@ -46,7 +46,7 @@ function Dashboard() {
 
               <div className="carousel-item" style={{ height: '100%' }}>
                 <img
-                  src="/image/banner_2.png"
+                  src="/images/banner_2.png"
                   className="d-block w-100"
                   alt="산세베리아"
                   style={{ height: '100%', objectFit: 'cover' }}
@@ -62,7 +62,7 @@ function Dashboard() {
 
               <div className="carousel-item" style={{ height: '100%' }}>
                 <img
-                  src="/image/banner_3.png"
+                  src="/images/banner_3.png"
                   className="d-block w-100"
                   alt="허브 & 다육"
                   style={{ height: '100%', objectFit: 'cover' }}

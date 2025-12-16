@@ -113,7 +113,7 @@ export default function Header() {
         <div className="d-flex align-items-center justify-content-between w-100" style={{ minWidth: 1450 }}>
           {/* 로고 */}
           <Link to="/dashboard" className="ph-logo" aria-label="대시보드로 이동">
-          <img src="/image/plantory_logo.png" alt="Plantory Logo" className="ph-logo-img" />
+          <img src="/images/plantory_logo.png" alt="Plantory Logo" className="ph-logo-img" />
           </Link>
 
           {/* 중앙 메뉴 */}
