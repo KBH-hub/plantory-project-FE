@@ -1,145 +1,235 @@
-import { useEffect, useMemo, useState } from "react";
-import { MessageService } from "../services/messageService";
-import type { MessageItem, TargetType } from "../types/message";
-import { useAuthStore } from "../stores/useAuthStore";
-// import { formatKST } from "../utils/datetime";
-
-const TARGET_TYPES: (TargetType | "ALL")[] =
-  ["ALL", "SHARING", "QUESTION", "REPORT", "MYPLANT", "DIARY"];
+import { useEffect, useState } from "react";
+import { getMessageList } from "@/services/messageService";
+import { MessageListResponse } from "src/types/message/message";
+import "../styles/header.css";
+import "../styles/modal.css";
+import "../styles/alert.css";
 
 export default function MessageList() {
-  const user = useAuthStore((s) => s.user);
-  const memberId = user?.memberId ?? 0;
+  const [data, setData] = useState<MessageListResponse[] | null>(null);
+  const [loading, setLoading] = useState(true);
+  console.log(data);
 
-  const [items, setItems] = useState<MessageItem[]>([]);
-  const [total, setTotal] = useState(0);
-  const [offset, setOffset] = useState(0);
-  const [limit, setLimit] = useState(10);
-  const [targetType, setTargetType] = useState<TargetType | undefined>(undefined);
+  useEffect(() => {
+    let alive = true;
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const currentPage = useMemo(() => Math.floor(offset / limit) + 1, [offset, limit]);
-  const totalPages  = useMemo(() => Math.max(1, Math.ceil(total / limit)), [total, limit]);
-
-  const load = async () => {
-    if (!memberId) return;
-    setLoading(true);
-    setError(null);
-    try {
-      const page = await MessageService.listByBox(memberId, "RECEIVED", {
-        targetType,
-        offset,
-        limit,
+    getMessageList({ boxType: "RECEIVED", offset: 0, limit: 10 })
+      .then((res) => {
+        if (!alive) return;
+        setData(res);
+      })
+      .catch((e) => {
+        if (!alive) return;
+        console.error(e);
+      })
+      .finally(() => {
+        if (!alive) return;
+        setLoading(false);
       });
-      setItems(page.items);
-      setTotal(page.totalCount);
-    } catch (e: any) {
-      setError(e?.message ?? "목록 조회 실패");
-    } finally {
-      setLoading(false);
+
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  if (loading) return <div>로딩중...</div>;
+  if (!data) return <div>데이터 없음</div>;
+
+  const formatDateTime = (iso: string) => {
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return iso;
+
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const dd = String(d.getDate()).padStart(2, "0");
+    const hh = String(d.getHours()).padStart(2, "0");
+    const mi = String(d.getMinutes()).padStart(2, "0");
+    const se = String(d.getSeconds()).padStart(2, "0");
+
+    return `${yyyy}-${mm}-${dd} ${hh}:${mi}:${se}`;
+  };
+
+  const labelTargetType = (t: string) => {
+    switch (t) {
+      case "SHARING":
+        return "나눔";
+      case "QUESTION":
+        return "질문";
+      default:
+        return t ?? "";
     }
   };
 
-  useEffect(() => {
-    void load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [memberId, targetType, offset, limit]);
+  const messageTbody = (
+    <>
+      {data.length === 0 ? (
+        <tr>
+          <td colSpan={8} className="text-center text-muted py-4">
+            쪽지가 없습니다.
+          </td>
+        </tr>
+      ) : (
+        data.map((item) => {
+          const isUnread = !item.readFlag;
+          const rowClass = `cursor-pointer${isUnread ? " fw-semibold" : ""}`;
+          const readText = item.readFlag ? "읽음" : "안읽음";
+          const category = labelTargetType(item.targetType);
+          const relatedText = item.targetTitle || "(삭제된 쪽지)";
 
-  const onChangeType = (val: string) => {
-    setTargetType(val === "ALL" ? undefined : (val as TargetType));
-    setOffset(0);
-  };
+          return (
+            <tr
+              key={item.messageId}
+              data-id={item.messageId}
+              className={rowClass}
+              onClick={() => {
+                // TODO: 상세 이동/모달 오픈
+                // navigate(`/message/${item.messageId}`);
+              }}
+            >
+              <td className="text-center" style={{ width: 44 }}>
+                <input
+                  type="checkbox"
+                  className="form-check-input row-check"
+                  value={item.messageId}
+                  onClick={(e) => e.stopPropagation()} // 체크 클릭 시 row onClick 방지
+                  onChange={() => {
+                    // TODO: 선택 상태 관리(선택 삭제용)
+                  }}
+                />
+              </td>
 
-  const go = (p: number) => {
-    if (p < 1 || p > totalPages) return;
-    setOffset((p - 1) * limit);
-  };
+              <td style={{ width: 96 }}>{readText}</td>
+              <td style={{ width: 120 }}>{item.senderNickname ?? ""}</td>
+              <td style={{ width: 120 }}>{item.receiverNickname ?? ""}</td>
+              <td style={{ width: 90 }}>{category}</td>
 
-  if (!memberId) {
-    return <div className="container py-4">로그인이 필요합니다.</div>;
-  }
+              <td className="text-truncate" style={{ maxWidth: 180 }}>
+                {item.title || ""}
+              </td>
+
+              <td className="text-truncate">{relatedText}</td>
+
+              <td className="text-nowrap" style={{ width: 170 }}>
+                {formatDateTime(item.createdAt)}
+              </td>
+            </tr>
+          );
+        })
+      )}
+    </>
+  );
 
   return (
-    <div className="container-xxl py-3">
-      <div className="d-flex align-items-center justify-content-between mb-3">
-        <h5 className="fw-bold mb-0">쪽지함 (받은 쪽지)</h5>
-        <div className="d-flex gap-2">
-          <select
-            className="form-select form-select-sm"
-            style={{ width: 180 }}
-            value={targetType ?? "ALL"}
-            onChange={(e) => onChangeType(e.target.value)}
-          >
-            {TARGET_TYPES.map((t) => (
-              <option key={t} value={t}>{t}</option>
-            ))}
-          </select>
-          <select
-            className="form-select form-select-sm"
-            style={{ width: 90 }}
-            value={String(limit)}
-            onChange={(e) => { setLimit(Number(e.target.value)); setOffset(0); }}
-          >
-            {[10, 20, 50].map(n => <option key={n} value={n}>{n}/페이지</option>)}
-          </select>
+    <div className="bg-light" data-member-id="">
+      <div className="container-xxl py-4">
+        <h5 className="fw-bold mb-3">쪽지함</h5>
+
+        <div className="card shadow-sm" style={{ height: 600 }}>
+          <div className="card-header">
+            <div className="row g-2 align-items-center">
+              <div className="col d-flex flex-wrap align-items-center gap-3">
+                <div className="d-flex align-items-center gap-2">
+                  <a
+                    href="#"
+                    id="tabReceived"
+                    className="link-secondary text-decoration-none fw-semibold"
+                    data-box="RECEIVED"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    받은 쪽지
+                  </a>
+                  <span className="text-secondary">|</span>
+                  <a
+                    href="#"
+                    id="tabSent"
+                    className="link-secondary text-decoration-none"
+                    data-box="SENT"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    보낸 쪽지
+                  </a>
+
+                  <button id="btnDelete" className="btn btn-outline-danger btn-sm" type="button">
+                    선택 삭제
+                  </button>
+                </div>
+              </div>
+
+              <div className="col-auto">
+                <form id="searchForm" className="d-flex align-items-center gap-2">
+                  <select
+                    id="selectTargetType"
+                    className="form-select form-select-sm"
+                    style={{ width: 110 }}
+                    defaultValue=""
+                  >
+                    <option value="">전체</option>
+                    <option value="SHARING">나눔</option>
+                    <option value="QUESTION">질문</option>
+                  </select>
+
+                  <input
+                    id="inputTitle"
+                    type="text"
+                    className="form-control form-control-sm"
+                    placeholder="제목 검색"
+                    style={{ width: 220 }}
+                  />
+
+                  <button className="btn btn-secondary btn-sm" type="submit">
+                    <i className="bi bi-search" />
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div className="card-body p-0">
+            <div className="table-responsive">
+              <table className="table table-hover align-middle mb-0 table-fixed">
+                <thead className="table-light small">
+                  <tr>
+                    <th className="text-center" style={{ width: 44 }}>
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="checkAll"
+                        aria-label="전체선택"
+                      />
+                    </th>
+                    <th className="text-nowrap" style={{ width: 96 }}>
+                      읽음 상태
+                    </th>
+                    <th className="text-nowrap" style={{ width: 120 }}>
+                      보낸 사람
+                    </th>
+                    <th className="text-nowrap" style={{ width: 120 }}>
+                      받는 사람
+                    </th>
+                    <th className="text-nowrap" style={{ width: 90 }}>
+                      카테고리
+                    </th>
+                    <th style={{ width: 300 }}>제목</th>
+                    <th>관련글</th>
+                    <th className="text-nowrap" style={{ width: 170 }}>
+                      시간
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody id="messageTbody">{messageTbody}</tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="d-flex justify-content-center py-3">
+            <nav aria-label="쪽지함 페이지">
+              <ul className="pagination pagination-sm mb-0" id="pager"></ul>
+            </nav>
+          </div>
         </div>
       </div>
 
-      {loading && <div className="alert alert-secondary">로딩 중…</div>}
-      {error && <div className="alert alert-danger">{error}</div>}
-      {!loading && !error && items.length === 0 && (
-        <div className="alert alert-light border">데이터가 없습니다.</div>
-      )}
-
-      {!loading && !error && items.length > 0 && (
-        <>
-          <div className="small text-muted mb-2">
-            총 {total}건 · {currentPage}/{totalPages} 페이지
-          </div>
-
-          <ul className="list-group">
-            {items.map((m) => (
-              <li key={m.messageId} className="list-group-item d-flex justify-content-between align-items-start">
-                <div className="me-3">
-                  <div className="fw-bold">{m.title}</div>
-                  <div className="text-muted small">
-                    {m.senderNickname} → {m.receiverNickname} · {m.targetType} · {formatKST(m.createdAt)}
-                  </div>
-                  {m.targetTitle && <div className="small">{m.targetTitle}</div>}
-                  {m.content && (
-                    <div className="small text-body-secondary text-truncate" style={{ maxWidth: 520 }}>
-                      {m.content}
-                    </div>
-                  )}
-                </div>
-                {!m.readFlag && <span className="badge text-bg-primary align-self-center">NEW</span>}
-              </li>
-            ))}
-          </ul>
-
-          <div className="d-flex justify-content-center gap-2 mt-3">
-            <button
-              className="btn btn-outline-secondary btn-sm"
-              onClick={() => go(currentPage - 1)}
-              disabled={currentPage <= 1}
-            >
-              이전
-            </button>
-            <span className="small align-self-center">
-              {currentPage} / {totalPages}
-            </span>
-            <button
-              className="btn btn-outline-secondary btn-sm"
-              onClick={() => go(currentPage + 1)}
-              disabled={currentPage >= totalPages}
-            >
-              다음
-            </button>
-          </div>
-        </>
-      )}
     </div>
   );
 }

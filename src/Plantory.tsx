@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 // import SignUp from "./pages/SignUp";
 // import TermsOfService from "./pages/TermsOfService";
 import Dashboard from "./pages/Dashboard";
+import MessageList from "./pages/MessageList"
 import PrivateRoute from "./routes/PrivateRoute";
 import SignUp from "@/pages/SignUp";
 // import PrivateRoute from "./routes/PrivateRoute";

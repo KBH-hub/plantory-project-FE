@@ -1,22 +1,15 @@
-// src/api/axiosInstance.ts
-import axios, { AxiosError, AxiosRequestConfig } from "axios";
+import axios from "axios";
 import { useAuthStore } from "../stores/useAuthStore";
-
-const API_BASE =
-  import.meta.env.VITE_API_BASE_URL ?? "http://127.0.0.1:9000/api";
 
 export const axiosInstance = axios.create({
   baseURL: "http://localhost:9000",
   withCredentials: true,
-  timeout: 10000,
 });
 
-// 요청 인터셉터: 액세스 토큰 자동 첨부
 axiosInstance.interceptors.request.use((config) => {
-  const token = useAuthStore.getState().accessToken;
-  if (token && !(config as any).skipAuth) {
-    config.headers = config.headers ?? {};
-    config.headers.Authorization = `Bearer ${token}`;
+  const accessToken = useAuthStore.getState().accessToken;
+  if (accessToken) {
+    config.headers["Authorization"] = `Bearer ${accessToken}`;
   }
   return config;
 });
