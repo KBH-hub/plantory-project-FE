@@ -1,21 +1,8 @@
 import { Link } from "react-router-dom";
 import { timeAgo } from "@/global/utils/date";
+import { SharingCardListResponse } from "@/domain/sharing/types/sharing/sharingList";
 
-type RecommendedItem = {
-  sharingId: number;
-  title: string;
-  status: string;
-  createdAt: string;
-  interestNum: number;
-  commentCount: number;
-  fileUrl: string;
-};
-
-export default function RecommendedList({
-  items,
-}: {
-  items: RecommendedItem[];
-}) {
+function RecommendedList({items,}: { items: SharingCardListResponse[];}) {
   return (
     <div className="d-flex flex-nowrap gap-3">
       {items.map((item) => {
@@ -54,10 +41,8 @@ export default function RecommendedList({
                     {timeAgo(item.createdAt)}
                   </small>
                   <small className="text-muted">
-                    <i className="bi bi-chat me-1"></i>
-                    {item.commentCount}
-                    <i className="bi bi-heart ms-3 me-1"></i>
-                    {item.interestNum}
+                    <i className="bi bi-chat me-1"></i>{item.commentCount}
+                    <i className="bi bi-heart ms-3 me-1"></i>{item.interestNum}
                   </small>
                 </div>
               </div>
@@ -68,3 +53,5 @@ export default function RecommendedList({
     </div>
   );
 }
+
+export default RecommendedList;
