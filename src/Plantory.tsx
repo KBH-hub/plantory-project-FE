@@ -6,8 +6,8 @@ import MainLayout from "./layouts/MainLayout";
 
 import Login from "@/domain/dashboard/pages/Login";
 import Dashboard from "@/domain/dashboard/pages/Dashboard";
-import MessageList from "@/domain/dashboard/pages/MessageList";
-import MessageDetail from "@/domain/dashboard/pages/MessageDetail";
+import MessageList from "@/domain/message/pages/MessageList";
+import MessageDetail from "@/domain/message/pages/MessageDetail";
 import PrivateRoute from "./routes/PrivateRoute";
 import SignUp from "@/domain/dashboard/pages/SignUp";
 import AuthInitializer from "@/routes/AuthInitializer";

@@ -1,4 +1,4 @@
-import { BoxType, TargetType } from "./messageTypes";
+import { BoxType, TargetType } from "@/domain/message/enum/messageTypes";
 
 export interface MessageListResponse {
   messageId: number;
@@ -17,7 +17,14 @@ export interface MessageListResponse {
   totalCount: number;
 }
 
-export interface GetMessageListParams {
+export interface MessageItemRequest {
+  data: MessageListResponse[];
+  selectedIds: number[];
+  onToggleRow: (id: number, checked: boolean) => void;
+  onRowClick: (messageId: number) => void;
+}
+
+export interface MessageSearchRequest {
   boxType: BoxType;
   offset: number;
   limit: number;
@@ -46,3 +53,16 @@ export interface ReplyForm {
   content: string;
 };
 
+export interface paginationArgs {
+  containerRef: React.RefObject<HTMLUListElement | null>;
+  current: number;
+  totalItems: number | null;
+  pageSize: number;
+  onChange: (page: number) => void;
+};
+
+export interface PaginatorUpdateArgs {
+  current: number;
+  totalItems: number | null;
+  pageSize: number;
+}

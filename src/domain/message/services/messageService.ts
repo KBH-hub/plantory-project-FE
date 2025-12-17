@@ -1,6 +1,5 @@
 import { axiosInstance } from "@/global/services/api/axiosInstance";
-import type { MessageListResponse, GetMessageListParams, MessageDetailResponse } from "@/global/types/message/message";
-import type { BoxType, TargetType } from "@/global/types/message/messageTypes";
+import type { MessageListResponse, MessageSearchRequest, MessageDetailResponse } from "@/domain/message/types/message";
 
 export const getMessageList = async ({
   boxType,
@@ -8,7 +7,7 @@ export const getMessageList = async ({
   limit,
   targetType,
   title,
-}: GetMessageListParams): Promise<MessageListResponse> => {
+}: MessageSearchRequest): Promise<MessageListResponse> => {
   const res = await axiosInstance.get(`/api/message/${boxType}`, {
     params: { offset, limit, targetType, title },
   });
