@@ -1,17 +1,17 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useAuthStore } from "@/stores/useAuthStore";
+import { useAuthStore } from "@/global/stores/useAuthStore";
 
 import AuthLayout from "./layouts/AuthLayout";
 import MainLayout from "./layouts/MainLayout";
 
-import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
-import MessageList from "@/pages/MessageList";
-import MessageDetail from "@/pages/MessageDetail";
+import Login from "@/domain/dashboard/pages/Login";
+import Dashboard from "@/domain/dashboard/pages/Dashboard";
+import MessageList from "@/domain/dashboard/pages/MessageList";
+import MessageDetail from "@/domain/dashboard/pages/MessageDetail";
 import PrivateRoute from "./routes/PrivateRoute";
-import SignUp from "@/pages/SignUp";
+import SignUp from "@/domain/dashboard/pages/SignUp";
 import AuthInitializer from "@/routes/AuthInitializer";
-import SharingList from "./pages/SharingList";
+import SharingList from "@/domain/dashboard/pages/SharingList";
 
 export default function App() {
     const initialized = useAuthStore((s) => s.initialized);
