@@ -9,6 +9,7 @@ export function useMessageListQuery(params: MessageSearchRequest) {
 
   useEffect(() => {
     let alive = true;
+    setLoading(true);
 
     getMessageList(params)
       .then((res) => {
@@ -16,7 +17,7 @@ export function useMessageListQuery(params: MessageSearchRequest) {
         const items = Array.isArray(res) ? res : [];
         const tc = Number(items[0]?.totalCount);
         setData(items);
-        setTotal(Number.isFinite(tc) ? tc : null);
+        setTotal(Number.isFinite(tc) ? tc : 0);
       })
       .catch((e) => {
         if (!alive) return;
@@ -32,7 +33,7 @@ export function useMessageListQuery(params: MessageSearchRequest) {
     return () => {
       alive = false;
     };
-  }, [params.boxType, params.offset, params.limit, params.targetType, params.title]);
+  }, [params.boxType, params.offset, params.limit, params.targetType, params.title, params.refreshKey]);
 
   return { data, total, loading };
 }

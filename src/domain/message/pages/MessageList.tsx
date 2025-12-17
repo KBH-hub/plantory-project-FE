@@ -1,10 +1,11 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MessageItem from "@/domain/message/components/MessageItem";
 import { useMessageListQuery } from "@/domain/message/hooks/useMessageListQuery";
 import { usePaginator } from "@/domain/message/hooks/usePaginator";
 import { useIndeterminate } from "@/domain/message/hooks/useIndeterminate";
-import { BoxType } from "@/domain/message/enum/messageTypes";
+import { BoxType, TargetType } from "@/domain/message/enum/messageTypes";
+import { deleteSelectedMessages } from "../services/messageService";
 
 export default function MessageList() {
   const navigate = useNavigate();
@@ -13,11 +14,29 @@ export default function MessageList() {
   const [offset, setOffset] = useState(0);
   const limit = 10;
 
+  const [draftTitle, setDraftTitle] = useState("");
+  const [draftTargetType, setDraftTargetType] = useState<TargetType | "">("");
+
+  const [title, setTitle] = useState("");
+  const [targetType, setTargetType] = useState<TargetType | "">("");
+
+  const [refreshKey, setRefreshKey] = useState(0);
+
   const { data, total, loading } = useMessageListQuery({
     boxType,
     offset,
     limit,
+    targetType: targetType || undefined,
+    title: title.trim() || undefined,
+    refreshKey
   });
+
+  const onSubmitSearch = useCallback((e: React.FormEvent) => {
+    e.preventDefault();
+    setTitle(draftTitle.trim());
+    setTargetType(draftTargetType);
+    setOffset(0);
+  }, [draftTitle, draftTargetType]);
 
   const current = Math.floor(offset / limit) + 1;
 
@@ -25,15 +44,24 @@ export default function MessageList() {
   const checkAllRef = useRef<HTMLInputElement | null>(null);
   const pagerRef = useRef<HTMLUListElement | null>(null);
 
+
   const allChecked = data.length > 0 && selectedIds.length === data.length;
   const someChecked = selectedIds.length > 0 && selectedIds.length < data.length;
 
   useIndeterminate(checkAllRef, someChecked);
 
+  useEffect(() => {
+    setSelectedIds([]);
+  }, [boxType, offset, targetType, title]);
+
   const handleTabClick = useCallback((next: BoxType) => {
     setBoxType(next);
-    setOffset(0);          // 페이지 리셋
-    setSelectedIds([]);    // 선택 상태도 리셋 권장
+    setOffset(0);
+    setSelectedIds([]);
+    setDraftTitle("");
+    setDraftTargetType("");
+    setTitle("");
+    setTargetType("");
   }, []);
 
   const toggleRow = useCallback((id: number, checked: boolean) => {
@@ -53,6 +81,22 @@ export default function MessageList() {
     [navigate]
   );
 
+  const handleDeleteSelected = useCallback(async () => {
+    if (selectedIds.length === 0) return;
+
+    const ok = window.confirm(`선택한 ${selectedIds.length}건을 삭제하시겠습니까?`);
+    if (!ok) return;
+
+    try {
+      await deleteSelectedMessages(boxType, selectedIds);
+      setSelectedIds([]);
+      setRefreshKey((v) => v + 1);
+    } catch (e) {
+      console.error(e);
+      alert("삭제 실패");
+    }
+  }, [boxType, selectedIds]);
+
   usePaginator({
     containerRef: pagerRef,
     current,
@@ -61,7 +105,6 @@ export default function MessageList() {
     onChange: (page) => setOffset((page - 1) * limit),
   });
 
-  if (loading) return <div>로딩중...</div>;
   return (
     <div className="bg-light" data-member-id="">
       <div className="container-xxl py-4">
@@ -90,19 +133,29 @@ export default function MessageList() {
                     보낸 쪽지
                   </a>
 
-                  <button id="btnDelete" className="btn btn-outline-danger btn-sm" type="button">
+                  <button
+                    className="btn btn-outline-danger btn-sm"
+                    type="button"
+                    onClick={handleDeleteSelected}
+                    disabled={selectedIds.length === 0}
+                  >
                     선택 삭제
                   </button>
                 </div>
               </div>
 
               <div className="col-auto">
-                <form id="searchForm" className="d-flex align-items-center gap-2">
+                <form className="d-flex align-items-center gap-2" onSubmit={onSubmitSearch}>
                   <select
-                    id="selectTargetType"
                     className="form-select form-select-sm"
                     style={{ width: 110 }}
-                    defaultValue=""
+                    value={draftTargetType}
+                    onChange={(e) => {
+                      const v = e.target.value as TargetType | "";
+                      setDraftTargetType(v);
+                      setTargetType(v);
+                      setOffset(0);
+                    }}
                   >
                     <option value="">전체</option>
                     <option value="SHARING">나눔</option>
@@ -110,15 +163,16 @@ export default function MessageList() {
                   </select>
 
                   <input
-                    id="inputTitle"
                     type="text"
                     className="form-control form-control-sm"
                     placeholder="제목 검색"
                     style={{ width: 220 }}
+                    value={draftTitle}
+                    onChange={(e) => setDraftTitle(e.target.value)}
                   />
 
-                  <button className="btn btn-secondary btn-sm" type="submit">
-                    <i className="bi bi-search" />
+                  <button className="btn btn-secondary btn-sm" type="submit" disabled={loading}>
+                    {loading ? "검색중..." : <i className="bi bi-search" />}
                   </button>
                 </form>
               </div>

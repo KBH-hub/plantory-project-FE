@@ -1,5 +1,6 @@
 import { axiosInstance } from "@/global/services/api/axiosInstance";
 import type { MessageListResponse, MessageSearchRequest, MessageDetailResponse } from "@/domain/message/types/message";
+import { BoxType } from "../enum/messageTypes";
 
 export const getMessageList = async ({
   boxType,
@@ -13,6 +14,15 @@ export const getMessageList = async ({
   });
   return res.data;
 };
+
+export async function deleteSelectedMessages(boxType: BoxType, ids: number[]) {
+  const endpoint =
+    boxType === "SENT"
+      ? "/api/message/deleteSenderMessages"
+      : "/api/message/deleteMessages";
+
+  await axiosInstance.delete(endpoint, { data: ids });
+}
 
 export const getMessageDetail = async (messageId: number): Promise<MessageDetailResponse> => {
   const res = await axiosInstance.get(`/api/message/detail/${messageId}`);
