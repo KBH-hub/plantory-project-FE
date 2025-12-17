@@ -1,5 +1,5 @@
 import { axiosInstance } from "@/global/services/api/axiosInstance"
-import { SharingCard, SharingSearchParams } from "@/global/types/sharing/sharingList";
+import { SharingCard, SharingSearchParams } from "@/domain/sharing/types/sharing/sharingList";
 
 
 export const getSharingList = (params:SharingSearchParams) => {

@@ -1,17 +1,8 @@
-import { useEffect, useState } from "react";
-import { getDashboard } from "@/domain/services/dashboard";
-import { DashboardResponse } from "@/global/types/dashboard";
 import RecommendedList from "@/global/components/RecommendedList";
+import { useDashboard } from "../hooks/useDashboard";
 
 function Dashboard() {
-  const [data, setData] = useState<DashboardResponse | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    getDashboard()
-      .then(setData)
-      .finally(() => setLoading(false));
-  }, []);
+  const { data, loading } = useDashboard();
 
   if (loading) return <div>로딩중...</div>;
   if (!data) return <div>데이터 없음</div>;
