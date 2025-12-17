@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { getMessageList } from "@/services/messageService";
+import { useNavigate } from "react-router-dom";
+import { getMessageList, getMessageDetail } from "@/services/messageService";
 import type { MessageListResponse } from "src/types/message/message";
 import { createPaginator } from "@/utils/pagination";
 
 export default function MessageList() {
+  const navigate = useNavigate();
   const [data, setData] = useState<MessageListResponse[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -16,7 +18,33 @@ export default function MessageList() {
 
   const current = Math.floor(offset / limit) + 1;
 
-  // 1) 목록 조회 (offset/limit 바뀌면 재조회)
+  const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
+  const checkAllRef = useRef<HTMLInputElement | null>(null);
+  const allChecked = data.length > 0 && selectedIds.size === data.length;
+  const someChecked = selectedIds.size > 0 && selectedIds.size < data.length;
+
+  useEffect(() => {
+    if (!checkAllRef.current) return;
+    checkAllRef.current.indeterminate = someChecked;
+  }, [someChecked]);
+
+  const toggleRow = (id: number, checked: boolean) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (checked) next.add(id);
+      else next.delete(id);
+      return next;
+    });
+  };
+
+  const toggleAll = (checked: boolean) => {
+    if (!checked) {
+      setSelectedIds(new Set());
+      return;
+    }
+    setSelectedIds(new Set(data.map((it) => it.messageId)));
+  };
+
   useEffect(() => {
     let alive = true;
     // setLoading(true);
@@ -46,7 +74,6 @@ export default function MessageList() {
     };
   }, [offset, limit]);
 
-  // 2) paginator 최초 생성 (container 생긴 후 1회)
   useEffect(() => {
     if (loading) return;
     if (!pagerRef.current) return;
@@ -63,9 +90,8 @@ export default function MessageList() {
         setOffset((page - 1) * limit);
       },
     });
-  }, [loading]); // mount 1회
+  }, [loading]);
 
-  // 3) paging 값 변경 시 update
   useEffect(() => {
     if (!paginatorRef.current) return;
 
@@ -77,7 +103,6 @@ export default function MessageList() {
   }, [current, total, limit]);
 
   if (loading) return <div>로딩중...</div>;
-console.log("total:", total, "dataLen:", data.length);
   const formatDateTime = (iso: string) => {
     const d = new Date(iso);
     if (Number.isNaN(d.getTime())) return iso;
@@ -124,20 +149,15 @@ console.log("total:", total, "dataLen:", data.length);
               key={item.messageId}
               data-id={item.messageId}
               className={rowClass}
-              onClick={() => {
-                // TODO: 상세 이동/모달 오픈
-                // navigate(`/message/${item.messageId}`);
-              }}
+              onClick={() => navigate(`/messageDetail/${item.messageId}`)}
             >
               <td className="text-center" style={{ width: 44 }}>
                 <input
                   type="checkbox"
-                  className="form-check-input row-check"
-                  value={item.messageId}
-                  onClick={(e) => e.stopPropagation()} // 체크 클릭 시 row onClick 방지
-                  onChange={() => {
-                    // TODO: 선택 상태 관리(선택 삭제용)
-                  }}
+                  className="form-check-input"
+                  checked={selectedIds.has(item.messageId)}
+                  onClick={(e) => e.stopPropagation()}
+                  onChange={(e) => toggleRow(item.messageId, e.target.checked)}
                 />
               </td>
 
@@ -234,10 +254,13 @@ console.log("total:", total, "dataLen:", data.length);
                   <tr>
                     <th className="text-center" style={{ width: 44 }}>
                       <input
+                        ref={checkAllRef}
                         className="form-check-input"
                         type="checkbox"
-                        id="checkAll"
                         aria-label="전체선택"
+                        checked={allChecked}
+                        onChange={(e) => toggleAll(e.target.checked)}
+                        disabled={data.length === 0}
                       />
                     </th>
                     <th className="text-nowrap" style={{ width: 96 }}>
