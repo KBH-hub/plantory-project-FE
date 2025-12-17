@@ -56,5 +56,5 @@ export const useAuthStore = create<AuthState>((set) => ({
  * 개발용 디버깅 배포 시 지우기.
  */
 if (import.meta.env.DEV) {
-    (window as any).authStore = useAuthStore;
+    window.authStore = useAuthStore;
 }

@@ -11,7 +11,7 @@ import MessageDetail from "@/domain/dashboard/pages/MessageDetail";
 import PrivateRoute from "./routes/PrivateRoute";
 import SignUpPage from "@/domain/member/pages/SignUpPage";
 import AuthInitializer from "@/routes/AuthInitializer";
-import SharingList from "@/domain/dashboard/pages/SharingList";
+import SharingList from "@/domain/sharing/pages/SharingList";
 import TermsOfServicePage from "@/domain/member/pages/TermsOfServicePage";
 
 export default function App() {

@@ -1,5 +1,5 @@
 import { axiosInstance } from "@/global/services/api/axiosInstance";
-import type { DashboardResponse } from "@/global/types/dashboard";
+import type { DashboardResponse } from "@/domain/dashboard/types/dashboard";
 
 export const getDashboard = async (): Promise<DashboardResponse> => {
   const res = await axiosInstance.get("/api/dashboard");
