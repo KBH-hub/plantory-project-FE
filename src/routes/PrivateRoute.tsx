@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { useAuthStore } from "@/stores/useAuthStore";
+import { useAuthStore } from "@/global/stores/useAuthStore";
 import { Navigate, useLocation } from "react-router-dom";
 
 

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useAuthStore } from "@/stores/useAuthStore";
-import { axiosInstance } from "@/api/axiosInstance";
+import { useAuthStore } from "@/global/stores/useAuthStore";
+import { axiosInstance } from "@/global/services/api/axiosInstance";
 
 export default function AuthInitializer({
                                             children,
