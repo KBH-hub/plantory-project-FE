@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import RecommendedList from "@/global/components/RecommendedList";
-import {getSharingList,getPopularSharingList,getInterestCount,} from "@/domain/services/sharingList";
+import {getSharingList,getPopularSharingList,getInterestCount,} from "@/domain/sharing/services/sharingList";
 import { timeAgo } from "@/global/utils/date";
 import AddressSelect from "@/global/components/AddressSelect";
 

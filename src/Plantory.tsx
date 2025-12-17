@@ -11,7 +11,7 @@ import MessageDetail from "@/domain/message/pages/MessageDetail";
 import PrivateRoute from "./routes/PrivateRoute";
 import SignUp from "@/domain/dashboard/pages/SignUp";
 import AuthInitializer from "@/routes/AuthInitializer";
-import SharingList from "@/domain/dashboard/pages/SharingList";
+import SharingList from "@/domain/sharing/pages/SharingList";
 
 export default function App() {
     const initialized = useAuthStore((s) => s.initialized);
