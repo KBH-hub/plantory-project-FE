@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getDashboard } from "../services/dashboard";
+import { getDashboard } from "../services/dashboardApi";
 import { DashboardResponse } from "../types/dashboard";
 
 export function useDashboard() {

@@ -5,7 +5,7 @@ import { useSharingList } from "../hooks/useSharingList";
 import SharingSidebar from "../components/SideBar";
 import SharingCard from "../../../global/components/SharingCard";
 
-export default function SharingList() {
+function SharingList() {
   const {
     list,
     popular,
@@ -89,3 +89,5 @@ export default function SharingList() {
   </div>
   );
 }
+
+export default SharingList;

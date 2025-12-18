@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getSharingList, getPopularSharingList, getInterestCount } from "../services/sharingList";
+import { getSharingList, getPopularSharingList, getInterestCount } from "../services/sharingListApi";
 import { SharingCardListResponse, SharingSearchRequest } from "../types/sharingList";
 
 export function useSharingList() {
