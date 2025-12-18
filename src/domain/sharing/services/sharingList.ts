@@ -1,15 +1,15 @@
 import { axiosInstance } from "@/global/services/api/axiosInstance"
 import { SharingCardListResponse, SharingSearchRequest } from "@/domain/sharing/types/sharingList";
 
-
-export const getSharingList = (params:SharingSearchRequest) => {
-    return axiosInstance.get("/api/sharings", {params}).then(res => res.data);
+export const getSharingList = async (params:SharingSearchRequest) : Promise<SharingCardListResponse[]> => {
+  return (await axiosInstance.get<SharingCardListResponse[]>("/api/sharings", {params})).data;
 }
 
-export const getPopularSharingList = (params?:SharingSearchRequest) => {
-    return axiosInstance.get("/api/sharings/popular", {params}).then(res => res.data);
+export const getPopularSharingList = async (params?:SharingSearchRequest) : Promise<SharingCardListResponse[]> => {
+  return (await axiosInstance.get<SharingCardListResponse[]>("/api/sharings/popular", {params})).data;
 }
 
-export const getInterestCount = () => {
-  return axiosInstance.get("/api/sharings/countInterest").then(res => res.data);
-};
+export const getInterestCount = async () : Promise<number> => {
+  return (await axiosInstance.get<number>("/api/sharings/countInterest")).data;
+}
+
