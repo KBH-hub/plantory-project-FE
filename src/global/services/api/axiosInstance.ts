@@ -30,7 +30,6 @@ axiosInstance.interceptors.request.use((config) => {
 axiosInstance.interceptors.response.use(
     (res) => res,
     async (error) => {
-        // ⭐ Cancel된 요청은 그냥 종료
         if (axios.isCancel(error)) {
             return Promise.reject(error);
         }

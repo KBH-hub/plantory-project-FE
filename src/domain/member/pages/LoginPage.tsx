@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import fixmeImg from '@/assets/images/fixme.png';
 import fixmeImg2 from '@/assets/images/fixme2.png';
 
-export default function Login() {
+export default function LoginPage() {
     const navigate = useNavigate();
 
     const authLogin = useAuthStore((s) => s.login);
@@ -91,8 +91,8 @@ export default function Login() {
 
                         <p className="text-center text-white">
                             아직 회원이 아니신가요?{" "}
-                            <Link to="/signup" className="text-warning fw-bold">
-                                회원가입
+                            <Link to="/termsOfServicePage" className="text-warning fw-bold">
+                                회원가입 하러가기
                             </Link>
                         </p>
                     </div>
@@ -124,8 +124,6 @@ export default function Login() {
 
             </div>
         </div>
-
-
         </form>
     );
 }
