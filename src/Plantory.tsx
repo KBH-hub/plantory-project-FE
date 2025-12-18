@@ -4,14 +4,15 @@ import { useAuthStore } from "@/global/stores/useAuthStore";
 import AuthLayout from "./layouts/AuthLayout";
 import MainLayout from "./layouts/MainLayout";
 
-import Login from "@/domain/dashboard/pages/Login";
+import LoginPage from "@/domain/member/pages/LoginPage";
 import Dashboard from "@/domain/dashboard/pages/Dashboard";
 import MessageList from "@/domain/message/pages/MessageList";
 import MessageDetail from "@/domain/message/pages/MessageDetail";
 import PrivateRoute from "./routes/PrivateRoute";
-import SignUp from "@/domain/dashboard/pages/SignUp";
+import SignUpPage from "@/domain/member/pages/SignUpPage";
 import AuthInitializer from "@/routes/AuthInitializer";
 import SharingList from "@/domain/sharing/pages/SharingList";
+import TermsOfServicePage from "@/domain/member/pages/TermsOfServicePage";
 
 export default function App() {
     const initialized = useAuthStore((s) => s.initialized);
@@ -23,8 +24,9 @@ export default function App() {
             ) : (
                 <Routes>
                     <Route element={<AuthLayout />}>
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/signup" element={<SignUp />} />
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/signup" element={<SignUpPage />} />
+                        <Route path="/termsOfServicePage" element={<TermsOfServicePage />} />
                     </Route>
 
             <Route
