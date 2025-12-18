@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { timeAgo } from "@/global/utils/date";
 
 interface Props {
+  pageTitle: string;
   title: string;
   createdAt: string;
   images: { fileUrl: string }[];
@@ -11,9 +12,11 @@ interface Props {
   scoreInfo?: ReactNode;
   actions?: ReactNode;
   comments?: ReactNode;
+  loginMemberId?: number;
 }
 
 function CommunityDetailLayout({
+  pageTitle,
   title,
   createdAt,
   images,
@@ -23,11 +26,12 @@ function CommunityDetailLayout({
   scoreInfo,
   actions,
   comments,
+  loginMemberId,
 }: Props) {
   return (
     <div className="bg-light">
       <div className="mx-auto" style={{ width: 1470, padding: 16 }}>
-        <h5 className="fw-bold mb-3">게시글 상세</h5>
+        <h5 className="fw-bold mb-3">{pageTitle}글 상세</h5>
         <hr />
 
         <div className="card">

@@ -1,36 +1,154 @@
-import { timeAgo } from "../utils/date";
+import { useState } from "react";
+import { formatDate } from "../utils/date";
 import { SharingCommentResponse } from "@/domain/sharing/types/readSharing";
+import { addSharingComments, updateSharingComments, deleteSharingComments } from "@/domain/sharing/services/readSharingApi";
+import { showModal } from "../utils/showModal";
 
 interface Props {
+  sharingId: number;
   comments: SharingCommentResponse[];
-  loading?: boolean;
+  reload: () => Promise<void>;
+  loginNickname?: string;
+  loginMemberId?: number;
 }
 
-function Comments({ comments, loading }: Props) {
-  if (loading) {
-    return <div className="text-muted">댓글 로딩중...</div>;
-  }
+function Comments({ sharingId, comments, reload, loginNickname, loginMemberId }: Props) {
+  const [content, setContent] = useState("");
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editingContent, setEditingContent] = useState("");
+  
+  const handleSubmit = async () => {
+    if (!content.trim()) {
+      showModal.alert("댓글을 입력하세요.");
+      return;
+    }
 
-  if (comments.length === 0) {
-    return <div className="text-muted">댓글이 없습니다.</div>;
-  }
+    try {
+      await addSharingComments(sharingId, content);
+
+      showModal.alert("댓글이 등록되었습니다.", {
+        callback: async () => {
+          setContent("");
+          await reload();   
+        },
+      });
+
+    } catch (e) {
+      showModal.alert("댓글 등록 중 오류가 발생했습니다.");
+    }
+  };
+ const handleDelete = async (commentId: number) => {
+    const ok = await showModal.confirm("댓글을 삭제하시겠습니까?");
+    if (!ok) return;
+
+    await deleteSharingComments(commentId);
+    await reload();
+  };
+
+  const handleUpdate = async (commentId: number) => {
+    if (!editingContent.trim()) {
+      showModal.alert("댓글 내용을 입력하세요.");
+      return;
+    }
+
+    await updateSharingComments(commentId, editingContent);
+    setEditingId(null);
+    setEditingContent("");
+    await reload();
+  };
 
   return (
-    <ul className="list-group mt-3">
-      {comments.map((c) => (
-        <li key={c.commentId} className="list-group-item">
-          <div className="d-flex justify-content-between">
-            <strong>{c.nickname}</strong>
-            <span className="text-muted small">
-              {c.updatedAt
-                ? `${timeAgo(c.updatedAt)} (수정됨)`
-                : timeAgo(c.createdAt)}
-            </span>
-          </div>
-          <div className="mt-1">{c.content}</div>
-        </li>
-      ))}
-    </ul>
+    <>
+      <div className="mb-2 text-muted small">댓글</div>
+
+      <ul className="list-group mt-3">
+        {comments.map((c) => {
+          console.log("writerId:", c.writerId, "loginMemberId:", loginMemberId);
+
+          const isMine = c.writerId === loginMemberId;
+
+          return (
+            <li key={c.commentId} className="list-group-item">
+              <div className="d-flex justify-content-between align-items-center mb-1">
+                <span className="fw-semibold small">{c.nickname}</span>
+                <span className="text-muted small">
+                  {formatDate(c.createdAt)}
+                </span>
+              </div>
+
+              {editingId === c.commentId ? (
+                <>
+                  <input
+                    className="form-control mb-2"
+                    value={editingContent}
+                    onChange={(e) => setEditingContent(e.target.value)}
+                  />
+                  <div className="d-flex gap-2">
+                    <button
+                      className="btn btn-sm btn-success"
+                      onClick={() => handleUpdate(c.commentId)}
+                    >
+                      저장
+                    </button>
+                    <button
+                      className="btn btn-sm btn-secondary"
+                      onClick={() => setEditingId(null)}
+                    >
+                      취소
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div>{c.content}</div>
+
+                  {isMine && (
+                    <div className="d-flex justify-content-end gap-2 mt-1">
+                      <button
+                        className="btn btn-sm btn-outline-secondary"
+                        onClick={() => {
+                          setEditingId(c.commentId);
+                          setEditingContent(c.content);
+                        }}
+                      >
+                        수정
+                      </button>
+                      <button
+                        className="btn btn-sm btn-outline-danger"
+                        onClick={() => handleDelete(c.commentId)}
+                      >
+                        삭제
+                      </button>
+                    </div>
+                  )}
+                </>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+
+      {/* 댓글 입력 */}
+      <div className="d-flex align-items-center mt-3">
+        <div className="me-3 d-flex align-items-center" style={{ whiteSpace: "nowrap" }}>
+          <span className="ms-2 fw-semibold small">
+            {loginNickname ?? "로그인 필요"}
+          </span>
+        </div>
+
+        <div className="input-group">
+          <input
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            className="form-control"
+            placeholder="댓글을 입력하세요."
+          />
+          <button className="btn btn-secondary" onClick={handleSubmit}>
+            등록
+          </button>
+        </div>
+      </div>
+    </>
   );
 }
 

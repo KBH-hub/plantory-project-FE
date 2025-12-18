@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { getSharingDetail, getSharingComments } from "../services/readSharingApi";
 import { SharingDetailResponse, SharingCommentResponse } from "../types/readSharing";
 
@@ -36,19 +36,23 @@ export function useSharingDetail(sharingId?: number) {
 
 export function useSharingComments(sharingId?: number) {
   const [comments, setComments] = useState<SharingCommentResponse[]>([]);
-  const [loading, setLoading] = useState(true);
+
+  const reload = useCallback(async () => {
+    if (!sharingId) return;
+    const res = await getSharingComments(sharingId);
+    setComments(res);
+  }, [sharingId]);
 
   useEffect(() => {
     if (!sharingId) return;
 
-    const load = async () => {
+    const fetch = async () => {
       const res = await getSharingComments(sharingId);
       setComments(res);
-      setLoading(false);
     };
 
-    load();
+    fetch();
   }, [sharingId]);
 
-  return { comments, loading };
+  return { comments, reload };
 }
