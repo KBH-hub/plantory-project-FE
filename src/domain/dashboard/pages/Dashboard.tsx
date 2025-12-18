@@ -1,6 +1,12 @@
 import RecommendedList from "@/global/components/RecommendedList";
 import { useDashboard } from "../hooks/useDashboard";
 import MyPlantManage from "@/global/components/MyPlantManage";
+import banner1 from "@/assets/images/banner_1.png";
+import banner2 from "@/assets/images/banner_2.png"
+import banner3 from "@/assets/images/banner_3.png";
+import dashboard1 from "@/assets/images/dashboard_1.png";
+import dashboard2 from "@/assets/images/dashboard_2.png";
+import dashboard3 from "@/assets/images/dashboard_3.png";
 
 function Dashboard() {
   const { data, loading } = useDashboard();
@@ -22,7 +28,7 @@ function Dashboard() {
             <div className="carousel-inner" style={{ height: '100%' }}>
               <div className="carousel-item active" style={{ height: '100%' }}>
                 <img
-                  src="/images/banner_1.png"
+                  src={banner1}
                   className="d-block w-100"
                   alt="싱그러운 몬스테라"
                   style={{ height: '100%', objectFit: 'cover' }}
@@ -38,7 +44,7 @@ function Dashboard() {
 
               <div className="carousel-item" style={{ height: '100%' }}>
                 <img
-                  src="/images/banner_2.png"
+                  src={banner2}
                   className="d-block w-100"
                   alt="산세베리아"
                   style={{ height: '100%', objectFit: 'cover' }}
@@ -54,7 +60,7 @@ function Dashboard() {
 
               <div className="carousel-item" style={{ height: '100%' }}>
                 <img
-                  src="/images/banner_3.png"
+                  src={banner3}
                   className="d-block w-100"
                   alt="허브 & 다육"
                   style={{ height: '100%', objectFit: 'cover' }}
@@ -103,9 +109,9 @@ function Dashboard() {
           <div style={{ width: '1000px' }}>
             <div className="d-flex flex-nowrap gap-3 mb-3">
               {[
-                { title: '내 식물', img: '/images/dashboard_1.png', value: data.myPlantsCount },
-                { title: '오늘 물 필요 식물', img: '/images/dashboard_2.png', value: data.todayWateringCount },
-                { title: '관심 필요 식물', img: '/images/dashboard_3.png', value: data.careNeededCount }
+                { title: '내 식물', img: dashboard1, value: data.myPlantsCount },
+                { title: '오늘 물 필요 식물', img: dashboard2, value: data.todayWateringCount },
+                { title: '관심 필요 식물', img: dashboard3, value: data.careNeededCount }
               ].map((item, idx) => (
                 <div key={idx} className="card shadow-sm" style={{ width: '340px' }}>
                   <div className="card-body d-flex align-items-center p-3">
