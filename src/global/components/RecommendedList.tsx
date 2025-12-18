@@ -3,11 +3,18 @@ import SharingCard from "@/global/components/SharingCard";
 
 function RecommendedList({items,}: { items: SharingCardListResponse[];}) {
    return (
-    <div className="d-flex flex-nowrap gap-3">
-      {items.map((item) => (
-        <SharingCard key={item.sharingId} item={item} variant="recommended" />
-      ))}
+    <div style={{ overflowX: "auto" }}>
+      <div className="d-flex flex-nowrap gap-3">
+        {items.map((item) => (
+          <SharingCard
+            key={item.sharingId}
+            item={item}
+            variant="recommended"
+          />
+        ))}
+      </div>
     </div>
+
   );
 }
 
