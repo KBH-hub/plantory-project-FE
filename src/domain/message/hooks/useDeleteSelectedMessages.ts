@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import type { BoxType } from "@/domain/message/enum/messageTypes";
+import { showModal } from "@/global/utils/showModal";
 
 interface UseDeleteSelectedMessagesParams {
   boxType: BoxType;
@@ -17,12 +18,13 @@ export function useDeleteSelectedMessages({
   const handleDeleteSelected = useCallback(async () => {
     if (selectedIds.length === 0) return;
 
-    const ok = window.confirm(`선택한 ${selectedIds.length}건을 삭제하시겠습니까?`);
+    const ok = await showModal.confirm(`선택한 ${selectedIds.length}건을 삭제하시겠습니까?`);
     if (!ok) return;
 
     try {
       await deleter(boxType, selectedIds);
       onSuccess();
+      showModal.alert(`삭제되었습니다`);
     } catch (e) {
       console.error(e);
       alert("삭제 실패");
