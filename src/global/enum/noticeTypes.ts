@@ -1,0 +1,1 @@
+export type NoticeTargetType = "SHARING" | "SHARING_REVIEW"| "QUESTION"| "MESSAGE"| "REPORT"| "WATERING";
