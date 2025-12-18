@@ -1,14 +1,32 @@
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getMessageDetail /*, sendMessage */ } from "@/domain/services/messageService";
-import {MessageDetailResponse, ReplyForm} from "@/global/types/message/message"
+import { useMessageDetailQuery } from "@/domain/message/hooks/useMessageDetailQuery";
+import type { ReplyForm } from "@/domain/message/types/message";
 
 export default function MessageDetail() {
   const { messageId } = useParams();
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(true);
-  const [detail, setDetail] = useState<MessageDetailResponse | null>(null);
+  const formatDateTime = (iso: string) => {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  const hh = String(d.getHours()).padStart(2, "0");
+  const mi = String(d.getMinutes()).padStart(2, "0");
+  const se = String(d.getSeconds()).padStart(2, "0");
+
+  return `${yyyy}-${mm}-${dd} ${hh}:${mi}:${se}`;
+};
+
+  const safeId = (() => {
+    const id = Number(messageId);
+    return Number.isFinite(id) && id > 0 ? id : null;
+  })();
+
+  const { detail, loading } = useMessageDetailQuery(safeId);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reply, setReply] = useState<ReplyForm>({
@@ -18,71 +36,20 @@ export default function MessageDetail() {
     content: "",
   });
 
-  const safeId = useMemo(() => {
-    const id = Number(messageId);
-    return Number.isFinite(id) && id > 0 ? id : null;
-  }, [messageId]);
-
-  useEffect(() => {
-    if (!safeId) {
-      setLoading(false);
-      setDetail(null);
-      return;
-    }
-
-    let alive = true;
-    setLoading(true);
-
-    getMessageDetail(safeId)
-      .then((res) => {
-        if (!alive) return;
-        setDetail(res ?? null);
-      })
-      .catch((e) => {
-        if (!alive) return;
-        console.error(e);
-        setDetail(null);
-      })
-      .finally(() => {
-        if (!alive) return;
-        setLoading(false);
-      });
-
-    return () => {
-      alive = false;
-    };
-  }, [safeId]);
-
-  const formatDateTime = (iso?: string) => {
-    if (!iso) return "";
-    const d = new Date(iso);
-    if (Number.isNaN(d.getTime())) return iso;
-
-    const yyyy = d.getFullYear();
-    const mm = String(d.getMonth() + 1).padStart(2, "0");
-    const dd = String(d.getDate()).padStart(2, "0");
-    const hh = String(d.getHours()).padStart(2, "0");
-    const mi = String(d.getMinutes()).padStart(2, "0");
-    const se = String(d.getSeconds()).padStart(2, "0");
-    return `${yyyy}-${mm}-${dd} ${hh}:${mi}:${se}`;
-  };
-
   const openReplyModal = () => {
     const to = detail?.senderNickname || "(삭제된 쪽지)";
     const post = detail?.targetTitle || "삭제된 쪽지입니다.";
     const title = detail?.title ? `RE: ${detail.title}` : "(삭제된 쪽지)";
 
-    setReply({
-      to,
-      post,
-      title,
-      content: "",
-    });
+    setReply({ to, post, title, content: "" });
     setIsModalOpen(true);
   };
 
   const closeModal = () => setIsModalOpen(false);
 
+  if (loading) return <div className="container-xxl py-4">로딩중...</div>;
+  if (!detail) return <div className="container-xxl py-4">쪽지를 찾을 수 없습니다.</div>;
+  
   const onSubmitReply = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -97,10 +64,6 @@ export default function MessageDetail() {
 
     closeModal();
   };
-
-  if (loading) return <div className="container-xxl py-4">로딩중...</div>;
-  if (!detail) return <div className="container-xxl py-4">쪽지를 찾을 수 없습니다.</div>;
-
   return (
     <div className="bg-light">
       <div className="container-xxl py-4">
