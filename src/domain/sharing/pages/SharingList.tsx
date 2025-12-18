@@ -18,6 +18,7 @@ export default function SharingList() {
   } = useSharingList();
 
   return (
+    <div className="bg-light">
     <div className="mx-auto" style={{ width: 1470 }}>
       <main className="py-4">
         <div className="container-fluid px-4">
@@ -85,5 +86,6 @@ export default function SharingList() {
 
       </main>
     </div>
+  </div>
   );
 }
