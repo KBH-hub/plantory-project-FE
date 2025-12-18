@@ -15,7 +15,7 @@ function SharingCard({ item, variant = "default" }: SharingCardProps) {
 
   return (
     <div className={ isRecommended ? "flex-shrink-0" : "col-12 col-sm-6 col-md-4"}
-      style={isRecommended ? { width: 350 } : undefined}
+      style={isRecommended ? { width: 320 } : undefined}
     >
       <Link
         to={`/readSharing/${item.sharingId}`}
@@ -25,7 +25,7 @@ function SharingCard({ item, variant = "default" }: SharingCardProps) {
           src={item.fileUrl}
           className="card-img-top"
           style={{
-            height: isRecommended ? 375 : 350,
+            height: isRecommended ? 355 : 350,
             objectFit: "cover",
           }} alt={item.title}
         />
