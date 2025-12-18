@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "@/global/stores/useAuthStore";
+import { getNoticeList } from "../services/noticeService";
 
 type MemberLite = { memberId: number | string; nickname: string } | null;
 
@@ -17,10 +18,31 @@ type SearchResult = { id: number | string; nickname: string };
 // export default function Header({ me }: { me: MemberLite }) {
 export default function Header() {
   const user = useAuthStore((s) => s.user);
-  const [alarms, setAlarms] = useState<AlarmItem[]>([
-    { id: 1, at: "2025-10-27 10:42", text: "방토방토님의 나눔이 완료되었습니다...", href: "#" },
-  ]);
+  
+  const [alarms, setAlarms] = useState<AlarmItem[]>([]);
   const alarmCount = alarms.length;
+
+   useEffect(() => {
+  const fetchNotices = async () => {
+    try {
+      const data = await getNoticeList(); 
+
+      const mapped: AlarmItem[] = (data ?? []).map((n: any) => ({
+        id: n.noticeId,
+        at: n.createdAt, 
+        text: n.content,
+        // href: buildNoticeHref(n.targetType, n.targetId),
+      }));
+
+      setAlarms(mapped);
+    } catch (e) {
+      console.error(e);
+      setAlarms([]);
+    }
+  };
+
+  fetchNotices();
+}, []);
 
   const [reportTarget, setReportTarget] = useState<{ id: string | number | null; nickname: string }>({
     id: null,
@@ -57,7 +79,7 @@ export default function Header() {
 
   const searchMember = async () => {
     if (!keyword.trim()) return;
-    try {
+    try { 
       setLoadingSearch(true);
       // TODO: 실제 API로 교체
       setTimeout(() => {
@@ -248,7 +270,7 @@ export default function Header() {
                 aria-label="프로필 메뉴 열기"
               >
                 <i className="bi bi-person-circle fs-3" />
-                <span className="ms-2">{user?.nickname || "Guest"}</span>님
+                <span className="ms-2">{user?.membername || "Guest"}</span>님
               </button>
               <ul className="dropdown-menu dropdown-menu-end ph-profile-menu">
                 <li><a className="dropdown-item" href="/profile">내 프로필</a></li>
