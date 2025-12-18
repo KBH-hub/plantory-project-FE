@@ -56,10 +56,3 @@
 .ph-profile {}
 .ph-profile-btn {}
 .ph-profile-menu {}
-
-
-#sharingSidebar {
-    position: sticky;
-    top: 150px;
-    height: fit-content;
-}
