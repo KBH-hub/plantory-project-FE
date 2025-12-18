@@ -1,5 +1,5 @@
 import { axiosInstance } from "@/global/services/api/axiosInstance";
-import type { MessageListResponse, MessageSearchRequest, MessageDetailResponse } from "@/domain/message/types/message";
+import type { MessageListResponse, MessageSearchRequest, MessageDetailResponse, MessageRegisterRequest } from "@/domain/message/types/message";
 import { BoxType } from "../enum/messageTypes";
 
 export const getMessageList = async ({
@@ -28,3 +28,9 @@ export const getMessageDetail = async (messageId: number): Promise<MessageDetail
   const res = await axiosInstance.get(`/api/message/detail/${messageId}`);
   return res.data;
 };
+
+export async function registerMessage(payload:MessageRegisterRequest) {
+  const res = await axiosInstance.post(`/api/message/messageRegist`, payload);
+  return res.data;
+}
+
