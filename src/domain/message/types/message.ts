@@ -43,7 +43,8 @@ export interface MessageDetailResponse {
   receiverNickname: string;
   createdAt: string;
   targetTitle?: string;
-  targetType?: string;
+  targetType?: TargetType| null;
+  targetId?: number | null;
   readFlag?: boolean | null;
 };
 
@@ -66,4 +67,17 @@ export interface PaginatorUpdateArgs {
   current: number;
   totalItems: number | null;
   pageSize: number;
+}
+
+export interface MessageRegisterRequest {
+  messageId?: number;
+  senderId?: number;
+  receiverId?: number;
+  title?: string;
+  content?: string;
+  targetType?: TargetType;
+  targetId?: number;
+  createdAt?: Date;
+  readFlag?: Date;
+  delFlag?: Date;
 }
