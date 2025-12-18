@@ -5,7 +5,7 @@ import { useSharingList } from "../hooks/useSharingList";
 import SharingSidebar from "../components/SideBar";
 import SharingCard from "../../../global/components/SharingCard";
 
-export default function SharingList() {
+function SharingList() {
   const {
     list,
     popular,
@@ -18,6 +18,7 @@ export default function SharingList() {
   } = useSharingList();
 
   return (
+    <div className="bg-light">
     <div className="mx-auto" style={{ width: 1470 }}>
       <main className="py-4">
         <div className="container-fluid px-4">
@@ -85,5 +86,8 @@ export default function SharingList() {
 
       </main>
     </div>
+  </div>
   );
 }
+
+export default SharingList;
