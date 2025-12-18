@@ -1,32 +1,19 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useMessageDetailQuery } from "@/domain/message/hooks/useMessageDetailQuery";
+import { useMessageDetail } from "@/domain/message/hooks/useMessageDetail";
 import type { ReplyForm } from "@/domain/message/types/message";
+import { formatDateTime } from "@/global/utils/formatDateTime";
 
 export default function MessageDetail() {
   const { messageId } = useParams();
   const navigate = useNavigate();
-
-  const formatDateTime = (iso: string) => {
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return iso;
-
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth() + 1).padStart(2, "0");
-  const dd = String(d.getDate()).padStart(2, "0");
-  const hh = String(d.getHours()).padStart(2, "0");
-  const mi = String(d.getMinutes()).padStart(2, "0");
-  const se = String(d.getSeconds()).padStart(2, "0");
-
-  return `${yyyy}-${mm}-${dd} ${hh}:${mi}:${se}`;
-};
 
   const safeId = (() => {
     const id = Number(messageId);
     return Number.isFinite(id) && id > 0 ? id : null;
   })();
 
-  const { detail, loading } = useMessageDetailQuery(safeId);
+  const { detail, loading } = useMessageDetail(safeId);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reply, setReply] = useState<ReplyForm>({
@@ -49,7 +36,7 @@ export default function MessageDetail() {
 
   if (loading) return <div className="container-xxl py-4">로딩중...</div>;
   if (!detail) return <div className="container-xxl py-4">쪽지를 찾을 수 없습니다.</div>;
-  
+
   const onSubmitReply = async (e: React.FormEvent) => {
     e.preventDefault();
 

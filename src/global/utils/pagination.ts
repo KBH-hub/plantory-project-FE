@@ -1,5 +1,3 @@
-
-// src/utils/pagination.ts
 export type PaginatorLabels = { first: string; prev: string; next: string; last: string };
 
 export type CreatePaginatorOptions = {

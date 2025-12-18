@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getMessageDetail } from "@/domain/message/services/messageService";
 import type { MessageDetailResponse } from "@/domain/message/types/message";
 
-export function useMessageDetailQuery(messageId: number | null) {
+export function useMessageDetail(messageId: number | null) {
   const [detail, setDetail] = useState<MessageDetailResponse | null>(null);
   const [loading, setLoading] = useState(false);
 

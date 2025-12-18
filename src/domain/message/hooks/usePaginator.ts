@@ -19,7 +19,7 @@ export function usePaginator({ containerRef, current, totalItems, pageSize, onCh
       modeWhenUnknown: "next-only",
       onChange,
     });
-  }, [containerRef, onChange]); // 최초 1회 생성
+  }, [containerRef, onChange]);
 
   useEffect(() => {
     if (!paginatorRef.current) return;
