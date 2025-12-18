@@ -30,6 +30,7 @@ export interface MessageSearchRequest {
   limit: number;
   targetType?: TargetType;
   title?: string;
+  refreshKey? : number;
 }
 
 export interface MessageDetailResponse {
