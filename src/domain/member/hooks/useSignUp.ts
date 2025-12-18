@@ -1,14 +1,18 @@
-import {checkMembername, signUp} from "@/domain/member/services/memberApi";
+import {checkMembernameApi, checkNicknameApi, signUp} from "@/domain/member/services/memberApi";
 import {SignUpRequest} from "@/domain/member/types/memberRequest";
 
 export function useSignUp() {
-    const checkId = (membername: string) => {
-        return checkMembername(membername);
+    const checkMembername = (membername: string) => {
+        return checkMembernameApi(membername);
+    };
+
+    const checkNickname = (nickname: string) => {
+        return checkNicknameApi(nickname);
     };
 
     const submit = async (data: SignUpRequest) => {
         await signUp(data);
     };
 
-    return { checkId, submit };
+    return { checkMembername, checkNickname, submit };
 }

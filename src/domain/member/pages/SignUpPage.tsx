@@ -1,49 +1,78 @@
-import { useState } from 'react';
+import { useState } from "react";
 import AddressSelect from "@/global/components/AddressSelect";
-import {useSignUp} from "@/domain/member/hooks/useSignUp";
+import { useSignUp } from "@/domain/member/hooks/useSignUp";
 import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
-  const [membername, setMembername] = useState('');
-  const [idMessage, setIdMessage] = useState('');
-  const [isAvailable, setIsAvailable] = useState<boolean | null>(null);
-  const [nickname, setNickname] = useState('');
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
-  const [pwCheck, setPwCheck] = useState('');
-  const [address, setAddress] = useState('');
-  const { checkId, submit } = useSignUp();
+  const { checkMembername, checkNickname, submit } = useSignUp();
+  const [membername, setMembername] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [pwCheck, setPwCheck] = useState("");
+  const [address, setAddress] = useState("");
 
-  const handleCheckId = async () => {
+  const [isMembernameAvailable, setIsMembernameAvailable] =
+      useState<boolean | null>(null);
+  const [isNicknameAvailable, setIsNicknameAvailable] =
+      useState<boolean | null>(null);
+
+  const [idMessage, setIdMessage] = useState("");
+  const [nicknameMessage, setNicknameMessage] = useState("");
+
+  const handleCheckMembername = async () => {
     if (!membername) {
-      setIsAvailable(false);
+      setIsMembernameAvailable(false);
       setIdMessage("아이디를 입력해주세요.");
       return;
     }
 
     try {
-      const available = await checkId(membername);
-
-      if (available) {
-        setIsAvailable(true);
-        setIdMessage("사용 가능한 아이디입니다.");
-      } else {
-        setIsAvailable(false);
-        setIdMessage("이미 사용 중인 아이디입니다.");
-      }
+      const available = await checkMembername(membername);
+      setIsMembernameAvailable(available);
+      setIdMessage(
+          available
+              ? "사용 가능한 아이디입니다."
+              : "이미 사용 중인 아이디입니다."
+      );
     } catch {
-      setIsAvailable(false);
+      setIsMembernameAvailable(false);
       setIdMessage("아이디 확인 중 오류가 발생했습니다.");
     }
   };
 
+  const handleCheckNickname = async () => {
+    if (!nickname) {
+      setIsNicknameAvailable(false);
+      setNicknameMessage("닉네임을 입력해주세요.");
+      return;
+    }
+
+    try {
+      const available = await checkNickname(nickname);
+      setIsNicknameAvailable(available);
+      setNicknameMessage(
+          available
+              ? "사용 가능한 닉네임입니다."
+              : "이미 사용 중인 닉네임입니다."
+      );
+    } catch {
+      setIsNicknameAvailable(false);
+      setNicknameMessage("닉네임 확인 중 오류가 발생했습니다.");
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (isAvailable !== true) {
+    if (isMembernameAvailable !== true) {
       alert("아이디 중복 확인을 해주세요.");
+      return;
+    }
+
+    if (isNicknameAvailable !== true) {
+      alert("닉네임 중복 확인을 해주세요.");
       return;
     }
 
@@ -67,111 +96,86 @@ const SignUpPage = () => {
       alert("회원가입 실패");
     }
   };
+
   return (
-    <div className="bg-dark min-vh-100 d-flex align-items-center">
-      <div className="container">
-        <div className="mx-auto p-5 bg-white rounded shadow" style={{ maxWidth: 700 }}>
-          <div className="bg-dark text-white px-4 py-3 rounded mb-4">
-            <h4 className="m-0 fw-bold">회원가입</h4>
-          </div>
+      <div className="bg-dark min-vh-100 d-flex align-items-center">
+        <div className="container">
+          <div className="mx-auto p-5 bg-white rounded shadow" style={{ maxWidth: 700 }}>
+            <h4 className="fw-bold mb-4">회원가입</h4>
 
-          <h2 className="text-center fw-bold mb-3 text-success">Plantory</h2>
-          <p className="text-center text-muted mb-4">
-            식물을 관리하고 커뮤니티를 사용하려면 가입하세요.
-          </p>
-
-          <form onSubmit={handleSubmit}>
-            <div className="row g-3">
-              <div className="col-md-6">
-                <label className="fw-bold">아이디 *</label>
-
-                <div className="input-group">
+            <form onSubmit={handleSubmit}>
+              <label className="fw-bold">아이디 *</label>
+              <div className="input-group">
                 <input
-                    type="text"
                     className="form-control"
                     value={membername}
                     onChange={(e) => {
                       setMembername(e.target.value);
-                      setIsAvailable(null);
+                      setIsMembernameAvailable(null);
                       setIdMessage("");
                     }}
-                    required
                 />
-                  <button
-                      type="button"
-                      className="btn btn-outline-secondary"
-                      onClick={handleCheckId}
-                  >
-                    중복 확인
-                  </button>
-                </div>
-                {idMessage && (
-                    <p
-                        className={`small mt-1 ${
-                            isAvailable ? "text-success" : "text-danger"
-                        }`}
-                    >
-                      {idMessage}
-                    </p>
-                )}
+                <button type="button" className="btn btn-outline-secondary" onClick={handleCheckMembername}>
+                  중복 확인
+                </button>
               </div>
+              {idMessage && (
+                  <p className={`small ${isMembernameAvailable ? "text-success" : "text-danger"}`}>
+                    {idMessage}
+                  </p>
+              )}
 
-              <div className="row g-3">
-                <AddressSelect onChange={setAddress} />
-              </div>
-
-              <div className="col-md-6">
-                <label className="fw-bold">닉네임 *</label>
+              <label className="fw-bold mt-3">닉네임 *</label>
+              <div className="input-group">
                 <input
-                    type="text"
-                    name="nickname"
                     className="form-control"
                     value={nickname}
-                    onChange={(e) => setNickname(e.target.value)}
-                    required
+                    onChange={(e) => {
+                      setNickname(e.target.value);
+                      setIsNicknameAvailable(null);
+                      setNicknameMessage("");
+                    }}
                 />
-
+                <button type="button" className="btn btn-outline-secondary" onClick={handleCheckNickname}>
+                  중복 확인
+                </button>
               </div>
+              {nicknameMessage && (
+                  <p className={`small ${isNicknameAvailable ? "text-success" : "text-danger"}`}>
+                    {nicknameMessage}
+                  </p>
+              )}
 
-              <div className="col-md-6">
-                <label className="fw-bold">휴대전화 *</label>
-                <input
-                  className="form-control"
-                  placeholder="010-1234-5678"
+              <AddressSelect onChange={setAddress} />
+
+              <input
+                  className="form-control mt-3"
+                  placeholder="휴대전화"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  required
-                />
-              </div>
+              />
 
-              <div className="col-md-6">
-                <label className="fw-bold">비밀번호 *</label>
-                <input
+              <input
                   type="password"
-                  className="form-control"
+                  className="form-control mt-3"
+                  placeholder="비밀번호"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
+              />
 
-              <div className="col-md-6">
-                <label className="fw-bold">비밀번호 확인 *</label>
-                <input
+              <input
                   type="password"
-                  className="form-control"
+                  className="form-control mt-3"
+                  placeholder="비밀번호 확인"
                   value={pwCheck}
                   onChange={(e) => setPwCheck(e.target.value)}
-                  required
-                />
-              </div>
-            </div>
+              />
 
-            <button className="btn btn-success w-100 mt-4">가입하기</button>
-          </form>
+              <button className="btn btn-success w-100 mt-4">가입하기</button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
   );
 };
 
