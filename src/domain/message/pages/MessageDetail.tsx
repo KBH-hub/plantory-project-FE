@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useMessageDetailQuery } from "@/domain/message/hooks/useMessageDetailQuery";
+import { useMessageDetail } from "@/domain/message/hooks/useMessageDetail";
 import type { ReplyForm } from "@/domain/message/types/message";
 
 export default function MessageDetail() {
@@ -26,7 +26,7 @@ export default function MessageDetail() {
     return Number.isFinite(id) && id > 0 ? id : null;
   })();
 
-  const { detail, loading } = useMessageDetailQuery(safeId);
+  const { detail, loading } = useMessageDetail(safeId);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reply, setReply] = useState<ReplyForm>({

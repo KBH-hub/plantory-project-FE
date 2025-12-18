@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getMessageList } from "@/domain/message/services/messageService";
 import type { MessageListResponse, MessageSearchRequest } from "@/domain/message/types/message";
 
-export function useMessageListQuery(params: MessageSearchRequest) {
+export function useMessageList(params: MessageSearchRequest) {
   const [data, setData] = useState<MessageListResponse[]>([]);
   const [total, setTotal] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);

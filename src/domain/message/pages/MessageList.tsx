@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MessageItem from "@/domain/message/components/MessageItem";
-import { useMessageListQuery } from "@/domain/message/hooks/useMessageListQuery";
+import { useMessageList } from "@/domain/message/hooks/useMessageList";
 import { usePaginator } from "@/domain/message/hooks/usePaginator";
 import { useIndeterminate } from "@/domain/message/hooks/useIndeterminate";
 import { BoxType, TargetType } from "@/domain/message/enum/messageTypes";
@@ -22,7 +22,7 @@ export default function MessageList() {
 
   const [refreshKey, setRefreshKey] = useState(0);
 
-  const { data, total, loading } = useMessageListQuery({
+  const { data, total, loading } = useMessageList({
     boxType,
     offset,
     limit,
