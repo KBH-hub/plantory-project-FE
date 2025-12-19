@@ -1,6 +1,6 @@
 import { useAuthStore } from "@/global/stores/useAuthStore";
 import { SharingDetailResponse } from "../types/readSharing";
-import { useInterestToggle } from "@/community/sharing/hooks/useReadSharing";
+import { useInterestToggle } from "@/community/sharing/hooks/useInterestToggle";
 
 interface Props {
   data: SharingDetailResponse;
