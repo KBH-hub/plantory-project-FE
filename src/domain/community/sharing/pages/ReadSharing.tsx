@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
-import CommunityDetailLayout from "@/layouts/ReadCommunityLayout";
+import CommunityDetailLayout from "@/domain/community/layouts/ReadCommunityLayout";
 import { useSharingComments, useSharingDetail } from "../hooks/useReadSharing";
 import SharingActions from "../components/SharingActions";
-import Comments from "@/global/components/Comments";
+import Comments from "@/domain/community/components/Comments";
 import { useAuthStore } from "@/global/stores/useAuthStore";
 
 function ReadSharing() {

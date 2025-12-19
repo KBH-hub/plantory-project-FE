@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { timeAgo } from "@/global/utils/date";
-import ImageCarousel from "@/global/components/ImageCarousel";
+import ImageCarousel from "@/domain/community/components/ImageCarousel";
 
 interface Props {
   pageTitle: string;
@@ -16,7 +16,7 @@ interface Props {
   loginMemberId?: number;
 }
 
-function CommunityDetailLayout({
+function ReadCommunityLayout({
   pageTitle,
   title,
   createdAt,
@@ -97,4 +97,4 @@ function CommunityDetailLayout({
   );
 }
 
-export default CommunityDetailLayout;
+export default ReadCommunityLayout;

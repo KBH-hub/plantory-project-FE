@@ -3,7 +3,7 @@ import RecommendedList from "@/global/components/RecommendedList";
 import AddressSelect from "@/global/components/AddressSelect";
 import { useSharingList } from "../hooks/useSharingList";
 import SharingSidebar from "../components/SideBar";
-import SharingCard from "../../../global/components/SharingCard";
+import SharingCard from "../../../../global/components/SharingCard";
 
 function SharingList() {
   const {

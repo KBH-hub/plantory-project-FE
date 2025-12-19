@@ -1,4 +1,4 @@
-import { SharingCardListResponse } from "@/domain/sharing/types/sharingList";
+import { SharingCardListResponse } from "@/domain/community/sharing/types/sharingList";
 import SharingCard from "@/global/components/SharingCard";
 
 function RecommendedList({items,}: { items: SharingCardListResponse[];}) {

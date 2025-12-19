@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { formatDate } from "../utils/date";
-import { SharingCommentResponse } from "@/domain/sharing/types/readSharing";
-import { addSharingComments, updateSharingComments, deleteSharingComments } from "@/domain/sharing/services/readSharingApi";
-import { showModal } from "../utils/showModal";
+import { formatDate } from "../../../global/utils/date";
+import { SharingCommentResponse } from "@/domain/community/sharing/types/readSharing";
+import { addSharingComments, updateSharingComments, deleteSharingComments } from "@/domain/community/sharing/services/readSharingApi";
+import { showModal } from "../../../global/utils/showModal";
 
 interface Props {
   sharingId: number;
@@ -41,7 +41,8 @@ function Comments({ sharingId, comments, reload, loginNickname, loginMemberId }:
     const ok = await showModal.confirm("댓글을 삭제하시겠습니까?");
     if (!ok) return;
 
-    await deleteSharingComments(commentId);
+    await deleteSharingComments(sharingId,commentId);
+    showModal.alert("삭제되었습니다.") 
     await reload();
   };
 
@@ -51,7 +52,7 @@ function Comments({ sharingId, comments, reload, loginNickname, loginMemberId }:
       return;
     }
 
-    await updateSharingComments(commentId, editingContent);
+    await updateSharingComments(sharingId, commentId, editingContent);
     setEditingId(null);
     setEditingContent("");
     await reload();
@@ -72,41 +73,47 @@ function Comments({ sharingId, comments, reload, loginNickname, loginMemberId }:
               <div className="d-flex justify-content-between align-items-center mb-1">
                 <span className="fw-semibold small">{c.nickname}</span>
                 <span className="text-muted small">
-                  {formatDate(c.createdAt)}
+                  {c.updatedAt ? `${formatDate(c.updatedAt)} (수정됨)` : formatDate(c.createdAt)}
                 </span>
               </div>
 
-              {editingId === c.commentId ? (
-                <>
-                  <input
-                    className="form-control mb-2"
-                    value={editingContent}
-                    onChange={(e) => setEditingContent(e.target.value)}
-                  />
-                  <div className="d-flex gap-2">
-                    <button
-                      className="btn btn-sm btn-success"
-                      onClick={() => handleUpdate(c.commentId)}
-                    >
-                      저장
-                    </button>
-                    <button
-                      className="btn btn-sm btn-secondary"
-                      onClick={() => setEditingId(null)}
-                    >
-                      취소
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="d-flex justify-content-between align-items-center">
+              <div className="d-flex justify-content-between align-items-start">
+                <div className="flex-grow-1 me-3">
+                  {editingId === c.commentId ? (
+                    <input
+                      className="form-control form-control-sm"
+                      value={editingContent}
+                      onChange={(e) => setEditingContent(e.target.value)}
+                    />
+                  ) : (
                     <div>{c.content}</div>
+                  )}
+                </div>
 
-                    {isMine && (
-                      <div className="d-flex gap-2">
+                {isMine && (
+                  <div className="d-flex gap-2 flex-shrink-0">
+                    {editingId === c.commentId ? (
+                      <>
                         <button
-                          className="btn btn-sm btn-link text-muted p-0 comment-delete-btn"
+                          className="btn btn-sm btn-link p-0 text-primary"
+                          onClick={() => handleUpdate(c.commentId)}
+                        >
+                          저장
+                        </button>
+                        <button
+                          className="btn btn-sm btn-link p-0 text-muted"
+                          onClick={() => {
+                            setEditingId(null);
+                            setEditingContent("");
+                          }}
+                        >
+                          취소
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <button
+                          className="btn btn-sm btn-link p-0 text-muted"
                           onClick={() => {
                             setEditingId(c.commentId);
                             setEditingContent(c.content);
@@ -115,22 +122,22 @@ function Comments({ sharingId, comments, reload, loginNickname, loginMemberId }:
                           수정
                         </button>
                         <button
-                          className="btn btn-sm btn-link text-muted p-0 comment-delete-btn"
+                          className="btn btn-sm btn-link p-0 text-muted"
                           onClick={() => handleDelete(c.commentId)}
                         >
                           삭제
                         </button>
-                      </div>
+                      </>
                     )}
                   </div>
-                </>
-              )}
+                )}
+              </div>
             </li>
           );
         })}
       </ul>
 
-      {/* 댓글 입력 */}
+
       <div className="d-flex align-items-center mt-3">
         <div className="me-3 d-flex align-items-center" style={{ whiteSpace: "nowrap" }}>
           <span className="ms-2 fw-semibold small">
