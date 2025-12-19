@@ -96,24 +96,24 @@ const init = () => {
 };
 
 export const showModal = {
-  alert(message: string, options: AlertOptions = {}) {
+  alert(message: string, options: AlertOptions = {}): Promise<void> {
     init();
-    if (!alertModal || !alertMessageEl || !alertOkBtn) return;
+    if (!alertModal || !alertMessageEl || !alertOkBtn) return Promise.resolve();
 
     const { callback = null, noOverlay = false } = options;
 
     alertMessageEl.textContent = message;
-
     alertModal.classList.toggle("no-overlay", Boolean(noOverlay));
-
     setVisible(alertModal, true);
 
-    const handleOk = () => {
-      setVisible(alertModal!, false);
-      if (typeof callback === "function") callback();
-    };
-
-    alertOkBtn.addEventListener("click", handleOk, { once: true });
+    return new Promise<void>((resolve) => {
+      const handleOk = () => {
+        setVisible(alertModal!, false);
+        if (typeof callback === "function") callback();
+        resolve();
+      };
+      alertOkBtn.addEventListener("click", handleOk, { once: true });
+    });
   },
 
   confirm(message: string): Promise<boolean> {
