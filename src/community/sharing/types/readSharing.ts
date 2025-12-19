@@ -22,7 +22,7 @@ export interface SharingDetailResponse {
   updatedAt?: string;
 
   images: Image[];
-  isInterested: boolean;
+  interested: boolean;
 
   reviewFlag: string | null;
   receiverReviewFlag: string | null;

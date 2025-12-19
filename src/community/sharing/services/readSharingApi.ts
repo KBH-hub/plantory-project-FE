@@ -22,3 +22,10 @@ export const deleteSharingComments = async ( sharingId: number, commentId: numbe
   return ((await axiosInstance.delete<boolean>( `/api/sharings/${sharingId}/comments/${commentId}`)).data);
 };
 
+export const addInterest = (sharingId: number) =>
+  axiosInstance.post<boolean>(`/api/sharings/${sharingId}/interest`);
+
+export const removeInterest = (sharingId: number) =>
+  axiosInstance.delete<boolean>(`/api/sharings/${sharingId}/interest`);
+
+

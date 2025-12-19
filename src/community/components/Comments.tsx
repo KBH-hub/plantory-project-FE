@@ -64,8 +64,6 @@ function Comments({ sharingId, comments, reload, loginNickname, loginMemberId }:
 
       <ul className="list-group mt-3">
         {comments.map((c) => {
-          console.log("writerId:", c.writerId, "loginMemberId:", loginMemberId);
-
           const isMine = c.writerId === loginMemberId;
 
           return (

@@ -10,7 +10,7 @@ function ReadSharing() {
   const { data, loading } = useSharingDetail(Number(sharingId));
   const { comments, reload } = useSharingComments(Number(sharingId));
   const loginUser = useAuthStore((s) => s.user);
-
+  
   if (loading || !data) return <div>로딩중...</div>;
 
   return (

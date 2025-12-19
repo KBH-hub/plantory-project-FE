@@ -1,5 +1,6 @@
 import { useAuthStore } from "@/global/stores/useAuthStore";
 import { SharingDetailResponse } from "../types/readSharing";
+import { useInterestToggle } from "@/community/sharing/hooks/useReadSharing";
 
 interface Props {
   data: SharingDetailResponse;
@@ -7,6 +8,12 @@ interface Props {
 
 function SharingActions({ data }: Props) {
   const { user, isLogin } = useAuthStore();
+
+  const { interested, interestCount, toggle } = useInterestToggle(
+    data.interested,
+    data.interestNum,
+    data.sharingId
+  );
 
   if (!isLogin || !user) return null;
 
@@ -22,7 +29,16 @@ function SharingActions({ data }: Props) {
         </>
       ) : (
         <>
-          <button className="btn btn-outline-secondary">관심 ♡</button>
+          <button
+            className={`btn px-4 ${
+              interested ? "btn-danger" : "btn-outline-secondary"
+            }`}
+            onClick={toggle}
+          >
+            <span>{interested ? "관심♥" : "관심♡"}</span>
+            <span className="ms-1">({interestCount})</span>
+          </button>
+
           <button className="btn btn-success">쪽지 보내기</button>
         </>
       )}
