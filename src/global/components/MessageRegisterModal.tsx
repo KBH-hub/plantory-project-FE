@@ -1,4 +1,4 @@
-import type { ReplyForm } from "@/domain/message/types/message";
+import type { ReplyForm } from "@/message/types/message";
 
 type Props = {
   isOpen: boolean;
