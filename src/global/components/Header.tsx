@@ -1,26 +1,55 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/global/stores/useAuthStore";
+import { getNoticeList, markNoticeRead, removeAllNotice } from "../services/noticeService";
+import { formatDateTime } from "../utils/formatDateTime";
+import { notice } from "../types/notice";
+import { showModal } from "../utils/showModal";
 
 type MemberLite = { memberId: number | string; nickname: string } | null;
-
-type AlarmItem = {
-  id: number | string;
-  at: string;
-  text: string;
-  href?: string;
-};
 
 type SearchResult = { id: number | string; nickname: string };
 
 // export default function Header({ me }: { me: MemberLite }) {
 export default function Header() {
   const user = useAuthStore((s) => s.user);
-  const [alarms, setAlarms] = useState<AlarmItem[]>([
-    { id: 1, at: "2025-10-27 10:42", text: "방토방토님의 나눔이 완료되었습니다...", href: "#" },
-  ]);
+  
+  const [alarms, setAlarms] = useState<notice[]>([]);
   const alarmCount = alarms.length;
+  function noticeBuildLink(n : notice) {
+        const id = n?.targetId;
+        switch (String(n?.targetType || "")) {
+            case "SHARING": return `/readSharing/${id}`;
+            case "SHARING_REVIEW": return `/sharing/${id}/review`;
+            case "QUESTION": return `/readQuestion/${id}`;
+            case "MESSAGE": return `/messageDetail/${id}`;
+            case "WATERING": return `/plantCalendar`;
+            default: return "#";
+        }
+    }
+
+   useEffect(() => {
+  const fetchNotices = async () => {
+    try {
+      const data = await getNoticeList(); 
+
+      const mapped: notice[] = (data ?? []).map((n: notice) => ({
+        noticeId: n.noticeId,
+        createdAt: n.createdAt, 
+        content: n.content,
+        href: noticeBuildLink(n),
+      }));
+
+      setAlarms(mapped);
+    } catch (e) {
+      console.error(e);
+      setAlarms([]);
+    }
+  };
+
+  fetchNotices();
+}, []);
 
   const [reportTarget, setReportTarget] = useState<{ id: string | number | null; nickname: string }>({
     id: null,
@@ -57,7 +86,7 @@ export default function Header() {
 
   const searchMember = async () => {
     if (!keyword.trim()) return;
-    try {
+    try { 
       setLoadingSearch(true);
       // TODO: 실제 API로 교체
       setTimeout(() => {
@@ -101,7 +130,24 @@ export default function Header() {
     }
   };
 
-  const clearAllAlarms = () => setAlarms([]);
+  const clearAllNotice = async () => {
+    const ok = await showModal.confirm(`알림을 모두 삭제하시겠습니까?`);
+    if(ok){
+      removeAllNotice();
+      setAlarms([])
+      showModal.alert('삭제되었습니다');
+    }
+  };
+
+const navigate = useNavigate();
+
+const moveNotice = async (noticeId: number, href: string) => {
+  try {
+    await markNoticeRead(noticeId);
+  } finally {
+    navigate(href);
+  }
+};
 
   return (
     <>
@@ -202,12 +248,11 @@ export default function Header() {
                     <div className="p-3 text-center text-secondary small">새 알림이 없습니다.</div>
                   )}
                   {alarms.map((a) => (
-                    <div key={a.id} className="p-3 border-bottom d-flex align-items-start ph-alarm-item">
-                      <input type="checkbox" className="form-check-input me-2 alarm-check d-none" />
+                    <div key={a.noticeId} onClick={() => moveNotice(a.noticeId, a.href)} className="p-3 border-bottom d-flex align-items-start ph-alarm-item">
                       <div className="w-100">
-                        <small className="text-secondary d-block">{a.at}</small>
+                        <small className="text-secondary d-block">{formatDateTime(a.createdAt)}</small>
                         <a href={a.href || "#"} className="fw-semibold text-dark d-block text-truncate">
-                          {a.text}
+                          {a.content}
                         </a>
                       </div>
                     </div>
@@ -215,7 +260,7 @@ export default function Header() {
                 </div>
 
                 <div className="d-flex justify-content-center p-2 ph-alarm-footer">
-                  <button id="removeAllAlarm" className="btn btn-danger btn-sm" type="button" onClick={clearAllAlarms}>
+                  <button id="removeAllAlarm" className="btn btn-danger btn-sm" type="button" onClick={clearAllNotice}>
                     비우기
                   </button>
                 </div>
@@ -248,7 +293,7 @@ export default function Header() {
                 aria-label="프로필 메뉴 열기"
               >
                 <i className="bi bi-person-circle fs-3" />
-                <span className="ms-2">{user?.nickname || "Guest"}</span>님
+                <span className="ms-2">{user?.membername || "Guest"}</span>님
               </button>
               <ul className="dropdown-menu dropdown-menu-end ph-profile-menu">
                 <li><a className="dropdown-item" href="/profile">내 프로필</a></li>

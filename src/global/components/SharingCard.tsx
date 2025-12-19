@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { timeAgo } from "@/global/utils/date";
-import { SharingCardListResponse } from "@/domain/community/sharing/types/sharingList";
+import { SharingCardListResponse } from "@/community/sharing/types/sharingList";
 
 type SharingCardProps = { item: SharingCardListResponse; variant?: "default" | "recommended"; };
 

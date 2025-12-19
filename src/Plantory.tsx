@@ -4,16 +4,16 @@ import { useAuthStore } from "@/global/stores/useAuthStore";
 import AuthLayout from "./layouts/AuthLayout";
 import MainLayout from "./layouts/MainLayout";
 
-import LoginPage from "@/domain/member/pages/LoginPage";
-import Dashboard from "@/domain/dashboard/pages/Dashboard";
-import MessageList from "@/domain/message/pages/MessageList";
-import MessageDetail from "@/domain/message/pages/MessageDetail";
+import LoginPage from "@/member/pages/LoginPage";
+import Dashboard from "@/dashboard/pages/Dashboard";
+import MessageList from "@/message/pages/MessageList";
+import MessageDetail from "@/message/pages/MessageDetail";
 import PrivateRoute from "./routes/PrivateRoute";
-import SignUpPage from "@/domain/member/pages/SignUpPage";
+import SignUpPage from "@/member/pages/SignUpPage";
 import AuthInitializer from "@/routes/AuthInitializer";
-import SharingList from "@/domain/community/sharing/pages/SharingList";
-import TermsOfServicePage from "@/domain/member/pages/TermsOfServicePage";
-import ReadSharing from "./domain/community/sharing/pages/ReadSharing";
+import SharingList from "@/community/sharing/pages/SharingList";
+import TermsOfServicePage from "@/member/pages/TermsOfServicePage";
+import ReadSharing from "./community/sharing/pages/ReadSharing";
 
 export default function App() {
     const initialized = useAuthStore((s) => s.initialized);

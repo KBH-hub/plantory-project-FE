@@ -1,4 +1,4 @@
-import type { TodayWatering, TodayDiary } from "@/domain/dashboard/types/dashboard";
+import type { TodayWatering, TodayDiary } from "@/dashboard/types/dashboard";
 type Props = {waterings: TodayWatering[]; diaries: TodayDiary[]};
 
 function MyPlantManage({ waterings, diaries }: Props) {
