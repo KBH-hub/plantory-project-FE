@@ -9,7 +9,7 @@ type Params = {
   onSuccess?: () => void;
 };
 
-export function useReplyModal({ detail, send, onSuccess }: Params) {
+export function useReplyModal({ detail, send }: Params) {
   const [isOpen, setIsOpen] = useState(false);
   const [reply, setReply] = useState<ReplyForm>({
     to: "(삭제된 쪽지)",

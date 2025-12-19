@@ -1,6 +1,6 @@
 import type { NoticeTargetType } from "@/global/enum/noticeTypes";
 
-export interface NoticeDTO {
+export interface notice {
   noticeId: number;   
   receiverId: number;
   targetType: NoticeTargetType;
@@ -8,5 +8,6 @@ export interface NoticeDTO {
   content: string;
   readFlag: string | null;
   createdAt: string;
+  href:string;
   delFlag: string | null;
 }
