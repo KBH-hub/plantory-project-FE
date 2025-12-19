@@ -10,7 +10,7 @@ function ReadSharing() {
   const { data, loading } = useSharingDetail(Number(sharingId));
   const { comments, reload } = useSharingComments(Number(sharingId));
   const loginUser = useAuthStore((s) => s.user);
-  
+
   if (loading || !data) return <div>로딩중...</div>;
 
   return (
@@ -36,10 +36,7 @@ function ReadSharing() {
         <div className="d-flex align-items-center">
           <div className="me-3">
             {/* 프로필 이미지 컴포넌트 */}
-            <div
-              className="bg-secondary rounded-circle"
-              style={{ width: 48, height: 48 }}
-            />
+            <div className="bg-secondary rounded-circle" style={{ width: 48, height: 48 }} />
           </div>
           <strong>{data.nickname}</strong>
         </div>
@@ -54,7 +51,7 @@ function ReadSharing() {
       actions={<SharingActions data={data} />}
 
       comments={
-        <Comments sharingId={Number(sharingId)} comments={comments} reload={reload} loginNickname={data.nickname} />
+        <Comments sharingId={Number(sharingId)} loginMemberId={loginUser?.memberId} comments={comments} reload={reload} loginNickname={data.nickname} />
       }
     />
   );

@@ -100,27 +100,29 @@ function Comments({ sharingId, comments, reload, loginNickname, loginMemberId }:
                 </>
               ) : (
                 <>
-                  <div>{c.content}</div>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div>{c.content}</div>
 
-                  {isMine && (
-                    <div className="d-flex justify-content-end gap-2 mt-1">
-                      <button
-                        className="btn btn-sm btn-outline-secondary"
-                        onClick={() => {
-                          setEditingId(c.commentId);
-                          setEditingContent(c.content);
-                        }}
-                      >
-                        수정
-                      </button>
-                      <button
-                        className="btn btn-sm btn-outline-danger"
-                        onClick={() => handleDelete(c.commentId)}
-                      >
-                        삭제
-                      </button>
-                    </div>
-                  )}
+                    {isMine && (
+                      <div className="d-flex gap-2">
+                        <button
+                          className="btn btn-sm btn-link text-muted p-0 comment-delete-btn"
+                          onClick={() => {
+                            setEditingId(c.commentId);
+                            setEditingContent(c.content);
+                          }}
+                        >
+                          수정
+                        </button>
+                        <button
+                          className="btn btn-sm btn-link text-muted p-0 comment-delete-btn"
+                          onClick={() => handleDelete(c.commentId)}
+                        >
+                          삭제
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </>
               )}
             </li>
