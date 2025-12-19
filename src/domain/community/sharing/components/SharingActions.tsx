@@ -22,7 +22,7 @@ function SharingActions({ data }: Props) {
         </>
       ) : (
         <>
-          <button className="btn btn-outline-secondary">관심</button>
+          <button className="btn btn-outline-secondary">관심 ♡</button>
           <button className="btn btn-success">쪽지 보내기</button>
         </>
       )}

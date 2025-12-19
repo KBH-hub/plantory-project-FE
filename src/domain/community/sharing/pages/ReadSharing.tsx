@@ -1,22 +1,26 @@
 import { useParams } from "react-router-dom";
-import CommunityDetailLayout from "@/layouts/ReadCommunityLayout";
+import CommunityDetailLayout from "@/domain/community/layouts/ReadCommunityLayout";
 import { useSharingComments, useSharingDetail } from "../hooks/useReadSharing";
 import SharingActions from "../components/SharingActions";
-import Comments from "@/global/components/Comments";
+import Comments from "@/domain/community/components/Comments";
+import { useAuthStore } from "@/global/stores/useAuthStore";
 
 function ReadSharing() {
   const { sharingId } = useParams<{ sharingId: string }>();
   const { data, loading } = useSharingDetail(Number(sharingId));
-  const { comments, loading: commentsLoading } = useSharingComments(Number(sharingId));
+  const { comments, reload } = useSharingComments(Number(sharingId));
+  const loginUser = useAuthStore((s) => s.user);
 
   if (loading || !data) return <div>로딩중...</div>;
 
   return (
     <CommunityDetailLayout
+      pageTitle="나눔"
       title={data.title}
       createdAt={data.createdAt}
       images={data.images}
       content={data.content}
+      loginMemberId={loginUser?.memberId}
 
       metaInfo={
         <>
@@ -32,10 +36,7 @@ function ReadSharing() {
         <div className="d-flex align-items-center">
           <div className="me-3">
             {/* 프로필 이미지 컴포넌트 */}
-            <div
-              className="bg-secondary rounded-circle"
-              style={{ width: 48, height: 48 }}
-            />
+            <div className="bg-secondary rounded-circle" style={{ width: 48, height: 48 }} />
           </div>
           <strong>{data.nickname}</strong>
         </div>
@@ -50,7 +51,7 @@ function ReadSharing() {
       actions={<SharingActions data={data} />}
 
       comments={
-        <Comments comments={comments} loading={commentsLoading} />
+        <Comments sharingId={Number(sharingId)} loginMemberId={loginUser?.memberId} comments={comments} reload={reload} loginNickname={data.nickname} />
       }
     />
   );

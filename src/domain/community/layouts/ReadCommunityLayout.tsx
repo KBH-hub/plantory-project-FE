@@ -1,7 +1,9 @@
 import { ReactNode } from "react";
 import { timeAgo } from "@/global/utils/date";
+import ImageCarousel from "@/domain/community/components/ImageCarousel";
 
 interface Props {
+  pageTitle: string;
   title: string;
   createdAt: string;
   images: { fileUrl: string }[];
@@ -11,9 +13,11 @@ interface Props {
   scoreInfo?: ReactNode;
   actions?: ReactNode;
   comments?: ReactNode;
+  loginMemberId?: number;
 }
 
-function CommunityDetailLayout({
+function ReadCommunityLayout({
+  pageTitle,
   title,
   createdAt,
   images,
@@ -27,7 +31,7 @@ function CommunityDetailLayout({
   return (
     <div className="bg-light">
       <div className="mx-auto" style={{ width: 1470, padding: 16 }}>
-        <h5 className="fw-bold mb-3">게시글 상세</h5>
+        <h5 className="fw-bold mb-3">{pageTitle}글 상세</h5>
         <hr />
 
         <div className="card">
@@ -35,54 +39,7 @@ function CommunityDetailLayout({
 
             <div className="row g-3">
               <div className="col-md-4">
-                {images.length === 0 ? (
-                  <div className="text-muted text-center py-5">
-                    등록된 이미지가 없습니다.
-                  </div>
-                ) : (
-                  <div
-                    id="communityCarousel"
-                    className="carousel slide"
-                    data-bs-ride="false"
-                  >
-                    <div className="carousel-inner">
-                      {images.map((img, idx) => (
-                        <div
-                          key={idx}
-                          className={`carousel-item ${idx === 0 ? "active" : ""}`}
-                        >
-                          <img
-                            src={img.fileUrl}
-                            className="d-block w-100 object-fit-cover"
-                            style={{ height: 450 }}
-                          />
-                        </div>
-                      ))}
-                    </div>
-
-                    {images.length > 1 && (
-                      <>
-                        <button
-                          className="carousel-control-prev"
-                          type="button"
-                          data-bs-target="#communityCarousel"
-                          data-bs-slide="prev"
-                        >
-                          <span className="carousel-control-prev-icon" />
-                        </button>
-
-                        <button
-                          className="carousel-control-next"
-                          type="button"
-                          data-bs-target="#communityCarousel"
-                          data-bs-slide="next"
-                        >
-                          <span className="carousel-control-next-icon" />
-                        </button>
-                      </>
-                    )}
-                  </div>
-                )}
+               <ImageCarousel images={images} />
               </div>
 
               <div className="col-md-7">
@@ -111,12 +68,14 @@ function CommunityDetailLayout({
             {(authorProfile || scoreInfo || actions) && (
               <>
                 <div className="row align-items-center">
-
+                  
                   <div className="col-3">
+                    <br />
                     {authorProfile}
                   </div>
 
                   <div className="col-2 text-start">
+                    <br />
                     {scoreInfo}
                   </div>
 
@@ -138,4 +97,4 @@ function CommunityDetailLayout({
   );
 }
 
-export default CommunityDetailLayout;
+export default ReadCommunityLayout;
