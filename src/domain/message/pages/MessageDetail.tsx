@@ -31,7 +31,7 @@ export default function MessageDetail() {
     <>
       <MessageDetailView
         detail={detail}
-        onBack={() => navigate(-1)}
+        onBack={() => navigate('/messageList')}
         onReply={replyModal.open}
       />
 
