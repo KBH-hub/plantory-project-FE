@@ -27,7 +27,7 @@ export default function AuthInitializer({
         if (!initialized) {
             initAuth();
         }
-    }, [initialized]);
+    }, [initialized, login, setInitialized]);
 
     if (!initialized) {
         return <div>로딩중...</div>;
