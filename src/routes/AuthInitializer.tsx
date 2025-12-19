@@ -7,27 +7,33 @@ export default function AuthInitializer({
                                         }: {
     children: React.ReactNode;
 }) {
-    const login = useAuthStore((s) => s.login);
-    const setInitialized = useAuthStore((s) => s.setInitialized);
     const initialized = useAuthStore((s) => s.initialized);
 
     useEffect(() => {
         const initAuth = async () => {
             try {
                 const { data } = await axiosInstance.get("/api/auth/me");
-                login({
-                    user: data.user,
+
+                useAuthStore.getState().login({
+                    authUser: {
+                        memberId: data.user.memberId,
+                        membername: data.user.membername,
+                        role: data.user.role,
+                    },
                     accessToken: data.accessToken,
                 });
-            } catch {
-                setInitialized();
+
+                useAuthStore.getState().setUser(data.user);
+
+            } catch (e) {
+                console.error(e);
+                useAuthStore.getState().setInitialized();
             }
         };
 
-        if (!initialized) {
-            initAuth();
-        }
-    }, [initialized]);
+        initAuth();
+    }, []);
+
 
     if (!initialized) {
         return <div>로딩중...</div>;

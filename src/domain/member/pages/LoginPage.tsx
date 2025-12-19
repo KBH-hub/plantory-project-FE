@@ -1,6 +1,6 @@
 import "../../../styles/login.css";
 import { login as loginApi } from "@/global/services/api/auth";
-import { useAuthStore } from "@/global/stores/useAuthStore";
+import {Role, useAuthStore} from "@/global/stores/useAuthStore";
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import fixmeImg from '@/assets/images/fixme.png';
@@ -22,19 +22,25 @@ export default function LoginPage() {
                 password: formData.get("password") as string,
             });
 
+            const role = res.data.role as Role;
             authLogin({
-                user: {
+                authUser: {
                     memberId: res.data.memberId,
                     membername: res.data.membername,
-                    role: res.data.role,
+                    role,
                 },
                 accessToken: res.data.accessToken,
             });
 
-            navigate("/dashboard");
+            if (role === "ADMIN") {
+                console.log("어드민접속!@")
+                // navigate("/admin");
+            } else {
+                navigate("/dashboard");
+            }
 
         } catch (err) {
-            console.log(err);
+            console.error("로그인 실패", err);
         }
     };
 
@@ -57,6 +63,7 @@ export default function LoginPage() {
                             <input
                                 type="text"
                                 name="membername"
+                                autoComplete="current-id"
                                 className="form-control form-control-lg mb-3"
                                 placeholder="아이디 입력"
                                 required
@@ -66,6 +73,7 @@ export default function LoginPage() {
                             <input
                                 type="password"
                                 name="password"
+                                autoComplete="current-password"
                                 className="form-control form-control-lg mb-3"
                                 placeholder="비밀번호 입력"
                                 required
