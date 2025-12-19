@@ -3,13 +3,24 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/global/stores/useAuthStore";
 import { getNoticeList, markNoticeRead, removeAllNotice } from "../services/noticeService";
+import { searchUserByNickname } from "../services/reportService";
 import { formatDateTime } from "../utils/formatDateTime";
 import { notice } from "../types/notice";
 import { showModal } from "../utils/showModal";
 
-type MemberLite = { memberId: number | string; nickname: string } | null;
-
 type SearchResult = { id: number | string; nickname: string };
+
+declare global {
+  interface Window {
+    bootstrap?: any;
+  }
+}
+
+function getBsModal(el: HTMLElement) {
+  const bs = window.bootstrap;
+  if (!bs?.Modal) return null;
+  return bs.Modal.getInstance(el) || new bs.Modal(el);
+}
 
 // export default function Header({ me }: { me: MemberLite }) {
 export default function Header() {
@@ -75,20 +86,12 @@ export default function Header() {
     return () => URL.revokeObjectURL(url);
   }, [reportImage]);
 
-  const openMemberSearchModal = () => {
-    setKeyword("");
-    setResults([]);
-  };
-  const closeMemberSearchModal = () => {
-    setKeyword("");
-    setResults([]);
-  };
-
   const searchMember = async () => {
     if (!keyword.trim()) return;
     try { 
       setLoadingSearch(true);
-      // TODO: 실제 API로 교체
+      const response = searchUserByNickname(keyword);
+      console.log(response);
       setTimeout(() => {
         setResults(
           ["sunny", "leafy", "monstera", "aloe"]
@@ -103,9 +106,6 @@ export default function Header() {
     }
   };
 
-  const chooseMember = (m: SearchResult) => {
-    setReportTarget({ id: m.id, nickname: m.nickname });
-  };
 
   const submitReport = async () => {
     if (!reportTarget.id) return alert("피신고자를 선택해 주세요.");
@@ -148,6 +148,63 @@ const moveNotice = async (noticeId: number, href: string) => {
     navigate(href);
   }
 };
+
+const openReportModal = () => {
+    const el = document.getElementById("reportModal");
+    if (!el) return;
+    getBsModal(el as HTMLElement)?.show();
+  };
+
+  const openMemberSearchModal = () => {
+    setKeyword("");
+    setResults([]);
+    setLoadingSearch(false);
+
+    const el = document.getElementById("memberSearchModal");
+    if (!el) return;
+
+    const onShown = () => {
+      el.removeEventListener("shown.bs.modal", onShown as any);
+      const input = el.querySelector("input") as HTMLInputElement | null;
+      input?.focus();
+    };
+    el.addEventListener("shown.bs.modal", onShown as any);
+
+    getBsModal(el as HTMLElement)?.show();
+  };
+
+  const closeMemberSearchModal = () => {
+    const el = document.getElementById("memberSearchModal");
+    if (!el) return;
+    window.bootstrap?.Modal?.getInstance(el)?.hide();
+  };
+
+  useEffect(() => {
+    const top = document.getElementById("memberSearchModal");
+    const bottom = document.getElementById("reportModal");
+    if (!top || !bottom) return;
+
+    const onTopHidden = () => {
+      if (bottom.classList.contains("show")) {
+        document.body.classList.add("modal-open");
+
+        bottom.removeAttribute("aria-hidden");
+        bottom.setAttribute("aria-modal", "true");
+        bottom.setAttribute("role", "dialog");
+
+        const targetInput = document.getElementById("reportTargetInput") as HTMLInputElement | null;
+        targetInput?.focus();
+      }
+    };
+
+    top.addEventListener("hidden.bs.modal", onTopHidden as any);
+    return () => top.removeEventListener("hidden.bs.modal", onTopHidden as any);
+  }, []);
+
+  const chooseMember = (m: SearchResult) => {
+    setReportTarget({ id: m.id, nickname: m.nickname });
+    closeMemberSearchModal();
+  };
 
   return (
     <>
@@ -276,8 +333,7 @@ const moveNotice = async (noticeId: number, href: string) => {
             <button
               type="button"
               className="btn p-0"
-              data-bs-toggle="modal"
-              data-bs-target="#reportModal"
+              onClick={openReportModal}
               aria-label="신고 모달 열기"
             >
               <i className="bi bi-exclamation-triangle fs-4 ph-report" />
@@ -293,7 +349,7 @@ const moveNotice = async (noticeId: number, href: string) => {
                 aria-label="프로필 메뉴 열기"
               >
                 <i className="bi bi-person-circle fs-3" />
-                <span className="ms-2">{user?.membername || "Guest"}</span>님
+                <span className="ms-2">{user?.nickname || "Guest"}</span>님
               </button>
               <ul className="dropdown-menu dropdown-menu-end ph-profile-menu">
                 <li><a className="dropdown-item" href="/profile">내 프로필</a></li>
@@ -325,8 +381,6 @@ const moveNotice = async (noticeId: number, href: string) => {
                 <button
                   type="button"
                   className="btn btn-dark"
-                  data-bs-toggle="modal"
-                  data-bs-target="#memberSearchModal"
                   onClick={openMemberSearchModal}
                   style={{ minWidth: 90 }}
                 >
