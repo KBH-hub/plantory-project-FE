@@ -199,15 +199,15 @@ function CreateSharing() {
       </main>
       
       <PlantSearchModal
-  onSelect={(data) => {
-    setForm((prev) => ({
-      ...prev,
-      plantType: data.plantName,
-      managementLevel: data.manageLevel,   // 화면 표시
-      managementDemand: data.manageDemand, // 화면 표시
-    }));
-  }}
-/>
+        onSelect={(data) => {
+          setForm((prev) => ({
+            ...prev,
+            plantType: data.plantName,
+            managementLevel: data.manageLevel,  
+            managementDemand: data.manageDemand,
+          }));
+        }}
+      />
 
 
     </div>

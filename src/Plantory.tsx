@@ -46,8 +46,9 @@ export default function App() {
                     >
                         <Route path="/dashboard" element={<Dashboard />} />
                         <Route path="/sharingList" element={<SharingList />} />
-                        <Route path="/readSharing/:sharingId" element={<ReadSharing />} />
-                        <Route path="/createSharing" element={<CreateSharing />} />
+                        <Route path="/sharing/:sharingId" element={<ReadSharing />} />
+                        <Route path="/sharing/create" element={<CreateSharing />} />
+                        <Route path="/sharing/:sharingId/edit" element={<CreateSharing />} />
                         <Route path="/MessageList" element={<MessageList />} />
                         <Route path="/messageDetail/:messageId" element={<MessageDetail />} />
                         <Route path="/plantDictionary" element={<PlantDictionary />} />

@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import CommunityDetailLayout from "@/community/layouts/ReadCommunityLayout";
 import { useSharingComments, useSharingDetail } from "@/community/sharing/hooks/useReadSharing";
-import SharingActions from "@/community/sharing/components/SharingActions";
+import SharingBtnActions from "@/community/sharing/components/SharingBtnActions";
 import Comments from "@/community/components/Comments";
 import { useAuthStore } from "@/global/stores/useAuthStore";
 
@@ -48,7 +48,7 @@ function ReadSharing() {
         </small>
       }
 
-      actions={<SharingActions data={data} />}
+      actions={<SharingBtnActions data={data} />}
 
       comments={
         <Comments sharingId={Number(sharingId)} loginMemberId={loginUser?.memberId} comments={comments} reload={reload} loginNickname={data.nickname} />

@@ -43,7 +43,7 @@ function SharingList() {
             </div>
 
             <div className="col-md-2 text-end">
-              <Link to="/createSharing" className="btn btn-success">
+              <Link to="/sharing/create" className="btn btn-success">
                 글쓰기
               </Link>
             </div>

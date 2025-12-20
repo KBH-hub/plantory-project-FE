@@ -18,7 +18,7 @@ function SharingCard({ item, variant = "default" }: SharingCardProps) {
       style={isRecommended ? { width: 320 } : undefined}
     >
       <Link
-        to={`/readSharing/${item.sharingId}`}
+        to={`/sharing/${item.sharingId}`}
         className="card text-reset text-decoration-none h-100"
       >
         <img

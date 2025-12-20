@@ -58,9 +58,9 @@ export default function Header() {
               </button>
               <ul className="dropdown-menu ph-dropdown">
                 <li>
-                  <a className="dropdown-item ph-dropdown-item" href="/sharingList">
+                  <Link to="/sharingList" className="dropdown-item ph-dropdown-item">
                     나눔 게시판
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a className="dropdown-item ph-dropdown-item" href="/questionList">

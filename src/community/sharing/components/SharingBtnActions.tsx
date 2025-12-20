@@ -1,12 +1,13 @@
 import { useAuthStore } from "@/global/stores/useAuthStore";
 import { SharingDetailResponse } from "@/community/sharing/types/readSharing";
 import { useInterestToggle } from "@/community/sharing/hooks/useInterestToggle";
+import { Link } from "react-router-dom";
 
 interface Props {
   data: SharingDetailResponse;
 }
 
-function SharingActions({ data }: Props) {
+function SharingBtnActions({ data }: Props) {
   const { user, isLogin } = useAuthStore();
 
   const { interested, interestCount, toggle } = useInterestToggle(
@@ -23,7 +24,9 @@ function SharingActions({ data }: Props) {
     <div className="d-flex justify-content-end gap-2">
       {isWriter ? (
         <>
-          <button className="btn btn-primary">수정</button>
+          <Link to={`/sharing/${data.sharingId}/edit`} className="btn btn-primary">
+          수정
+          </Link>
           <button className="btn btn-danger">삭제</button>
           <button className="btn btn-success">나눔 완료</button>
         </>
@@ -46,4 +49,4 @@ function SharingActions({ data }: Props) {
   );
 }
 
-export default SharingActions;
+export default SharingBtnActions;
