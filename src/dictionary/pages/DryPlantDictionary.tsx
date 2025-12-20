@@ -41,8 +41,8 @@ export default function DryPlantDictionary() {
 
   return (
     <div className="bg-light" style={{ overflowX: "auto" }}>
-      <div className="mx-auto" style={{ width: 1470, padding: 16 }}>
-        <h4 className="fw-bold mb-4">건조에 강한 실내식물</h4>
+      <div className="mx-auto py-4" style={{ width: 1470, padding: 16 }}>
+        <h3 className="fw-bold mb-4">건조에 강한 실내식물</h3>
 
         <DictionarySearchBar
           value={dict.q}

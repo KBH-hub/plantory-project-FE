@@ -1,6 +1,5 @@
 import React from "react";
 import type { CalendarCell } from "@/myPlant/types/plantCalendar";
-import { cn } from "@/myPlant/utils/cn";
 
 type Props = {
     cells: CalendarCell[];
@@ -9,6 +8,10 @@ type Props = {
     monthWaterCount: Record<string, number>;
     onSelectDay: (ymd: string) => void;
 };
+
+export function cn(...args: Array<string | false | null | undefined>) {
+    return args.filter(Boolean).join(" ");
+}
 
 export default function CalendarGrid({ cells, selectedYmd, monthDiaryCount, monthWaterCount, onSelectDay }: Props) {
     return (
