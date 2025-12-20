@@ -14,6 +14,10 @@ import AuthInitializer from "@/routes/AuthInitializer";
 import SharingList from "@/community/sharing/pages/SharingList";
 import TermsOfServicePage from "@/member/pages/TermsOfServicePage";
 import ReadSharing from "./community/sharing/pages/ReadSharing";
+import PlantDictionary from "@/dictionary/pages/PlantDictionary";
+import DictionaryDetail from "@/dictionary/pages/DictionaryDetail";
+import DryPlantDictionary from "./dictionary/pages/DryPlantDictionary";
+import DryDictionaryDetail from "./dictionary/pages/DryDictionaryDetail";
 
 export default function App() {
     const initialized = useAuthStore((s) => s.initialized);
@@ -42,6 +46,10 @@ export default function App() {
                 <Route path="/readSharing/:sharingId" element={<ReadSharing />} />
                 <Route path="/MessageList" element={<MessageList />} />
                 <Route path="/messageDetail/:messageId" element={<MessageDetail />} />
+                <Route path="/plantDictionary" element={<PlantDictionary />} />
+                <Route path="/dictionaryDetail/:cntntsNo" element={<DictionaryDetail />} />
+                <Route path="/dryPlantDictionary" element={<DryPlantDictionary />} />
+                <Route path="/dryDictionaryDetail/:cntntsNo" element={<DryDictionaryDetail />} />
             </Route>
 
                     <Route path="/" element={<Navigate to="/login" replace />} />
