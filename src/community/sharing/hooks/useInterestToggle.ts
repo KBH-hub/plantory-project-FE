@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import { addInterest, removeInterest, } from "../services/readSharingApi";
+import { addInterest, removeInterest, } from "@/community/sharing/services/readSharingApi";
 import { showModal } from "@/global/utils/showModal";
 
 export function useInterestToggle(

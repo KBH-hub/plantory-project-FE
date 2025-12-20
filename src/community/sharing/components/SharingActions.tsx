@@ -1,5 +1,5 @@
 import { useAuthStore } from "@/global/stores/useAuthStore";
-import { SharingDetailResponse } from "../types/readSharing";
+import { SharingDetailResponse } from "@/community/sharing/types/readSharing";
 import { useInterestToggle } from "@/community/sharing/hooks/useInterestToggle";
 
 interface Props {

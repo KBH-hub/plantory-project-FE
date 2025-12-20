@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import CommunityDetailLayout from "@/community/layouts/ReadCommunityLayout";
-import { useSharingComments, useSharingDetail } from "../hooks/useReadSharing";
-import SharingActions from "../components/SharingActions";
+import { useSharingComments, useSharingDetail } from "@/community/sharing/hooks/useReadSharing";
+import SharingActions from "@/community/sharing/components/SharingActions";
 import Comments from "@/community/components/Comments";
 import { useAuthStore } from "@/global/stores/useAuthStore";
 

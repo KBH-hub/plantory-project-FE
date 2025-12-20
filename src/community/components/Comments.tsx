@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { formatDate } from "../../global/utils/date";
+import { formatDate } from "@/global/utils/date";
 import { SharingCommentResponse } from "@/community/sharing/types/readSharing";
 import { addSharingComments, updateSharingComments, deleteSharingComments } from "@/community/sharing/services/readSharingApi";
-import { showModal } from "../../global/utils/showModal";
+import { showModal } from "@/global/utils/showModal";
 
 interface Props {
   sharingId: number;

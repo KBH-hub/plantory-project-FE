@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
-import { getSharingDetail, getSharingComments } from "../services/readSharingApi";
-import { SharingDetailResponse, SharingCommentResponse } from "../types/readSharing";
+import { getSharingDetail, getSharingComments } from "@/community/sharing/services/readSharingApi";
+import { SharingDetailResponse, SharingCommentResponse } from "@/community/sharing/types/readSharing";
 
 export function useSharingDetail(sharingId?: number) {
   const [data, setData] = useState<SharingDetailResponse | null>(null);
