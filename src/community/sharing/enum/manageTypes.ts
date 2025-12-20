@@ -20,3 +20,14 @@ export type ManageLevel =
 
 export type ManageDemand =
   (typeof MANAGE_DEMANDS)[number]["value"];
+
+export function getManageLevelLabel(value?: ManageLevel): string {
+  if (!value) return "";
+  return MANAGE_LEVELS.find((v) => v.value === value)?.label ?? "";
+}
+
+export function getManageDemandLabel(value?: ManageDemand): string {
+  if (!value) return "";
+  return MANAGE_DEMANDS.find((v) => v.value === value)?.label ?? "";
+}
+

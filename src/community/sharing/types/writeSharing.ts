@@ -5,7 +5,7 @@ export interface CreateSharingForm {
   content: string;
   plantType: string;
   managementLevel?: ManageLevel;
-  managementNeeds?: ManageDemand;
+  managementDemand?: ManageDemand;
 }
 
 export interface CreateSharingImage {

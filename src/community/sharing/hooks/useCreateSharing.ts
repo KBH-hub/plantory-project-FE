@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CreateSharingForm, CreateSharingImage } from "@/community/sharing/types/writeSharing";
-import { createSharing, updateSharing } from "@/community/sharing/services/writeSharingApi";
+import { createSharing, updateSharing } from "@/community/sharing/services/createSharingApi";
 import { getSharingDetail } from "@/community/sharing/services/readSharingApi";
 import { showModal } from "@/global/utils/showModal";
 
@@ -17,7 +17,7 @@ export function useSharingWrite(sharingId?: number) {
     content: "",
     plantType: "",
     managementLevel: undefined,
-    managementNeeds: undefined,
+    managementDemand: undefined,
   });
 
   const [images, setImages] = useState<CreateSharingImage[]>([]);
@@ -84,8 +84,8 @@ export function useSharingWrite(sharingId?: number) {
         formData.append("managementLevel", form.managementLevel);
       }
 
-      if (form.managementNeeds) {
-        formData.append("managementNeeds", form.managementNeeds);
+      if (form.managementDemand) {
+        formData.append("managementNeeds", form.managementDemand);
       }
 
       if (deletedImageIds.length > 0) {
@@ -101,7 +101,6 @@ export function useSharingWrite(sharingId?: number) {
           formData.append("files", img.file!);
         });
 
-      // API 호출
       if (isEdit && sharingId) {
         await updateSharing(sharingId, formData);
         showModal.alert("수정 완료되었습니다.", {
@@ -133,7 +132,7 @@ export function useSharingWrite(sharingId?: number) {
         content: data.content,
         plantType: data.plantType,
         managementLevel: data.managementLevel,
-        managementNeeds: data.managementNeeds,
+        managementDemand: data.managementNeeds,
       });
 
       const existingImages: CreateSharingImage[] = data.images.map(

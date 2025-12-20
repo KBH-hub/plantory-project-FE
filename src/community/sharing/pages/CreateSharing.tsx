@@ -1,5 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useSharingWrite } from "@/community/sharing/hooks/useCreateSharing";
+import PlantSearchModal from "@/community/sharing/components/PlantSearchModal";
+import { getManageDemandLabel, getManageLevelLabel } from "@/community/sharing/enum/manageTypes";
 
 import "@/styles/createSharing.css";
 
@@ -88,23 +90,65 @@ function CreateSharing() {
                   />
                 </label>
               </div>
+             <div className="small text-muted mt-2">최대 5장까지 업로드 가능합니다.</div>
             </div>
           </div>
 
-          <div className="row mb-3">
+            <div className="row mb-3">
             <label className="col-sm-2 col-form-label fw-semibold small">
-              식물 종류 <span className="text-danger">*</span>
+                식물 종류 <span className="text-danger">*</span>
             </label>
+
             <div className="col-sm-10">
-              <input
-                className="form-control form-control-sm"
-                value={form.plantType}
-                onChange={(e) =>
-                  setForm({ ...form, plantType: e.target.value })
-                }
-              />
+                <div className="row g-2 align-items-end flex-nowrap">
+                <div className="col" style={{ maxWidth: 560 }}>
+                    <div className="input-group input-group-sm">
+                    <input
+                        className="form-control"
+                        placeholder="식물 종류를 입력해 주세요."
+                        value={form.plantType}
+                        onChange={(e) =>
+                        setForm({ ...form, plantType: e.target.value })
+                        }
+                    />
+                    <button
+                        type="button"
+                        className="btn btn-dark"
+                        data-bs-toggle="modal"
+                        data-bs-target="#plantSearchModal"
+                    >
+                        식물검색
+                    </button>
+                    </div>
+                </div>
+
+                <div className="col-auto">
+                    <label className="form-label small fw-semibold mb-1 d-block">
+                    관리 수준
+                    </label>
+                    <input
+                    className="form-control form-control-sm"
+                    style={{ width: 180 }}
+                    value={getManageLevelLabel(form.managementLevel)}
+                    disabled
+                    />
+                </div>
+
+                <div className="col-auto">
+                    <label className="form-label small fw-semibold mb-1 d-block">
+                    관리 요구도
+                    </label>
+                    <input
+                    className="form-control form-control-sm"
+                    style={{ width: 200 }}
+                    value={getManageDemandLabel(form.managementDemand)}
+                    disabled
+                    />
+                </div>
+                </div>
             </div>
-          </div>
+            </div>
+
 
           <div className="row mb-3">
             <label className="col-sm-2 col-form-label fw-semibold small">
@@ -113,6 +157,7 @@ function CreateSharing() {
             <div className="col-sm-10">
               <input
                 className="form-control form-control-sm"
+                placeholder="제목을 입력해 주세요."
                 value={form.title}
                 onChange={(e) =>
                   setForm({ ...form, title: e.target.value })
@@ -128,6 +173,7 @@ function CreateSharing() {
             <div className="col-sm-10">
               <textarea
                 className="form-control"
+                placeholder="식물에 대한 간단한 소개를 적어주세요."
                 rows={5}
                 value={form.content}
                 onChange={(e) =>
@@ -151,8 +197,24 @@ function CreateSharing() {
           </div>
         </form>
       </main>
+      
+      <PlantSearchModal
+  onSelect={(data) => {
+    setForm((prev) => ({
+      ...prev,
+      plantType: data.plantName,
+      managementLevel: data.manageLevel,   // 화면 표시
+      managementDemand: data.manageDemand, // 화면 표시
+    }));
+  }}
+/>
+
+
     </div>
   );
+  
 }
+
+
 
 export default CreateSharing;
