@@ -1,5 +1,5 @@
 import React from "react";
-import type { MyPlantItem } from "@/myPlant/services/myPlantServices";
+import type { MyPlantItem } from "@/myPlant/types/plantCalendar";
 import type { DiaryFormErrors } from "@/myPlant/types/plantCalendar";
 import { cn } from "@/myPlant/utils/cn";
 
