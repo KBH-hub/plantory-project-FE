@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { SharingCardListResponse } from "../types/sharingList";
+import { SharingCardListResponse } from "@/community/sharing/types/sharingList";
 type SharingSidebarProps = { interestCount: number; popular: SharingCardListResponse[];};
 
 function SharingSidebar({ interestCount, popular }: SharingSidebarProps) {
@@ -9,11 +9,11 @@ function SharingSidebar({ interestCount, popular }: SharingSidebarProps) {
         to="/profileInsert"
         className="text-reset text-decoration-none"
       >
-        <div className="bg-white border p-3 mb-3 text-center">
+        <div className="bg-white border p-3 mb-3">
           <div className="fw-semibold">
             나의 관심 나눔 식물
           </div>
-          <p className="mt-2 mb-0">
+          <p className="mt-2 mb-0 text-center">
             <i className="bi bi-heart" /> {interestCount}
           </p>
         </div>
@@ -31,9 +31,11 @@ function SharingSidebar({ interestCount, popular }: SharingSidebarProps) {
             className="d-flex justify-content-between py-2 text-reset text-decoration-none border-bottom"
           >
             <span className="text-truncate">
+              <br/>
               {item.title}
             </span>
             <span>
+              <br />
               <i className="bi bi-heart" /> {item.interestNum}
             </span>
           </Link>

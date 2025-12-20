@@ -1,4 +1,5 @@
 import { Image } from "@/global/types/image";
+import { ManageDemand, ManageLevel } from "../enum/manageTypes";
 
 export interface SharingDetailResponse {
   sharingId: number;
@@ -10,10 +11,11 @@ export interface SharingDetailResponse {
   title: string;
   content: string;
   plantType: string;
-  managementLevel: string;
-  managementNeeds: string;
-  managementLevelLabel: string;
-  managementNeedsLabel: string;
+  managementLevel: ManageLevel;
+  managementNeeds: ManageDemand;
+
+  managementLevelLabel?: string;
+  managementNeedsLabel?: string;
 
   interestNum: number;
   status: string; 
@@ -22,7 +24,7 @@ export interface SharingDetailResponse {
   updatedAt?: string;
 
   images: Image[];
-  isInterested: boolean;
+  interested: boolean;
 
   reviewFlag: string | null;
   receiverReviewFlag: string | null;

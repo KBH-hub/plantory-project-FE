@@ -18,6 +18,7 @@ import PlantDictionary from "@/dictionary/pages/PlantDictionary";
 import DictionaryDetail from "@/dictionary/pages/DictionaryDetail";
 import DryPlantDictionary from "./dictionary/pages/DryPlantDictionary";
 import DryDictionaryDetail from "./dictionary/pages/DryDictionaryDetail";
+import CreateSharing from "@/community/sharing/pages/CreateSharing";
 
 export default function App() {
     const initialized = useAuthStore((s) => s.initialized);
@@ -44,6 +45,7 @@ export default function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/sharingList" element={<SharingList />} />
                 <Route path="/readSharing/:sharingId" element={<ReadSharing />} />
+                <Route path="/createSharing" element={<CreateSharing />} />
                 <Route path="/MessageList" element={<MessageList />} />
                 <Route path="/messageDetail/:messageId" element={<MessageDetail />} />
                 <Route path="/plantDictionary" element={<PlantDictionary />} />
