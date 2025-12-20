@@ -1,53 +1,13 @@
 import { axiosInstance } from "@/global/services/api/axiosInstance";
 
-export type ISODateTime = string;
-
-export interface MyPlantItem {
-  myplantId: number;
-  name: string;
-}
-
-export interface DiaryListItem {
-  diaryId: number;
-  name: string;
-  activity: string;
-  state: string;
-  memo: string;
-  createdAt: ISODateTime;
-  photoUrls?: string[];
-}
-
-export interface WateringItem {
-  wateringId: number;
-  name: string;
-  dateAt: ISODateTime;
-  checkFlag: boolean;
-}
-
-export interface DiaryDetailResponse {
-  diary: {
-    diaryId: number;
-    name: string;
-    activity: string;
-    state: string;
-    memo: string;
-    createdAt: ISODateTime;
-  };
-  images: { fileUrl: string }[];
-}
-
-export interface CalendarRangeRequest {
-  startDate: ISODateTime;
-  endDate: ISODateTime;
-}
-
-export interface RegisterDiaryPayload {
-  myplantId: number;
-  activity: string;
-  state: string;
-  memo: string;
-  files?: File[];
-}
+import type {
+  DiaryDetailResponse,
+  DiaryListItem,
+  MyPlantItem,
+  WateringItem,
+  CalendarRangeRequest,
+  RegisterDiaryPayload
+} from "@/myPlant/types/plantCalendar";
 
 export const getDiaryList = async (params: CalendarRangeRequest): Promise<DiaryListItem[]> => {
   const res = await axiosInstance.get("/api/plantingCalender/diary", { params });

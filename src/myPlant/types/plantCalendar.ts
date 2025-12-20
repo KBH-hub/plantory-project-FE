@@ -1,10 +1,53 @@
-import type {
-    DiaryDetailResponse,
-    DiaryListItem,
-    MyPlantItem,
-    WateringItem,
-} from "@/myPlant/services/myPlantServices";
-import type { ModalState } from "@/myPlant/enum/plantCalendarEnums";
+export type ISODateTime = string;
+
+export interface MyPlantItem {
+  myplantId: number;
+  name: string;
+}
+
+export interface DiaryListItem {
+  diaryId: number;
+  name: string;
+  activity: string;
+  state: string;
+  memo: string;
+  createdAt: ISODateTime;
+  photoUrls?: string[];
+}
+
+export interface WateringItem {
+  wateringId: number;
+  name: string;
+  dateAt: ISODateTime;
+  checkFlag: boolean;
+}
+
+export interface DiaryDetailResponse {
+  diary: {
+    diaryId: number;
+    name: string;
+    activity: string;
+    state: string;
+    memo: string;
+    createdAt: ISODateTime;
+  };
+  images: { fileUrl: string }[];
+}
+
+export interface CalendarRangeRequest {
+  startDate: ISODateTime;
+  endDate: ISODateTime;
+}
+
+export interface RegisterDiaryPayload {
+  myplantId: number;
+  activity: string;
+  state: string;
+  memo: string;
+  files?: File[];
+}
+
+import type { ModalState } from "@/myPlant/enums/plantCalendarEnums";
 
 export type DiaryFormErrors = Partial<{
     myplantId: string;
