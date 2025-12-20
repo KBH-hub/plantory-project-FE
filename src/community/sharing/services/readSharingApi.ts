@@ -1,6 +1,5 @@
 import { axiosInstance } from "@/global/services/api/axiosInstance";
-import { SharingDetailResponse } from "../types/readSharing";
-import { SharingCommentResponse } from "../types/readSharing";
+import { SharingDetailResponse, SharingCommentResponse } from "@/community/sharing/types/readSharing";
 
 export const getSharingDetail = async ( sharingId: number ): Promise<SharingDetailResponse> => {
     return ((await axiosInstance.get<SharingDetailResponse>(`/api/sharings/${sharingId}`)).data)
@@ -21,4 +20,14 @@ export const updateSharingComments = async ( sharingId: number, commentId: numbe
 export const deleteSharingComments = async ( sharingId: number, commentId: number ): Promise<boolean> => {
   return ((await axiosInstance.delete<boolean>( `/api/sharings/${sharingId}/comments/${commentId}`)).data);
 };
+
+export const addInterest = async ( sharingId: number): Promise<boolean> => {
+  return ((await axiosInstance.post<boolean>(`/api/sharings/${sharingId}/interest`)).data);
+}
+
+export const removeInterest = async ( sharingId: number): Promise<boolean> => {
+  return ((await axiosInstance.delete<boolean>(`/api/sharings/${sharingId}/interest`)).data);
+}
+
+
 

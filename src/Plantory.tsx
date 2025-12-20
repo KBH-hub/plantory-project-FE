@@ -14,6 +14,7 @@ import AuthInitializer from "@/routes/AuthInitializer";
 import SharingList from "@/community/sharing/pages/SharingList";
 import TermsOfServicePage from "@/member/pages/TermsOfServicePage";
 import ReadSharing from "./community/sharing/pages/ReadSharing";
+import CreateSharing from "@/community/sharing/pages/CreateSharing";
 
 export default function App() {
     const initialized = useAuthStore((s) => s.initialized);
@@ -40,6 +41,7 @@ export default function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/sharingList" element={<SharingList />} />
                 <Route path="/readSharing/:sharingId" element={<ReadSharing />} />
+                <Route path="/createSharing" element={<CreateSharing />} />
                 <Route path="/MessageList" element={<MessageList />} />
                 <Route path="/messageDetail/:messageId" element={<MessageDetail />} />
             </Route>
