@@ -1,5 +1,5 @@
 import React from "react";
-import type { DiaryListItem, WateringItem } from "@/myPlant/services/myPlantServices";
+import type { DiaryListItem, WateringItem } from "@/myPlant/types/plantCalendar";
 import WateringCard from "@/myPlant/components/WateringCard";
 import DiaryListCard from "@/myPlant/components/DiaryListCard";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import type { WateringItem } from "@/myPlant/services/myPlantServices";
+import type { WateringItem } from "@/myPlant/types/plantCalendar";
 
 type Props = {
     waters: WateringItem[];

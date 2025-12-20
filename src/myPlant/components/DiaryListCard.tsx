@@ -1,5 +1,5 @@
 import React from "react";
-import type { DiaryListItem } from "@/myPlant/services/myPlantServices";
+import type { DiaryListItem } from "@/myPlant/types/plantCalendar";
 import { toLocalYmd } from "@/myPlant/utils/calenderDate";
 
 type Props = {
