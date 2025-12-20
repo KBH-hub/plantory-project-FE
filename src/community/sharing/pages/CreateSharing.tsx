@@ -184,7 +184,7 @@ function CreateSharing() {
           </div>
 
           <div className="d-flex justify-content-center gap-3 pt-2">
-            <Link to="/sharingList" className="btn btn-secondary px-5">
+            <Link to={`/sharing/${sharingId}`} className="btn btn-secondary px-5">
               취소
             </Link>
             <button

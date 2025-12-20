@@ -4,6 +4,7 @@ import SharingBtnActions from "@/community/sharing/components/SharingBtnActions"
 import Comments from "@/community/components/Comments";
 import { useAuthStore } from "@/global/stores/useAuthStore";
 import ReadCommunityLayout from "@/community/layouts/ReadCommunityLayout";
+import "@/styles/readSharing.css"
 
 function ReadSharing() {
   const { sharingId } = useParams<{ sharingId: string }>();
