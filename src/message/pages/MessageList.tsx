@@ -2,11 +2,11 @@ import { useCallback, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MessageListView } from "@/message/components/MessageListView";
 import { useMessageList } from "@/message/hooks/useMessageList";
-import { usePaginator } from "@/message/hooks/usePaginator";
+import { usePaginator } from "@/global/hooks/usePaginator";
 import { useSelection } from "@/message/hooks/useSelection";
 import { useDeleteSelectedMessages } from "@/message/hooks/useDeleteSelectedMessages";
 import { BoxType, TargetType } from "@/message/enum/messageTypes";
-import { deleteSelectedMessages } from "../services/messageService";
+import { deleteSelectedMessages } from "@/message/services/messageService";
 
 export default function MessageList() {
   const navigate = useNavigate();
