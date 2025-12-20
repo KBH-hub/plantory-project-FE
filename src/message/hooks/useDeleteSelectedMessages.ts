@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import type { BoxType } from "@/message/enum/messageTypes";
+import type { BoxType } from "@/message/enums/messageEnums";
 import { showModal } from "@/global/utils/showModal";
 
 interface UseDeleteSelectedMessagesParams {
