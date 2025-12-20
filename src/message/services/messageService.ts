@@ -1,6 +1,6 @@
 import { axiosInstance } from "@/global/services/api/axiosInstance";
 import type { MessageListResponse, MessageSearchRequest, MessageDetailResponse, MessageRegisterRequest } from "@/message/types/message";
-import { BoxType } from "../enum/messageTypes";
+import { BoxType } from "../enum/messageEnums";
 
 export const getMessageList = async ({
   boxType,
