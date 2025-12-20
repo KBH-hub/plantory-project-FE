@@ -12,8 +12,8 @@ export default function PlantCalendar() {
     return (
         <div className="bg-light" style={{ minHeight: "100vh" }}>
             <div className="mx-auto" style={{ width: 1470 }}>
-                <div className="container-fluid text-center">
-                    <div className="container-fluid text-center py-4">
+                <div className="container-fluid">
+                    <div className="container-fluid py-4">
                         <h3 className="fw-bold m-0">식물 캘린더</h3>
                     </div>
 

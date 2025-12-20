@@ -37,8 +37,8 @@ export default function PlantDictionaryGardenPage() {
 
   return (
     <div className="bg-light" style={{ overflowX: "auto" }}>
-      <div className="mx-auto" style={{ width: 1470, padding: 16 }}>
-        <h4 className="fw-bold mb-4">실내 정원용 식물</h4>
+      <div className="mx-auto py-4" style={{ width: 1470, padding: 16 }}>
+        <h3 className="fw-bold mb-4">실내 정원용 식물</h3>
 
         <GardenSearchBar
           value={dict.q}
