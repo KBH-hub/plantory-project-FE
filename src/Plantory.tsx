@@ -20,6 +20,7 @@ import DryPlantDictionary from "./dictionary/pages/DryPlantDictionary";
 import DryDictionaryDetail from "./dictionary/pages/DryDictionaryDetail";
 import CreateSharing from "@/community/sharing/pages/CreateSharing";
 import PlantCalendar from "@/myPlant/pages/PlantCalendar";
+import MyPlantManagement from "@/myPlant/pages/MyPlantManagement";
 
 export default function App() {
     const initialized = useAuthStore((s) => s.initialized);
@@ -54,6 +55,7 @@ export default function App() {
                         <Route path="/dryPlantDictionary" element={<DryPlantDictionary />} />
                         <Route path="/dryDictionaryDetail/:cntntsNo" element={<DryDictionaryDetail />} />
                         <Route path="/plantCalendar" element={<PlantCalendar />} />
+                        <Route path="/myPlantManagement" element={<MyPlantManagement />} />
                     </Route>
 
                     <Route path="/" element={<Navigate to="/login" replace />} />
