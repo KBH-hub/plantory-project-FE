@@ -141,7 +141,8 @@ function CompleteSharingModal({
                   <button className="btn btn-light" onClick={onClose}>
                     닫기
                   </button>
-                  <button className="btn btn-success" onClick={onGoReview}>
+                  <button className="btn btn-success" onClick={onGoReview}
+>
                     후기 작성하러 가기
                   </button>
                 </>
