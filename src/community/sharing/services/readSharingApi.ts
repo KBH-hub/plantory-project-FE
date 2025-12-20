@@ -44,3 +44,7 @@ export const getDryDetail = async (cntntsNo: string) => {
   const res = await axiosInstance.get<DictionaryPlantDetail>( `/api/dictionaryModal/dry/${cntntsNo}` );
   return res.data;
 };
+
+export const deleteSharing = async ( sharingId: number ): Promise<boolean> => {
+  return (await axiosInstance.delete<boolean>( `/api/sharings/${sharingId}` )).data;
+};

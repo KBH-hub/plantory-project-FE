@@ -7,8 +7,7 @@ type SharingCardProps = { item: SharingCardListResponse; variant?: "default" | "
 function SharingCard({ item, variant = "default" }: SharingCardProps) {
   const isEdited = item.updatedAt && item.updatedAt !== item.createdAt;
 
-  const displayTime =
-    isEdited && item.updatedAt ? item.updatedAt: item.createdAt;
+  const displayTime = isEdited && item.updatedAt ? item.updatedAt: item.createdAt;
 
   const isDone = item.status === "true";
   const isRecommended = variant === "recommended";

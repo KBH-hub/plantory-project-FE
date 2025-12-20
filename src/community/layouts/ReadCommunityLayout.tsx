@@ -6,6 +6,7 @@ interface Props {
   pageTitle: string;
   title: string;
   createdAt: string;
+  updatedAt?: string; 
   images: { fileUrl: string }[];
   content: string;
   metaInfo?: ReactNode;
@@ -20,6 +21,7 @@ function ReadCommunityLayout({
   pageTitle,
   title,
   createdAt,
+  updatedAt,
   images,
   content,
   metaInfo,
@@ -28,6 +30,9 @@ function ReadCommunityLayout({
   actions,
   comments,
 }: Props) {
+  const isEdited = updatedAt && updatedAt !== createdAt;
+  const displayTime = isEdited ? updatedAt! : createdAt;
+
   return (
     <div className="bg-light">
       <div className="mx-auto" style={{ width: 1470, padding: 16 }}>
@@ -45,7 +50,10 @@ function ReadCommunityLayout({
               <div className="col-md-7">
                 <div className="d-flex justify-content-between align-items-center mb-2">
                   <h5 className="fw-bold mb-1">{title}</h5>
-                  <div className="text-muted small">{timeAgo(createdAt)}</div>
+                  <div className="text-muted small">
+                    {timeAgo(displayTime)}
+                    {isEdited && <span className="ms-1">(수정됨)</span>}
+                  </div>
                 </div>
 
 
