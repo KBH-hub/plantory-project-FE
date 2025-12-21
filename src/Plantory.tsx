@@ -28,6 +28,7 @@ import AdminLayout from "@/layouts/AdminLayout";
 import RootRedirect from "@/routes/RootRedirect";
 import AuthLayout from "@/layouts/AuthLayout";
 import MemberManagementPage from "@/admin/pages/MemberManagementPage";
+import CreateQuestion from "./community/question/pages/CreateQuestion";
 
 export default function App() {
     const initialized = useAuthStore((s) => s.initialized);
@@ -60,6 +61,8 @@ export default function App() {
                         <Route path="/sharing/:sharingId/review" element={<UpdateReview />} />
                         <Route path="/questionList" element={<QuestionList />} />
                         <Route path="/question/:questionId" element={<ReadQuestion />} />
+                        <Route path="/question/create" element={<CreateQuestion />} />
+                        <Route path="/question/:questionId/edit" element={<CreateQuestion />} />
                         <Route path="/MessageList" element={<MessageList />} />
                         <Route path="/messageDetail/:messageId" element={<MessageDetail />} />
                         <Route path="/plantDictionary" element={<PlantDictionary />} />

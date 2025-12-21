@@ -58,12 +58,12 @@ export function useSharingWrite(sharingId?: number) {
 
       if (isEdit && sharingId) {
         await updateSharing(sharingId, formData);
-        showModal.alert("수정 완료되었습니다.", {
+        showModal.alert("수정되었습니다.", {
           callback: () => navigate(`/sharing/${sharingId}`),
         });
       } else {
         const savedId = await createSharing(formData);
-        showModal.alert("등록 완료되었습니다.", {
+        showModal.alert("등록되었습니다.", {
           callback: () => navigate(`/sharing/${savedId}`),
         });
       }

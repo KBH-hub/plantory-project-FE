@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import CreateCommunityLayout from "@/community/layouts/CreateCommunityLayout";
 import { useQuestionWrite } from "@/community/question/hooks/useCreateQuestion";
-import "@/styles/createQuestion.css";
+
 
 function CreateQuestion() {
   const { questionId } = useParams<{ questionId?: string }>();
@@ -18,9 +18,7 @@ function CreateQuestion() {
     isSubmitting,
   } = useQuestionWrite(numericQuestionId);
 
-  const cancelLink = isEdit
-    ? `/question/${numericQuestionId}`
-    : `/questionList`;
+  const cancelLink = isEdit ? `/question/${numericQuestionId}` : `/questionList`;
 
   return (
     <CreateCommunityLayout

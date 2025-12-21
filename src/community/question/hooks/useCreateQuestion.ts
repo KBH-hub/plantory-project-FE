@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useImageManager } from "@/community/hooks/useImageManager";
-import { getQuestionDetail} from "../services/readQuestionApi";
-import { createQuestion, updateQuestion } from "../services/createQuestionApi";
+import { getQuestionDetail} from "@/community/question/services/readQuestionApi";
+import { createQuestion, updateQuestion } from "@/community/question/services/createQuestionApi";
 import { showModal } from "@/global/utils/showModal";
 
 interface CreateQuestionForm {
@@ -27,32 +27,47 @@ export function useQuestionWrite(questionId?: number) {
     removeImage,
   } = useImageManager();
 
-  const submit = async () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+ const submit = async () => {
+    if (isSubmitting) return;
+
     if (!form.title.trim() || !form.content.trim()) {
       showModal.alert("제목과 내용을 입력하세요.");
       return;
     }
 
-    const formData = new FormData();
-    formData.append("title", form.title);
-    formData.append("content", form.content);
+    try {
+      setIsSubmitting(true);
 
-    if (deletedImageIds.length > 0) {
-      formData.append("deletedImageIds", JSON.stringify(deletedImageIds));
-    }
+      const formData = new FormData();
+      formData.append("title", form.title);
+      formData.append("content", form.content);
 
-    images
-      .filter((i) => i.status === "NEW" && i.file)
-      .forEach((i) => formData.append("files", i.file!));
+      if (deletedImageIds.length > 0) {
+        formData.append("deletedImageIds", JSON.stringify(deletedImageIds));
+      }
 
-    if (isEdit && questionId) {
-      await updateQuestion(questionId, formData);
-      navigate(`/question/${questionId}`);
-    } else {
-      const id = await createQuestion(formData);
-      navigate(`/question/${id}`);
+      images
+        .filter((i) => i.status === "NEW" && i.file)
+        .forEach((i) => formData.append("files", i.file!));
+
+      if (isEdit && questionId) {
+        await updateQuestion(questionId, formData);
+        showModal.alert("수정되었습니다.", {
+          callback: () => navigate(`/question/${questionId}`),
+        });
+      } else {
+        const savedId = await createQuestion(formData);
+        showModal.alert("수정되었습니다.", {
+          callback: () => navigate(`/question/${savedId}`),
+        });
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
+
 
   useEffect(() => {
     if (!isEdit || !questionId) return;
@@ -83,5 +98,6 @@ export function useQuestionWrite(questionId?: number) {
     removeImage,
     submit,
     isEdit,
+    isSubmitting
   };
 }

@@ -63,7 +63,7 @@ function QuestionBtnAction({ data }: Props) {
   return (
     <>
       {isWriter ? (
-        <BtnAction editLink={`/updateQuestion/${data.questionId}`} onDelete={handleDelete} />
+        <BtnAction editLink={`/question/${data.questionId}/edit`} onDelete={handleDelete} />
       ) : (
         <BtnAction>
           <button className="btn btn-success px-4" onClick={() => setMessageOpen(true)}>
