@@ -96,25 +96,32 @@ const init = () => {
 };
 
 export const showModal = {
-  alert(message: string, options: AlertOptions = {}): Promise<void> {
-    init();
-    if (!alertModal || !alertMessageEl || !alertOkBtn) return Promise.resolve();
+    alert(message: string, options: AlertOptions = {}): Promise<void> {
+        init();
 
-    const { callback = null, noOverlay = false } = options;
+        const modal = alertModal;
+        const messageEl = alertMessageEl;
+        const btn = alertOkBtn;
 
-    alertMessageEl.textContent = message;
-    alertModal.classList.toggle("no-overlay", Boolean(noOverlay));
-    setVisible(alertModal, true);
+        if (!modal || !messageEl || !btn) return Promise.resolve();
 
-    return new Promise<void>((resolve) => {
-      const handleOk = () => {
-        setVisible(alertModal!, false);
-        if (typeof callback === "function") callback();
-        resolve();
-      };
-      alertOkBtn.addEventListener("click", handleOk, { once: true });
-    });
-  },
+        const { callback = null, noOverlay = false } = options;
+
+        messageEl.textContent = message;
+        modal.classList.toggle("no-overlay", Boolean(noOverlay));
+        setVisible(modal, true);
+
+        return new Promise<void>((resolve) => {
+            const handleOk = () => {
+                setVisible(modal, false);
+                if (typeof callback === "function") callback();
+                resolve();
+            };
+
+            btn.addEventListener("click", handleOk, { once: true });
+        });
+    }
+,
 
   confirm(message: string): Promise<boolean> {
     init();

@@ -7,6 +7,7 @@ type MemberFormValues = {
     address: string;
     password: string;
     pwCheck: string;
+    noticeEnabled: boolean;
 };
 
 type DuplicateCheckLike = {
@@ -15,6 +16,8 @@ type DuplicateCheckLike = {
     message: string;
     check: (value: string) => Promise<void>;
     reset: () => void;
+    // useDuplicateCheck에 이미 있다면 타입에 추가
+    isValidFor?: (currentValue: string) => boolean;
 };
 
 type MemberFormProps = {
@@ -24,10 +27,30 @@ type MemberFormProps = {
     idCheck: DuplicateCheckLike;
     nicknameCheck: DuplicateCheckLike;
     onSubmit: () => void;
+
+    onCheckNickname?: () => void;
+    showNoticeToggle?: boolean;
+
+    // ✅ 추가: edit에서 비번 필드 숨기기
+    showPasswordFields?: boolean;
 };
 
-const MemberForm = ({ mode, values, onChange, idCheck, nicknameCheck, onSubmit }: MemberFormProps) => {
+const MemberForm = ({
+                        mode,
+                        values,
+                        onChange,
+                        idCheck,
+                        nicknameCheck,
+                        onSubmit,
+                        onCheckNickname,
+                        showNoticeToggle,
+                        showPasswordFields,
+                    }: MemberFormProps) => {
     const isEdit = mode === "edit";
+    const shouldShowNotice = showNoticeToggle ?? isEdit;
+
+    // 기본값: signup은 비번 필드 보임, edit은 숨김
+    const shouldShowPassword = showPasswordFields ?? !isEdit;
 
     return (
         <form
@@ -36,6 +59,7 @@ const MemberForm = ({ mode, values, onChange, idCheck, nicknameCheck, onSubmit }
                 onSubmit();
             }}
         >
+            {/* 아이디 */}
             <label className="fw-bold">아이디 *</label>
             <div className="input-group">
                 <input
@@ -55,12 +79,8 @@ const MemberForm = ({ mode, values, onChange, idCheck, nicknameCheck, onSubmit }
                     </button>
                 )}
             </div>
-            {!isEdit && idCheck.message && (
-                <p className={`small ${idCheck.isAvailable ? "text-success" : "text-danger"}`}>
-                    {idCheck.message}
-                </p>
-            )}
 
+            {/* 닉네임 */}
             <label className="fw-bold mt-3">닉네임 *</label>
             <div className="input-group">
                 <input
@@ -71,7 +91,7 @@ const MemberForm = ({ mode, values, onChange, idCheck, nicknameCheck, onSubmit }
                 <button
                     type="button"
                     className="btn btn-outline-secondary"
-                    onClick={() => nicknameCheck.check(values.nickname)}
+                    onClick={() => (onCheckNickname ? onCheckNickname() : nicknameCheck.check(values.nickname))}
                     disabled={nicknameCheck.isChecking}
                 >
                     중복 확인
@@ -83,8 +103,10 @@ const MemberForm = ({ mode, values, onChange, idCheck, nicknameCheck, onSubmit }
                 </p>
             )}
 
+            {/* 주소 */}
             <AddressSelect onChange={(addr) => onChange("address", addr)} />
 
+            {/* 휴대전화 */}
             <input
                 className="form-control mt-3"
                 placeholder="휴대전화"
@@ -92,21 +114,40 @@ const MemberForm = ({ mode, values, onChange, idCheck, nicknameCheck, onSubmit }
                 onChange={(e) => onChange("phone", e.target.value)}
             />
 
-            <input
-                type="password"
-                className="form-control mt-3"
-                placeholder="비밀번호"
-                value={values.password}
-                onChange={(e) => onChange("password", e.target.value)}
-            />
+            {/* 알림 설정 */}
+            {shouldShowNotice && (
+                <>
+                    <label className="fw-bold mt-3">알림 설정</label>
+                    <div className="form-check form-switch mt-2">
+                        <input
+                            className="form-check-input"
+                            type="checkbox"
+                            checked={values.noticeEnabled}
+                            onChange={(e) => onChange("noticeEnabled", e.target.checked)}
+                        />
+                    </div>
+                </>
+            )}
 
-            <input
-                type="password"
-                className="form-control mt-3"
-                placeholder="비밀번호 확인"
-                value={values.pwCheck}
-                onChange={(e) => onChange("pwCheck", e.target.value)}
-            />
+            {/* ✅ 비밀번호 필드(옵션) */}
+            {shouldShowPassword && (
+                <>
+                    <input
+                        type="password"
+                        className="form-control mt-3"
+                        placeholder={isEdit ? "새 비밀번호(변경 시에만 입력)" : "비밀번호"}
+                        value={values.password}
+                        onChange={(e) => onChange("password", e.target.value)}
+                    />
+                    <input
+                        type="password"
+                        className="form-control mt-3"
+                        placeholder={isEdit ? "새 비밀번호 확인" : "비밀번호 확인"}
+                        value={values.pwCheck}
+                        onChange={(e) => onChange("pwCheck", e.target.value)}
+                    />
+                </>
+            )}
 
             <button className="btn btn-success w-100 mt-4">{isEdit ? "저장" : "가입하기"}</button>
         </form>

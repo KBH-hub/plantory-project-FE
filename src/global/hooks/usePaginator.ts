@@ -11,20 +11,20 @@ export function usePaginator({ containerRef, current, totalItems, pageSize, onCh
         onChangeRef.current = onChange;
     }, [onChange]);
 
-  useEffect(() => {
-    if (!containerRef.current) return;
-    if (paginatorRef.current) return;
+    useEffect(() => {
+        if (!containerRef.current) return;
+        if (paginatorRef.current) return;
 
-    paginatorRef.current = createPaginator({
-      container: containerRef.current,
-      current,
-      totalItems,
-      pageSize,
-      windowSize: 5,
-      modeWhenUnknown: "next-only",
-      onChange,
-    });
-  }, [containerRef, onChange]);
+        paginatorRef.current = createPaginator({
+            container: containerRef.current,
+            current,
+            totalItems,
+            pageSize,
+            windowSize: 5,
+            modeWhenUnknown: "next-only",
+            onChange: (p) => onChangeRef.current(p),
+        });
+    }, [containerRef, current, totalItems, pageSize]);
 
   useEffect(() => {
     if (!paginatorRef.current) return;

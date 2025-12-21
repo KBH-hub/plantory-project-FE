@@ -24,9 +24,11 @@ import UpdateReview from "@/community/sharing/pages/UpdateReview";
 import QuestionList from "./community/question/pages/QuestionList";
 import RoleRoute from "@/routes/RoleRoute";
 import AdminLayout from "@/layouts/AdminLayout";
-import RootRedirect from "@/routes/RootRedirect";
+import RootRedirectRoute from "@/routes/RootRedirectRoute";
 import AuthLayout from "@/layouts/AuthLayout";
 import MemberManagementPage from "@/admin/pages/MemberManagementPage";
+import ProfileInfoPage from "@/profile/pages/ProfileInfoPage";
+import UpdateProfilePage from "@/profile/pages/UpdateProfilePage";
 
 export default function App() {
     const initialized = useAuthStore((s) => s.initialized);
@@ -38,7 +40,7 @@ export default function App() {
             ) : (
                 <Routes>
                     <Route element={<AuthLayout />}>
-                        <Route path="/" element={<RootRedirect />} />
+                        <Route path="/" element={<RootRedirectRoute />} />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/signup" element={<SignUpPage />} />
                         <Route path="/termsOfServicePage" element={<TermsOfServicePage />} />
@@ -66,6 +68,8 @@ export default function App() {
                         <Route path="/dryDictionaryDetail/:cntntsNo" element={<DryDictionaryDetail />} />
                         <Route path="/plantCalendar" element={<PlantCalendar />} />
                         <Route path="/myPlantManagement" element={<MyPlantManagement />} />
+                        <Route path="/profile" element={<ProfileInfoPage />} />
+                        <Route path="/profile/update/:memberId" element={<UpdateProfilePage />} />
                     </Route>
 
                     {/* ADMIN */}
