@@ -101,7 +101,7 @@ export default function MemberManagementPage() {
     }, [currentPage, totalPages]);
 
     return (
-        <div className="container mt-4">
+        <div className="container py-4">
             <h3 className="fw-bold mb-4">회원관리</h3>
 
             <div className="d-flex justify-content-between align-items-center mb-4">
