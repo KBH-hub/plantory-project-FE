@@ -27,12 +27,10 @@ type MemberFormProps = {
     idCheck: DuplicateCheckLike;
     nicknameCheck: DuplicateCheckLike;
     onSubmit: () => void;
-
     onCheckNickname?: () => void;
     showNoticeToggle?: boolean;
-
-    // ✅ 추가: edit에서 비번 필드 숨기기
     showPasswordFields?: boolean;
+    hideSubmitButton?: boolean;
 };
 
 const MemberForm = ({
@@ -45,6 +43,7 @@ const MemberForm = ({
                         onCheckNickname,
                         showNoticeToggle,
                         showPasswordFields,
+                        hideSubmitButton,
                     }: MemberFormProps) => {
     const isEdit = mode === "edit";
     const shouldShowNotice = showNoticeToggle ?? isEdit;
@@ -104,7 +103,11 @@ const MemberForm = ({
             )}
 
             {/* 주소 */}
-            <AddressSelect onChange={(addr) => onChange("address", addr)} />
+            <AddressSelect
+                value={values.address}
+                onChange={(addr) => onChange("address", addr)}
+            />
+
 
             {/* 휴대전화 */}
             <input
@@ -129,7 +132,6 @@ const MemberForm = ({
                 </>
             )}
 
-            {/* ✅ 비밀번호 필드(옵션) */}
             {shouldShowPassword && (
                 <>
                     <input
@@ -149,7 +151,12 @@ const MemberForm = ({
                 </>
             )}
 
-            <button className="btn btn-success w-100 mt-4">{isEdit ? "저장" : "가입하기"}</button>
+            {!hideSubmitButton && (
+                <button className="btn btn-success w-100 mt-4">
+                    {isEdit ? "저장" : "가입하기"}
+                </button>
+            )}
+
         </form>
     );
 };

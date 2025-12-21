@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import {axiosInstance} from "@/global/services/api/axiosInstance";
 import useLogout from "@/global/hooks/useLogout";
 import {showModal} from "@/global/utils/showModal";
 
@@ -21,7 +21,7 @@ const WithdrawModal: React.FC<Props> = ({ open, onClose }) => {
 
         try {
             setIsSubmitting(true);
-            await axios.put("/api/profile/withdraw");
+            await axiosInstance.put("/api/profile/withdraw");
             await logout();
         } catch (e) {
             console.log(e);

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { showModal } from "@/global/utils/showModal";
-import axios from "axios";
+import { profileApi } from "@/profile/services/profileService";
 
 type Props = {
     open: boolean;
@@ -25,12 +25,12 @@ const ChangePasswordModal: React.FC<Props> = ({ open, onClose }) => {
         }
 
         try {
-            const res = await axios.put("/api/profile/changePassword", {
+            const result = await profileApi.changePassword({
                 oldPassword: oldPw,
                 newPassword: newPw,
             });
 
-            if (res.data?.success) {
+            if (result.success) {
                 await showModal.alert("비밀번호가 변경되었습니다.");
                 setOldPw("");
                 setNewPw("");

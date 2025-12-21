@@ -26,14 +26,6 @@ type MemberFormValues = {
     pwCheck: string;
     noticeEnabled: boolean;
 };
-
-type UpdateMemberRequest = {
-    nickname?: string;
-    phone?: string;
-    address?: string;
-    noticeEnabled?: 0 | 1;
-};
-
 const UpdateProfilePage: React.FC = () => {
     const navigate = useNavigate();
 
@@ -47,7 +39,7 @@ const UpdateProfilePage: React.FC = () => {
         address: "",
         password: "",
         pwCheck: "",
-        noticeEnabled: true,
+        noticeEnabled: false,
     });
 
     const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
@@ -99,7 +91,6 @@ const UpdateProfilePage: React.FC = () => {
                 });
                 setProfileImageUrl(me.profileImageUrl ?? null);
                 nicknameCheck.reset();
-                console.log("me response", res.data);
             } catch (e) {
                 console.log(e);
                 await showModal.alert("프로필 정보를 불러오지 못했습니다.");
@@ -109,8 +100,7 @@ const UpdateProfilePage: React.FC = () => {
         };
 
         load();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [nicknameCheck]);
 
     const onChange = <K extends keyof MemberFormValues>(key: K, value: MemberFormValues[K]) => {
         setValues((prev) => ({ ...prev, [key]: value }));
@@ -145,18 +135,13 @@ const UpdateProfilePage: React.FC = () => {
             return;
         }
 
-        const payload: UpdateMemberRequest = {};
-
-        const nickname = (values.nickname ?? "").trim();
-        if (nickname !== (original.nickname ?? "")) payload.nickname = nickname;
-
-        if ((values.phone ?? "") !== (original.phone ?? "")) payload.phone = values.phone ?? "";
-
-        if ((values.address ?? "") !== (original.address ?? "")) payload.address = values.address ?? "";
-
-        const noticeEnabledNum: 0 | 1 = values.noticeEnabled ? 1 : 0;
-        if (noticeEnabledNum !== original.noticeEnabled) payload.noticeEnabled = noticeEnabledNum;
-
+        const payload = {
+            nickname: (values.nickname ?? "").trim(),
+            phone: (values.phone ?? "").trim(),
+            address: (values.address ?? "").trim(),
+            noticeEnabled: values.noticeEnabled ? 1 : 0,
+        };
+        console.log("payload", payload);
         try {
             await axiosInstance.put("/api/profile", payload);
 
@@ -175,6 +160,7 @@ const UpdateProfilePage: React.FC = () => {
             console.log(e);
             await showModal.alert("프로필 수정에 실패했습니다.");
         }
+
     };
 
     if (loading) {
@@ -217,6 +203,7 @@ const UpdateProfilePage: React.FC = () => {
                         onCheckNickname={handleCheckNickname}
                         showNoticeToggle={true}
                         showPasswordFields={false}
+                        hideSubmitButton={true}
                     />
 
                     <div className="d-flex justify-content-between align-items-center mt-4">
