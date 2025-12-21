@@ -1,7 +1,6 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { useAuthStore } from "@/global/stores/useAuthStore";
 
-import AuthLayout from "./layouts/AuthLayout";
 import MainLayout from "./layouts/MainLayout";
 
 import LoginPage from "@/member/pages/LoginPage";
@@ -23,6 +22,11 @@ import PlantCalendar from "@/myPlant/pages/PlantCalendar";
 import MyPlantManagement from "@/myPlant/pages/MyPlantManagement";
 import UpdateReview from "@/community/sharing/pages/UpdateReview";
 import QuestionList from "./community/question/pages/QuestionList";
+import RoleRoute from "@/routes/RoleRoute";
+import AdminLayout from "@/layouts/AdminLayout";
+import RootRedirect from "@/routes/RootRedirect";
+import AuthLayout from "@/layouts/AuthLayout";
+import MemberManagementPage from "@/admin/pages/MemberManagementPage";
 
 export default function App() {
     const initialized = useAuthStore((s) => s.initialized);
@@ -34,11 +38,12 @@ export default function App() {
             ) : (
                 <Routes>
                     <Route element={<AuthLayout />}>
+                        <Route path="/" element={<RootRedirect />} />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/signup" element={<SignUpPage />} />
                         <Route path="/termsOfServicePage" element={<TermsOfServicePage />} />
                     </Route>
-
+                    {/* USER */}
                     <Route
                         element={
                             <PrivateRoute>
@@ -63,7 +68,20 @@ export default function App() {
                         <Route path="/myPlantManagement" element={<MyPlantManagement />} />
                     </Route>
 
-                    <Route path="/" element={<Navigate to="/login" replace />} />
+                    {/* ADMIN */}
+                    <Route
+                        element={
+                            <PrivateRoute>
+                                <RoleRoute allow={["ADMIN"]}>
+                                    <AdminLayout />
+                                </RoleRoute>
+                            </PrivateRoute>
+                        }
+                    >
+                        <Route path="/admin/memberManagement" element={<MemberManagementPage />} />
+                        {/*<Route path="/admin/reportManagement" element={<ReportManagement />} />*/}
+                        {/*<Route path="/admin/weightManagement" element={<WeightManagement />} />*/}
+                    </Route>
                 </Routes>
             )}
         </AuthInitializer>

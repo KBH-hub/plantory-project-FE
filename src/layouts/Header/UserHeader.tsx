@@ -9,7 +9,7 @@ import { useNotice } from "@/notice/hooks/useNotice";
 import { useReportFlow } from "@/report/hooks/useReport";
 import useLogout from "@/global/hooks/useLogout";
 import UserDropdown from "../../auth/componets/UserDropdown";
-export default function Header() {
+export default function UserHeader() {
   const user = useAuthStore((s) => s.user);
   const handleLogout = useLogout();
   const { alarms, alarmCount, moveNotice, clearAllNotice } = useNotice();
