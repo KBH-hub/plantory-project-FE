@@ -1,48 +1,55 @@
 import { useState } from "react";
 import { formatDate } from "@/global/utils/date";
-import { SharingCommentResponse } from "@/community/sharing/types/readSharing";
-import { addSharingComments, updateSharingComments, deleteSharingComments } from "@/community/sharing/services/readSharingApi";
 import { showModal } from "@/global/utils/showModal";
 
-interface Props {
-  sharingId: number;
-  comments: SharingCommentResponse[];
-  reload: () => Promise<void>;
-  loginNickname?: string;
-  loginMemberId?: number;
+export interface CommentItem {
+  commentId: number;
+  writerId: number;
+  nickname: string;
+  content: string;
+  createdAt: string;
+  updatedAt?: string;
 }
 
-function Comments({ sharingId, comments, reload, loginNickname, loginMemberId }: Props) {
+interface Props {
+  targetId: number;
+  comments: CommentItem[];
+  reload: () => Promise<void>;
+  loginMemberId?: number;
+  loginNickname?: string;
+
+  onAdd: (targetId: number, content: string) => Promise<boolean>;
+  onUpdate: (targetId: number, commentId: number, content: string) => Promise<boolean>;
+  onDelete: (targetId: number, commentId: number) => Promise<boolean>;
+}
+
+function Comments({
+  targetId,
+  comments,
+  reload,
+  loginMemberId,
+  loginNickname,
+  onAdd,
+  onUpdate,
+  onDelete,
+}: Props) {
   const [content, setContent] = useState("");
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editingContent, setEditingContent] = useState("");
-  
-  const handleSubmit = async () => {
+
+  const handleAdd = async () => {
     if (!content.trim()) {
       showModal.alert("댓글을 입력하세요.");
       return;
     }
 
-    try {
-      await addSharingComments(sharingId, content);
-
-      showModal.alert("댓글이 등록되었습니다.", {
-        callback: async () => {
-          setContent("");
-          await reload();   
-        },
-      });
-
-    } catch (e) {
-      showModal.alert("댓글 등록 중 오류가 발생했습니다.");
+    const ok = await onAdd(targetId, content);
+    if (!ok) {
+      showModal.alert("댓글 등록에 실패했습니다.");
+      return;
     }
-  };
- const handleDelete = async (commentId: number) => {
-    const ok = await showModal.confirm("댓글을 삭제하시겠습니까?");
-    if (!ok) return;
 
-    await deleteSharingComments(sharingId,commentId);
-    showModal.alert("삭제되었습니다.") 
+    setContent("");
     await reload();
   };
 
@@ -52,9 +59,27 @@ function Comments({ sharingId, comments, reload, loginNickname, loginMemberId }:
       return;
     }
 
-    await updateSharingComments(sharingId, commentId, editingContent);
+    const ok = await onUpdate(targetId, commentId, editingContent);
+    if (!ok) {
+      showModal.alert("댓글 수정에 실패했습니다.");
+      return;
+    }
+
     setEditingId(null);
     setEditingContent("");
+    await reload();
+  };
+
+  const handleDelete = async (commentId: number) => {
+    const okConfirm = await showModal.confirm("댓글을 삭제하시겠습니까?");
+    if (!okConfirm) return;
+
+    const ok = await onDelete(targetId, commentId);
+    if (!ok) {
+      showModal.alert("댓글 삭제에 실패했습니다.");
+      return;
+    }
+
     await reload();
   };
 
@@ -71,7 +96,9 @@ function Comments({ sharingId, comments, reload, loginNickname, loginMemberId }:
               <div className="d-flex justify-content-between align-items-center mb-1">
                 <span className="fw-semibold small">{c.nickname}</span>
                 <span className="text-muted small">
-                  {c.updatedAt ? `${formatDate(c.updatedAt)} (수정됨)` : formatDate(c.createdAt)}
+                  {c.updatedAt
+                    ? `${formatDate(c.updatedAt)} (수정됨)`
+                    : formatDate(c.createdAt)}
                 </span>
               </div>
 
@@ -92,14 +119,10 @@ function Comments({ sharingId, comments, reload, loginNickname, loginMemberId }:
                   <div className="d-flex gap-2 flex-shrink-0">
                     {editingId === c.commentId ? (
                       <>
-                        <button
-                          className="btn btn-sm btn-link p-0 text-primary"
-                          onClick={() => handleUpdate(c.commentId)}
-                        >
+                        <button className="btn btn-sm btn-link p-0 text-primary" onClick={() => handleUpdate(c.commentId)}>
                           저장
                         </button>
-                        <button
-                          className="btn btn-sm btn-link p-0 text-muted"
+                        <button className="btn btn-sm btn-link p-0 text-muted"
                           onClick={() => {
                             setEditingId(null);
                             setEditingContent("");
@@ -110,8 +133,7 @@ function Comments({ sharingId, comments, reload, loginNickname, loginMemberId }:
                       </>
                     ) : (
                       <>
-                        <button
-                          className="btn btn-sm btn-link p-0 text-muted"
+                        <button className="btn btn-sm btn-link p-0 text-muted"
                           onClick={() => {
                             setEditingId(c.commentId);
                             setEditingContent(c.content);
@@ -119,10 +141,7 @@ function Comments({ sharingId, comments, reload, loginNickname, loginMemberId }:
                         >
                           수정
                         </button>
-                        <button
-                          className="btn btn-sm btn-link p-0 text-muted"
-                          onClick={() => handleDelete(c.commentId)}
-                        >
+                        <button className="btn btn-sm btn-link p-0 text-muted" onClick={() => handleDelete(c.commentId)}>
                           삭제
                         </button>
                       </>
@@ -135,10 +154,9 @@ function Comments({ sharingId, comments, reload, loginNickname, loginMemberId }:
         })}
       </ul>
 
-
       <div className="d-flex align-items-center mt-3">
-        <div className="me-3 d-flex align-items-center" style={{ whiteSpace: "nowrap" }}>
-          <span className="ms-2 fw-semibold small">
+        <div className="me-3" style={{ whiteSpace: "nowrap" }}>
+          <span className="fw-semibold small">
             {loginNickname ?? "로그인 필요"}
           </span>
         </div>
@@ -150,7 +168,7 @@ function Comments({ sharingId, comments, reload, loginNickname, loginMemberId }:
             className="form-control"
             placeholder="댓글을 입력하세요."
           />
-          <button className="btn btn-secondary" onClick={handleSubmit}>
+          <button className="btn btn-secondary" onClick={handleAdd}>
             등록
           </button>
         </div>

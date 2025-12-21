@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { usePaginator } from "@/global/hooks/usePaginator";
 import { timeAgo } from "@/global/utils/date";
-import { useQuestionList } from "../hooks/useQuestionList";
+import { useQuestionList } from "@/community/question/hooks/useQuestionList";
 
 function QuestionList() {
    const pagerRef = useRef<HTMLUListElement | null>(null);
@@ -45,7 +45,7 @@ function QuestionList() {
             </div>
 
             <div className="col-md-2 text-md-end mt-2 mt-md-0">
-              <Link to="/quesiton" className="btn btn-success fw-semibold px-3">글쓰기</Link>
+              <Link to="/question/create" className="btn btn-success fw-semibold px-3">글쓰기</Link>
             </div>
           </div>
         </div>
@@ -62,7 +62,7 @@ function QuestionList() {
             return (
               <Link
                 key={item.questionId}
-                to={`/readQuestion/${item.questionId}`}
+                to={`/question/${item.questionId}`}
                 className="row mb-3 p-3 bg-white border rounded text-decoration-none text-dark"
               >
                 <div className="col-1 d-flex justify-content-center">

@@ -55,11 +55,11 @@ function ReadCommunityLayout({
                     {isEdited && <span className="ms-1">(수정됨)</span>}
                   </div>
                 </div>
+                <hr />
 
 
                 {metaInfo && (
                   <>
-                    <hr />
                     <div className="text-muted small mb-2">
                       {metaInfo}
                     </div>
