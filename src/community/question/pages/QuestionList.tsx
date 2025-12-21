@@ -62,7 +62,7 @@ function QuestionList() {
             return (
               <Link
                 key={item.questionId}
-                to={`/readQuestion/${item.questionId}`}
+                to={`/question/${item.questionId}`}
                 className="row mb-3 p-3 bg-white border rounded text-decoration-none text-dark"
               >
                 <div className="col-1 d-flex justify-content-center">

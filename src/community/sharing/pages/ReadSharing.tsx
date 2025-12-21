@@ -4,6 +4,7 @@ import SharingBtnAction from "@/community/sharing/components/SharingBtnAction";
 import Comments from "@/community/components/Comments";
 import { useAuthStore } from "@/global/stores/useAuthStore";
 import ReadCommunityLayout from "@/community/layouts/ReadCommunityLayout";
+import { addSharingComments, updateSharingComments, deleteSharingComments } from "../services/readSharingApi";
 import "@/styles/readSharing.css"
 
 function ReadSharing() {
@@ -53,7 +54,17 @@ function ReadSharing() {
       actions={<SharingBtnAction data={data} />}
 
       comments={
-        <Comments sharingId={Number(sharingId)} loginMemberId={loginUser?.memberId} comments={comments} reload={reload} loginNickname={data.nickname} />
+        <Comments
+          targetId={Number(sharingId)}
+          comments={comments}
+          reload={reload}
+          loginMemberId={loginUser?.memberId}
+          loginNickname={loginUser?.nickname}
+          onAdd={addSharingComments}
+          onUpdate={updateSharingComments}
+          onDelete={deleteSharingComments}
+        />
+
       }
     />
   );
