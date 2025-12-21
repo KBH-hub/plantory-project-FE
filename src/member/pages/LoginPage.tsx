@@ -38,8 +38,7 @@ export default function LoginPage() {
             setUser(data.user);
             setAccessToken(data.accessToken);
 
-            // 4) 이동
-            navigate(role === "ADMIN" ? "/admin" : "/dashboard", { replace: true });
+            navigate("/", { replace: true });
         } catch (err) {
             console.error("로그인 실패", err);
         }
