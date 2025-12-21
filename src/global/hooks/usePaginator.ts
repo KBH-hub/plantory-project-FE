@@ -4,7 +4,12 @@ import type { paginationArgs, PaginatorUpdateArgs } from "@/global/types/paginat
 
 
 export function usePaginator({ containerRef, current, totalItems, pageSize, onChange }: paginationArgs) {
-  const paginatorRef = useRef<{ update: (p?: PaginatorUpdateArgs) => void } | null>(null);
+    const paginatorRef = useRef<{ update: (p?: PaginatorUpdateArgs) => void } | null>(null);
+    const onChangeRef = useRef(onChange);
+
+    useEffect(() => {
+        onChangeRef.current = onChange;
+    }, [onChange]);
 
   useEffect(() => {
     if (!containerRef.current) return;
