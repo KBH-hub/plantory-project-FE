@@ -4,22 +4,27 @@ import type { paginationArgs, PaginatorUpdateArgs } from "@/global/types/paginat
 
 
 export function usePaginator({ containerRef, current, totalItems, pageSize, onChange }: paginationArgs) {
-  const paginatorRef = useRef<{ update: (p?: PaginatorUpdateArgs) => void } | null>(null);
+    const paginatorRef = useRef<{ update: (p?: PaginatorUpdateArgs) => void } | null>(null);
+    const onChangeRef = useRef(onChange);
 
-  useEffect(() => {
-    if (!containerRef.current) return;
-    if (paginatorRef.current) return;
+    useEffect(() => {
+        onChangeRef.current = onChange;
+    }, [onChange]);
 
-    paginatorRef.current = createPaginator({
-      container: containerRef.current,
-      current,
-      totalItems,
-      pageSize,
-      windowSize: 5,
-      modeWhenUnknown: "next-only",
-      onChange,
-    });
-  }, [containerRef, onChange]);
+    useEffect(() => {
+        if (!containerRef.current) return;
+        if (paginatorRef.current) return;
+
+        paginatorRef.current = createPaginator({
+            container: containerRef.current,
+            current,
+            totalItems,
+            pageSize,
+            windowSize: 5,
+            modeWhenUnknown: "next-only",
+            onChange: (p) => onChangeRef.current(p),
+        });
+    }, [containerRef, current, totalItems, pageSize]);
 
   useEffect(() => {
     if (!paginatorRef.current) return;

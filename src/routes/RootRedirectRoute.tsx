@@ -1,7 +1,7 @@
 import {Navigate} from "react-router-dom";
 import {useAuthStore} from "@/global/stores/useAuthStore";
 
-function RootRedirect() {
+function RootRedirectRoute() {
     const { isLogin, authUser, initialized } = useAuthStore();
 
     if (!initialized) return <div>로딩중...</div>;
@@ -15,4 +15,4 @@ function RootRedirect() {
     return <Navigate to="/dashboard" replace />;
 }
 
-export default RootRedirect;
+export default RootRedirectRoute;
