@@ -22,6 +22,7 @@ import CreateSharing from "@/community/sharing/pages/CreateSharing";
 import PlantCalendar from "@/myPlant/pages/PlantCalendar";
 import MyPlantManagement from "@/myPlant/pages/MyPlantManagement";
 import UpdateReview from "@/community/sharing/pages/UpdateReview";
+import QuestionList from "./community/question/pages/QuestionList";
 
 export default function App() {
     const initialized = useAuthStore((s) => s.initialized);
@@ -50,6 +51,7 @@ export default function App() {
                         <Route path="/sharing/:sharingId" element={<ReadSharing />} />
                         <Route path="/sharing/create" element={<CreateSharing />} />
                         <Route path="/sharing/:sharingId/edit" element={<CreateSharing />} />
+                        <Route path="/questionList" element={<QuestionList />} />
                         <Route path="/sharing/:sharingId/review" element={<UpdateReview />} />
                         <Route path="/MessageList" element={<MessageList />} />
                         <Route path="/messageDetail/:messageId" element={<MessageDetail />} />

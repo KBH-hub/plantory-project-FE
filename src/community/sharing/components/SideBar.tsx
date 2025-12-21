@@ -27,7 +27,7 @@ function SharingSidebar({ interestCount, popular }: SharingSidebarProps) {
         {popular.map((item) => (
           <Link
             key={item.sharingId}
-            to={`/readSharing/${item.sharingId}`}
+            to={`/sharing/${item.sharingId}`}
             className="d-flex justify-content-between py-2 text-reset text-decoration-none border-bottom"
           >
             <span className="text-truncate">
