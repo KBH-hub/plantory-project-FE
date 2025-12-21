@@ -16,7 +16,7 @@ import {
   getWeightList,
   saveRateConfig,
   saveWeights,
-} from "../weightManagementService";
+} from "@/admin/services/weightManagementService";
 
 import { showModal } from "@/global/utils/showModal";
 
