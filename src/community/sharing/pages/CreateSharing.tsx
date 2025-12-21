@@ -13,7 +13,7 @@ function CreateSharing() {
   const { form, setForm, images, addImages, removeImage, submit, isEdit, isSubmitting } =
     useSharingWrite(numericSharingId);
   
-  const cancelLink = isEdit ? `/sharing/${sharingId}` : `sharingList`;
+  const cancelLink = isEdit ? `/sharing/${sharingId}` : `/sharingList`;
 
   return (
     <>
