@@ -32,6 +32,8 @@ import ProfileSharingHistory from "./member/pages/ProfileSharingHistory";
 import WeightManagementPage from "./admin/pages/WeightManagementPage";
 import ProfileInfoPage from "@/profile/pages/ProfileInfoPage";
 import UpdateProfilePage from "@/profile/pages/UpdateProfilePage";
+import ReadQuestion from "./community/question/pages/ReadQuestion";
+import ProfileInterest from "./member/pages/ProfileInterest";
 
 export default function App() {
     const initialized = useAuthStore((s) => s.initialized);
@@ -61,8 +63,13 @@ export default function App() {
                         <Route path="/sharing/:sharingId" element={<ReadSharing />} />
                         <Route path="/sharing/create" element={<CreateSharing />} />
                         <Route path="/sharing/:sharingId/edit" element={<CreateSharing />} />
-                        <Route path="/questionList" element={<QuestionList />} />
                         <Route path="/sharing/:sharingId/review" element={<UpdateReview />} />
+                        <Route path="/question/:questionId" element={<ReadQuestion />} />
+                        <Route path="/question/create" element={<CreateQuestion />} />
+                        <Route path="/question/:questionId/edit" element={<CreateQuestion />} />
+                        <Route path="/questionList" element={<QuestionList />} />
+                        <Route path="/sharingHistory" element={<ProfileSharingHistory />} />
+                        <Route path="/profileInterest" element={<ProfileInterest />} />
                         <Route path="/MessageList" element={<MessageList />} />
                         <Route path="/messageDetail/:messageId" element={<MessageDetail />} />
                         <Route path="/plantDictionary" element={<PlantDictionary />} />

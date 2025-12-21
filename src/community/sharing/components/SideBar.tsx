@@ -6,7 +6,7 @@ function SharingSidebar({ interestCount, popular }: SharingSidebarProps) {
   return (
     <div id="sharingSidebar" style={{ position: "sticky", top: 150 }}>
       <Link
-        to="/profileInsert"
+        to="/profileInterest"
         className="text-reset text-decoration-none"
       >
         <div className="bg-white border p-3 mb-3">
