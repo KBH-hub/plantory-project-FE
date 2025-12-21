@@ -1,5 +1,5 @@
 import { axiosInstance } from "@/global/services/api/axiosInstance";
-import { SharingPartner, ReviewRequest } from "@/community/sharing/types/completeSharing";
+import { SharingPartner } from "@/community/sharing/types/completeSharing";
 
 export const getSharingPartners = async ( sharingId: number, receiverId: number ): Promise<SharingPartner[]> => {
   const res = await axiosInstance.get<SharingPartner[]>(`/api/sharings/${sharingId}/partners`,
@@ -17,8 +17,4 @@ export const completeSharing = async ( sharingId: number, targetMemberId: number
     }
   );
   return res.data;
-};
-
-export const registerSharingReview = async ( sharingId: number, review: ReviewRequest ): Promise<boolean> => {
-  return (await axiosInstance.post<boolean>( `/api/sharings/${sharingId}/review`, review)).data;
 };
