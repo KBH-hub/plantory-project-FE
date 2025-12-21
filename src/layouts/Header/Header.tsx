@@ -7,10 +7,11 @@ import MemberSearchModal from "@/report/components/MemberSearchModal";
 
 import { useNotice } from "@/notice/hooks/useNotice";
 import { useReportFlow } from "@/report/hooks/useReport";
-
+import useLogout from "@/global/hooks/useLogout";
+import UserDropdown from "../../auth/componets/UserDropdown";
 export default function Header() {
   const user = useAuthStore((s) => s.user);
-
+  const handleLogout = useLogout();
   const { alarms, alarmCount, moveNotice, clearAllNotice } = useNotice();
 
   const {
@@ -63,9 +64,9 @@ export default function Header() {
                   </Link>
                 </li>
                 <li>
-                  <a className="dropdown-item ph-dropdown-item" href="/questionList">
+                  <Link className="dropdown-item ph-dropdown-item" to="/questionList">
                     질문 게시판
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </li>
@@ -81,14 +82,14 @@ export default function Header() {
               </button>
               <ul className="dropdown-menu ph-dropdown">
                 <li>
-                  <a className="dropdown-item ph-dropdown-item" href="/plantDictionary">
+                  <Link className="dropdown-item ph-dropdown-item" to="/plantDictionary">
                     실내 식물
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="dropdown-item ph-dropdown-item" href="/dryPlantDictionary">
+                  <Link className="dropdown-item ph-dropdown-item" to="/dryPlantDictionary">
                     건조 식물
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </li>
@@ -104,14 +105,14 @@ export default function Header() {
               </button>
               <ul className="dropdown-menu ph-dropdown">
                 <li>
-                  <a className="dropdown-item ph-dropdown-item" href="/plantCalendar">
+                  <Link className="dropdown-item ph-dropdown-item" to="/plantCalendar">
                     식물 캘린더
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="dropdown-item ph-dropdown-item" href="/myPlantManagement">
+                  <Link className="dropdown-item ph-dropdown-item" to="/myPlantManagement">
                     내 식물 관리
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </li>
@@ -125,38 +126,15 @@ export default function Header() {
               onClearAll={clearAllNotice}
             />
 
-            <a href="/messageList" className="text-dark text-decoration-none" aria-label="쪽지함으로 이동">
+            <Link to="/messageList" className="text-dark text-decoration-none" aria-label="쪽지함으로 이동">
               <i className="bi bi-envelope fs-4 ph-mail" />
-            </a>
+            </Link>
 
             <button type="button" className="btn p-0" onClick={openReportModal} aria-label="신고 모달 열기">
               <i className="bi bi-exclamation-triangle fs-4 ph-report" />
             </button>
 
-            <div className="dropdown ph-profile">
-              <button
-                type="button"
-                className="d-flex align-items-center text-dark text-decoration-none ph-profile-btn btn btn-link p-0"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                aria-label="프로필 메뉴 열기"
-              >
-                <i className="bi bi-person-circle fs-3" />
-                <span className="ms-2">{user?.nickname || "Guest"}</span>님
-              </button>
-              <ul className="dropdown-menu dropdown-menu-end ph-profile-menu">
-                <li>
-                  <a className="dropdown-item" href="/profile">
-                    내 프로필
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item text-danger" href="/logout">
-                    로그아웃
-                  </a>
-                </li>
-              </ul>
-            </div>
+              <UserDropdown />
           </div>
         </div>
       </nav>
