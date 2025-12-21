@@ -30,6 +30,7 @@ import AuthLayout from "@/layouts/AuthLayout";
 import MemberManagementPage from "@/admin/pages/MemberManagementPage";
 import CreateQuestion from "./community/question/pages/CreateQuestion";
 import ProfileSharingHistory from "./member/pages/ProfileSharingHistory";
+import WeightManagementPage from "./admin/pages/WeightManagementPage";
 
 export default function App() {
     const initialized = useAuthStore((s) => s.initialized);
@@ -88,7 +89,7 @@ export default function App() {
                     >
                         <Route path="/admin/memberManagement" element={<MemberManagementPage />} />
                         {/*<Route path="/admin/reportManagement" element={<ReportManagement />} />*/}
-                        {/*<Route path="/admin/weightManagement" element={<WeightManagement />} />*/}
+                        <Route path="/admin/weightManagement" element={<WeightManagementPage />} />
                     </Route>
                 </Routes>
             )}
