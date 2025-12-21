@@ -1,13 +1,10 @@
-import axios from "axios";
+import { authAxios } from "@/global/services/api/authAxios";
 
-const api = axios.create({
-    baseURL: "http://localhost:9000",
-    withCredentials: true,
-});
+export const loginApi = (payload: { membername: string; password: string }) =>
+    authAxios.post("/api/auth/login", payload);
 
-export const login = (payload: {
-    membername: string;
-    password: string;
-}) => {
-    return api.post("/api/auth/login", payload);
-};
+export const logoutApi = () => authAxios.post("/api/auth/logout");
+
+export const meApi = () => authAxios.get("/api/auth/me");
+
+export const reissueApi = () => authAxios.post("/api/auth/reissue");
