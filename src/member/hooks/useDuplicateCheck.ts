@@ -8,13 +8,24 @@ interface DuplicateCheckOptions {
     errorMessage?: string;
 }
 
+// ✅ 반환 타입을 export
+export type DuplicateCheckResult = {
+    isAvailable: boolean | null;
+    message: string;
+    isChecking: boolean;
+    checkedValue: string | null;
+    check: (value: string) => Promise<void>;
+    reset: () => void;
+    isValidFor: (currentValue: string) => boolean;
+};
+
 export const useDuplicateCheck = ({
                                       checkFn,
                                       emptyMessage,
                                       successMessage,
                                       failMessage,
                                       errorMessage = "확인 중 오류가 발생했습니다.",
-                                  }: DuplicateCheckOptions) => {
+                                  }: DuplicateCheckOptions): DuplicateCheckResult => {
     const [isAvailable, setIsAvailable] = useState<boolean | null>(null);
     const [message, setMessage] = useState("");
     const [isChecking, setIsChecking] = useState(false);
@@ -56,13 +67,10 @@ export const useDuplicateCheck = ({
     );
 
     const isValidFor = useCallback(
-        (currentValue: string) => {
-            return (
-                isAvailable === true &&
-                checkedValue !== null &&
-                checkedValue === currentValue.trim()
-            );
-        },
+        (currentValue: string) =>
+            isAvailable === true &&
+            checkedValue !== null &&
+            checkedValue === currentValue.trim(),
         [isAvailable, checkedValue]
     );
 

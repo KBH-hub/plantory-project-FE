@@ -1,5 +1,4 @@
 export type TabKey = "profilePosts" | "profileComments";
-
 export type ChangePasswordReq = {
     oldPassword: string;
     newPassword: string;
