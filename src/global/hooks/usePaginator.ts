@@ -2,32 +2,28 @@ import { useEffect, useRef } from "react";
 import { createPaginator } from "@/global/utils/pagination";
 import type { paginationArgs, PaginatorUpdateArgs } from "@/global/types/pagination";
 
-
 export function usePaginator({ containerRef, current, totalItems, pageSize, onChange }: paginationArgs) {
     const paginatorRef = useRef<{ update: (p?: PaginatorUpdateArgs) => void } | null>(null);
     const onChangeRef = useRef(onChange);
 
-    useEffect(() => {
-        onChangeRef.current = onChange;
-    }, [onChange]);
-
-    useEffect(() => {
-        if (!containerRef.current) return;
-        if (paginatorRef.current) return;
-
-        paginatorRef.current = createPaginator({
-            container: containerRef.current,
-            current,
-            totalItems,
-            pageSize,
-            windowSize: 5,
-            modeWhenUnknown: "next-only",
-            onChange: (p) => onChangeRef.current(p),
-        });
-    }, [containerRef, current, totalItems, pageSize]);
-
   useEffect(() => {
-    if (!paginatorRef.current) return;
-    paginatorRef.current.update({ current, totalItems, pageSize });
-  }, [current, totalItems, pageSize]);
+    const container = containerRef.current;
+    if (!container) return;
+
+    container.innerHTML = "";
+    paginatorRef.current = createPaginator({
+      container,
+      current,
+      totalItems,
+      pageSize,
+      windowSize: 5,
+      modeWhenUnknown: "next-only",
+      onChange,
+    });
+
+    return () => {
+      container.innerHTML = "";
+      paginatorRef.current = null;
+    };
+  }, [containerRef, current, totalItems, pageSize, onChange]);
 }

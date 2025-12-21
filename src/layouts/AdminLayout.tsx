@@ -5,7 +5,7 @@ export default function AdminLayout() {
     return (
         <>
             <AdminHeader />
-            <main className="min-vh-100">
+            <main className="min-vh-100 bg-light">
                 <Outlet />
             </main>
         </>

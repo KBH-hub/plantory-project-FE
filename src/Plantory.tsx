@@ -27,6 +27,9 @@ import AdminLayout from "@/layouts/AdminLayout";
 import RootRedirectRoute from "@/routes/RootRedirectRoute";
 import AuthLayout from "@/layouts/AuthLayout";
 import MemberManagementPage from "@/admin/pages/MemberManagementPage";
+import CreateQuestion from "./community/question/pages/CreateQuestion";
+import ProfileSharingHistory from "./member/pages/ProfileSharingHistory";
+import WeightManagementPage from "./admin/pages/WeightManagementPage";
 import ProfileInfoPage from "@/profile/pages/ProfileInfoPage";
 import UpdateProfilePage from "@/profile/pages/UpdateProfilePage";
 
@@ -84,7 +87,7 @@ export default function App() {
                     >
                         <Route path="/admin/memberManagement" element={<MemberManagementPage />} />
                         {/*<Route path="/admin/reportManagement" element={<ReportManagement />} />*/}
-                        {/*<Route path="/admin/weightManagement" element={<WeightManagement />} />*/}
+                        <Route path="/admin/weightManagement" element={<WeightManagementPage />} />
                     </Route>
                 </Routes>
             )}
