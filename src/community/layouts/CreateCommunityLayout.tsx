@@ -75,7 +75,7 @@ function CreateCommunityLayout({
           <div className="row mb-4">
             <label className="col-sm-2 col-form-label fw-semibold small">설명 <span className="text-danger">*</span></label>
             <div className="col-sm-10">
-              <textarea className="form-control" placeholder="식물에 대한 간단한 소개를 적어주세요." rows={5} value={formContent} onChange={(e) => onContentChange(e.target.value)} />
+              <textarea className="form-control" placeholder="내용을 입력해주세요." rows={5} value={formContent} onChange={(e) => onContentChange(e.target.value)} />
             </div>
           </div>
 

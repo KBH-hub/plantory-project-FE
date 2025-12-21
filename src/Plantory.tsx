@@ -22,11 +22,14 @@ import PlantCalendar from "@/myPlant/pages/PlantCalendar";
 import MyPlantManagement from "@/myPlant/pages/MyPlantManagement";
 import UpdateReview from "@/community/sharing/pages/UpdateReview";
 import QuestionList from "./community/question/pages/QuestionList";
+import ReadQuestion from "./community/question/pages/ReadQuestion";
 import RoleRoute from "@/routes/RoleRoute";
 import AdminLayout from "@/layouts/AdminLayout";
 import RootRedirect from "@/routes/RootRedirect";
 import AuthLayout from "@/layouts/AuthLayout";
 import MemberManagementPage from "@/admin/pages/MemberManagementPage";
+import CreateQuestion from "./community/question/pages/CreateQuestion";
+import ProfileSharingHistory from "./member/pages/ProfileSharingHistory";
 
 export default function App() {
     const initialized = useAuthStore((s) => s.initialized);
@@ -56,8 +59,11 @@ export default function App() {
                         <Route path="/sharing/:sharingId" element={<ReadSharing />} />
                         <Route path="/sharing/create" element={<CreateSharing />} />
                         <Route path="/sharing/:sharingId/edit" element={<CreateSharing />} />
-                        <Route path="/questionList" element={<QuestionList />} />
                         <Route path="/sharing/:sharingId/review" element={<UpdateReview />} />
+                        <Route path="/questionList" element={<QuestionList />} />
+                        <Route path="/question/:questionId" element={<ReadQuestion />} />
+                        <Route path="/question/create" element={<CreateQuestion />} />
+                        <Route path="/question/:questionId/edit" element={<CreateQuestion />} />
                         <Route path="/MessageList" element={<MessageList />} />
                         <Route path="/messageDetail/:messageId" element={<MessageDetail />} />
                         <Route path="/plantDictionary" element={<PlantDictionary />} />
@@ -66,6 +72,8 @@ export default function App() {
                         <Route path="/dryDictionaryDetail/:cntntsNo" element={<DryDictionaryDetail />} />
                         <Route path="/plantCalendar" element={<PlantCalendar />} />
                         <Route path="/myPlantManagement" element={<MyPlantManagement />} />
+                        <Route path="/sharingHistory" element={<ProfileSharingHistory />} />
+                        
                     </Route>
 
                     {/* ADMIN */}

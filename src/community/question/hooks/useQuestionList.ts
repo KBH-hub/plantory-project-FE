@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getQuestionList } from "@/community/question/services/questionListApi";
-import type { QuestionListResponse } from "@/community/question/tyeps/questionList"
+import type { QuestionListResponse } from "@/community/question/types/questionList"
 
 export function useQuestionList() {
   const [list, setList] = useState<QuestionListResponse[]>([]);
