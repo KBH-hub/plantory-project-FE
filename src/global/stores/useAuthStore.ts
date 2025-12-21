@@ -1,5 +1,6 @@
 import { create } from "zustand";
-export type Role = 'USER' | 'ADMIN';
+
+export type Role = "USER" | "ADMIN";
 
 export interface AuthUser {
     memberId: number;
@@ -24,17 +25,13 @@ interface AuthState {
     accessToken: string | null;
     initialized: boolean;
 
-    login: (payload: {
-        authUser: AuthUser;
-        accessToken: string;
-    }) => void;
+    login: (payload: { authUser: AuthUser; accessToken: string; user: User }) => void;
 
-    setUser: (user: User) => void;
-    setAccessToken: (token: string) => void;
+    setUser: (user: User | null) => void;
+    setAccessToken: (token: string | null) => void;
     logout: () => void;
-    setInitialized: () => void;
+    setInitialized: (initialized: boolean) => void;
 }
-
 
 export const useAuthStore = create<AuthState>((set) => ({
     isLogin: false,
@@ -43,19 +40,19 @@ export const useAuthStore = create<AuthState>((set) => ({
     accessToken: null,
     initialized: false,
 
-    login: ({ authUser, accessToken }) =>
+    login: ({ authUser, accessToken, user }) =>
         set({
             isLogin: true,
             authUser,
+            user,
             accessToken,
-            initialized: true,
         }),
 
     setUser: (user) =>
         set((state) => ({
             ...state,
             user,
-            isLogin: true,
+            isLogin: !!user,
         })),
 
     setAccessToken: (token) =>
@@ -70,17 +67,12 @@ export const useAuthStore = create<AuthState>((set) => ({
             authUser: null,
             user: null,
             accessToken: null,
-            initialized: true,
+            // initialized는 AuthInitializer가 관리 (건드리지 않음)
         }),
 
-    setInitialized: () =>
-        set({ initialized: true }),
+    setInitialized: (initialized) => set({ initialized }),
 }));
 
-
-/**
- * 개발용 디버깅 배포 시 지우기.
- */
 if (import.meta.env.DEV) {
     window.authStore = useAuthStore;
 }
