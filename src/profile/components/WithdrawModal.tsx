@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import {axiosInstance} from "@/global/services/api/axiosInstance";
+// src/profile/components/WithdrawModal.tsx
+import React, { useEffect, useState } from "react";
 import useLogout from "@/global/hooks/useLogout";
-import {showModal} from "@/global/utils/showModal";
+import { showModal } from "@/global/utils/showModal";
+import { profileApi } from "@/profile/services/profileService";
 
 type Props = {
     open: boolean;
@@ -14,6 +15,14 @@ const WithdrawModal: React.FC<Props> = ({ open, onClose }) => {
 
     const logout = useLogout();
 
+    // 모달을 다시 열 때 체크 상태 초기화(UX)
+    useEffect(() => {
+        if (open) {
+            setWithdrawAgree(false);
+            setIsSubmitting(false);
+        }
+    }, [open]);
+
     if (!open) return null;
 
     const handleWithdraw = async () => {
@@ -21,8 +30,10 @@ const WithdrawModal: React.FC<Props> = ({ open, onClose }) => {
 
         try {
             setIsSubmitting(true);
-            await axiosInstance.put("/api/profile/withdraw");
+
+            await profileApi.withdraw();
             await logout();
+
         } catch (e) {
             console.log(e);
             await showModal.alert("회원 탈퇴에 실패했습니다.");

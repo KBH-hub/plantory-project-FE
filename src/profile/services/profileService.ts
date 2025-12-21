@@ -1,11 +1,14 @@
+// src/profile/services/profileService.ts
 import { axiosInstance } from "@/global/services/api/axiosInstance";
 import type {
-    ChangePasswordReq, ChangePasswordRes,
+    ChangePasswordReq,
+    ChangePasswordRes,
     ProfileCountsRes,
     ProfileInfo,
     ProfilePictureRes,
-    ProfileWrittenRes, UpdateProfileReq,
-} from "@/profile/types/profileType.ts";
+    ProfileWrittenRes,
+    UpdateProfileReq,
+} from "@/profile/types/profileType";
 
 export const profileApi = {
     getMyProfile: async () => {
@@ -25,21 +28,15 @@ export const profileApi = {
         return res.data;
     },
 
-    getWritten: async (profileId: number, params: {
-        keyword: string;
-        category: string;
-        limit: number;
-        offset: number;
-    }) => {
+    getWritten: async (
+        profileId: number,
+        params: { keyword: string; category: string; limit: number; offset: number }
+    ) => {
         const res = await axiosInstance.get<ProfileWrittenRes>(`/api/profileWritten/${profileId}`, { params });
         return res.data;
     },
 
-    softDeleteWritten: async (payload: {
-        memberId: number;
-        sharingIds: number[];
-        questionIds: number[];
-    }) => {
+    softDeleteWritten: async (payload: { memberId: number; sharingIds: number[]; questionIds: number[] }) => {
         const res = await axiosInstance.post("/api/profileWritten/softDelete", payload);
         return res.data;
     },
@@ -49,13 +46,12 @@ export const profileApi = {
         return res.data;
     },
 
-
-    updateMyProfile: async (payload: UpdateProfileReq) => {
+    updateProfile: async (payload: UpdateProfileReq) => {
         const res = await axiosInstance.put("/api/profile", payload);
         return res.data;
     },
 
-    uploadMyPicture: async (file: File) => {
+    uploadProfileImage: async (file: File) => {
         const formData = new FormData();
         formData.append("profileImage", file);
 
@@ -64,6 +60,9 @@ export const profileApi = {
         });
         return res.data;
     },
+
+    checkNickname: (nickname: string) =>
+        axiosInstance.get("/api/members/checkNickname", { params: { nickname } }).then(r => !r.data.exists),
 
     changePassword: async (payload: ChangePasswordReq) => {
         const res = await axiosInstance.put<ChangePasswordRes>("/api/profile/changePassword", payload);
