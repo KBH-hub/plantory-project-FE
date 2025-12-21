@@ -29,6 +29,7 @@ import RootRedirect from "@/routes/RootRedirect";
 import AuthLayout from "@/layouts/AuthLayout";
 import MemberManagementPage from "@/admin/pages/MemberManagementPage";
 import CreateQuestion from "./community/question/pages/CreateQuestion";
+import ProfileSharingHistory from "./member/pages/ProfileSharingHistory";
 
 export default function App() {
     const initialized = useAuthStore((s) => s.initialized);
@@ -71,6 +72,8 @@ export default function App() {
                         <Route path="/dryDictionaryDetail/:cntntsNo" element={<DryDictionaryDetail />} />
                         <Route path="/plantCalendar" element={<PlantCalendar />} />
                         <Route path="/myPlantManagement" element={<MyPlantManagement />} />
+                        <Route path="/sharingHistory" element={<ProfileSharingHistory />} />
+                        
                     </Route>
 
                     {/* ADMIN */}

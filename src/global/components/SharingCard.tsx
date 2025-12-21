@@ -24,7 +24,7 @@ function SharingCard({ item, variant = "default" }: SharingCardProps) {
           src={item.fileUrl}
           className="card-img-top"
           style={{
-            height: isRecommended ? 355 : 350,
+            height: isRecommended ? 355 : 380,
             objectFit: "cover",
           }} alt={item.title}
         />
