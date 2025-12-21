@@ -7,6 +7,7 @@ import banner3 from "@/assets/images/banner_3.png";
 import dashboard1 from "@/assets/images/dashboard_1.png";
 import dashboard2 from "@/assets/images/dashboard_2.png";
 import dashboard3 from "@/assets/images/dashboard_3.png";
+import { Link } from "react-router-dom";
 
 function Dashboard() {
   const { data, loading } = useDashboard();
@@ -36,9 +37,9 @@ function Dashboard() {
                 <div className="carousel-caption d-none d-md-block text-start">
                   <h5 className="fw-bold mb-1">오늘의 인기 나눔</h5>
                   <p className="mb-2 small">가까운 동네에서 식물을 나눔받아보세요.</p>
-                  <a href="/sharingList" className="btn btn-sm btn-light fw-semibold">
+                  <Link to={"/sharingList"} className="btn btn-sm btn-light fw-semibold">
                     나눔 보러가기
-                  </a>
+                  </Link>
                 </div>
               </div>
 

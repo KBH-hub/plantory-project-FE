@@ -1,9 +1,10 @@
 import { useParams } from "react-router-dom";
-import CommunityDetailLayout from "@/community/layouts/ReadCommunityLayout";
 import { useSharingComments, useSharingDetail } from "@/community/sharing/hooks/useReadSharing";
-import SharingActions from "@/community/sharing/components/SharingActions";
+import SharingBtnAction from "@/community/sharing/components/SharingBtnAction";
 import Comments from "@/community/components/Comments";
 import { useAuthStore } from "@/global/stores/useAuthStore";
+import ReadCommunityLayout from "@/community/layouts/ReadCommunityLayout";
+import "@/styles/readSharing.css"
 
 function ReadSharing() {
   const { sharingId } = useParams<{ sharingId: string }>();
@@ -14,10 +15,11 @@ function ReadSharing() {
   if (loading || !data) return <div>로딩중...</div>;
 
   return (
-    <CommunityDetailLayout
+    <ReadCommunityLayout
       pageTitle="나눔"
       title={data.title}
       createdAt={data.createdAt}
+      updatedAt={data.updatedAt}
       images={data.images}
       content={data.content}
       loginMemberId={loginUser?.memberId}
@@ -48,7 +50,7 @@ function ReadSharing() {
         </small>
       }
 
-      actions={<SharingActions data={data} />}
+      actions={<SharingBtnAction data={data} />}
 
       comments={
         <Comments sharingId={Number(sharingId)} loginMemberId={loginUser?.memberId} comments={comments} reload={reload} loginNickname={data.nickname} />

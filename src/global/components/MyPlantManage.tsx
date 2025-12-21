@@ -1,8 +1,10 @@
 import type { TodayWatering, TodayDiary } from "@/dashboard/types/dashboard";
+import { Link } from "react-router-dom";
 type Props = {waterings: TodayWatering[]; diaries: TodayDiary[]};
 
 function MyPlantManage({ waterings, diaries }: Props) {
   return (
+    <Link to="/plantCalendar" className="card text-reset text-decoration-none h-100">
     <div className="card shadow-sm mb-3">
       <div className="card-header bg-dark text-white py-2">
         <h6 className="m-0 fw-bold">오늘의 식물 관리</h6>
@@ -73,6 +75,7 @@ function MyPlantManage({ waterings, diaries }: Props) {
         </div>
       </div>
     </div>
+    </Link>
   );
 }
 

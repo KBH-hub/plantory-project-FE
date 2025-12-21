@@ -1,5 +1,5 @@
 import { Image } from "@/global/types/image";
-import { ManageDemand, ManageLevel } from "../enum/manageTypes";
+import { ManageDemand, ManageLevel } from "@/community/sharing/enum/manageTypes";
 
 export interface SharingDetailResponse {
   sharingId: number;
@@ -37,4 +37,23 @@ export interface SharingCommentResponse {
   content: string;
   createdAt: string;
   updatedAt?: string;
+}
+
+export interface DictionarySearchItem {
+  id: string;           // cntntsNo
+  plantName: string;    // cntntsSj
+  fileUrl: string;      
+  type: "garden" | "dry";
+}
+
+export interface DictionaryPlantDetail {
+  plantName: string;
+
+  manageLevel: ManageLevel;
+  levelLabel: string;
+
+  manageDemand: ManageDemand;
+  demandLabel: string;
+
+  fileUrl: string;
 }
