@@ -2,102 +2,68 @@ import { useState } from "react";
 import AddressSelect from "@/global/components/AddressSelect";
 import { useSignUp } from "@/member/hooks/useSignUp";
 import { useNavigate } from "react-router-dom";
+import { showModal } from "@/global/utils/showModal";
+import { useSubmitWithAlert } from "@/global/hooks/useSubmitWithAlert";
+import type { SignUpRequestType } from "@/member/types/memberRequestType";
+import { useDuplicateCheck } from "@/member/hooks/useDuplicateCheck";
 
 const SignUpPage = () => {
-  const navigate = useNavigate();
-  const { checkMembername, checkNickname, submit } = useSignUp();
-  const [membername, setMembername] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
-  const [pwCheck, setPwCheck] = useState("");
-  const [address, setAddress] = useState("");
+    const navigate = useNavigate();
+    const { submitWithAlert } = useSubmitWithAlert<SignUpRequestType>();
 
-  const [isMembernameAvailable, setIsMembernameAvailable] =
-      useState<boolean | null>(null);
-  const [isNicknameAvailable, setIsNicknameAvailable] =
-      useState<boolean | null>(null);
+    const { checkMembername, checkNickname, submit } = useSignUp();
 
-  const [idMessage, setIdMessage] = useState("");
-  const [nicknameMessage, setNicknameMessage] = useState("");
+    const [membername, setMembername] = useState("");
+    const [nickname, setNickname] = useState("");
+    const [phone, setPhone] = useState("");
+    const [password, setPassword] = useState("");
+    const [pwCheck, setPwCheck] = useState("");
+    const [address, setAddress] = useState("");
 
-  const handleCheckMembername = async () => {
-    if (!membername) {
-      setIsMembernameAvailable(false);
-      setIdMessage("아이디를 입력해주세요.");
-      return;
-    }
+    const idCheck = useDuplicateCheck({
+        checkFn: checkMembername,
+        emptyMessage: "아이디를 입력해주세요.",
+        successMessage: "사용 가능한 아이디입니다.",
+        failMessage: "이미 사용 중인 아이디입니다.",
+    });
 
-    try {
-      const available = await checkMembername(membername);
-      setIsMembernameAvailable(available);
-      setIdMessage(
-          available
-              ? "사용 가능한 아이디입니다."
-              : "이미 사용 중인 아이디입니다."
-      );
-    } catch {
-      setIsMembernameAvailable(false);
-      setIdMessage("아이디 확인 중 오류가 발생했습니다.");
-    }
-  };
+    const nicknameCheck = useDuplicateCheck({
+        checkFn: checkNickname,
+        emptyMessage: "닉네임을 입력해주세요.",
+        successMessage: "사용 가능한 닉네임입니다.",
+        failMessage: "이미 사용 중인 닉네임입니다.",
+    });
 
-  const handleCheckNickname = async () => {
-    if (!nickname) {
-      setIsNicknameAvailable(false);
-      setNicknameMessage("닉네임을 입력해주세요.");
-      return;
-    }
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
 
-    try {
-      const available = await checkNickname(nickname);
-      setIsNicknameAvailable(available);
-      setNicknameMessage(
-          available
-              ? "사용 가능한 닉네임입니다."
-              : "이미 사용 중인 닉네임입니다."
-      );
-    } catch {
-      setIsNicknameAvailable(false);
-      setNicknameMessage("닉네임 확인 중 오류가 발생했습니다.");
-    }
-  };
+        if (!idCheck.isValidFor(membername)) {
+            await showModal.alert("아이디 중복 확인을 해주세요.");
+            return;
+        }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+        if (!nicknameCheck.isValidFor(nickname)) {
+            await showModal.alert("닉네임 중복 확인을 해주세요.");
+            return;
+        }
 
-    if (isMembernameAvailable !== true) {
-      alert("아이디 중복 확인을 해주세요.");
-      return;
-    }
+        if (password !== pwCheck) {
+            await showModal.alert("비밀번호가 일치하지 않습니다.");
+            return;
+        }
 
-    if (isNicknameAvailable !== true) {
-      alert("닉네임 중복 확인을 해주세요.");
-      return;
-    }
+        await submitWithAlert(
+            {
+                submit,
+                successMessage: "회원가입 성공",
+                failureMessage: "회원가입 실패",
+                onSuccess: () => navigate("/login"),
+            },
+            { membername, nickname, phone, password, address }
+        );
+    };
 
-    if (password !== pwCheck) {
-      alert("비밀번호가 일치하지 않습니다.");
-      return;
-    }
-
-    try {
-      await submit({
-        membername,
-        nickname,
-        phone,
-        password,
-        address,
-      });
-
-      alert("회원가입 성공");
-      navigate("/login");
-    } catch {
-      alert("회원가입 실패");
-    }
-  };
-
-  return (
+    return (
       <div className="bg-dark min-vh-100 d-flex align-items-center">
         <div className="container">
           <div className="mx-auto p-5 bg-white rounded shadow" style={{ maxWidth: 700 }}>
@@ -111,40 +77,49 @@ const SignUpPage = () => {
                     value={membername}
                     onChange={(e) => {
                       setMembername(e.target.value);
-                      setIsMembernameAvailable(null);
-                      setIdMessage("");
+                      idCheck.reset();
                     }}
                 />
-                <button type="button" className="btn btn-outline-secondary" onClick={handleCheckMembername}>
+                  <button
+                  type="button"
+                  className="btn btn-outline-secondary"
+                  onClick={() => idCheck.check(membername)}
+                  disabled={idCheck.isChecking}
+              >
                   중복 확인
-                </button>
+              </button>
               </div>
-              {idMessage && (
-                  <p className={`small ${isMembernameAvailable ? "text-success" : "text-danger"}`}>
-                    {idMessage}
-                  </p>
+                {idCheck.message && (
+                    <p className={`small ${idCheck.isAvailable ? "text-success" : "text-danger"}`}>
+                        {idCheck.message}
+                    </p>
               )}
 
-              <label className="fw-bold mt-3">닉네임 *</label>
-              <div className="input-group">
-                <input
-                    className="form-control"
-                    value={nickname}
-                    onChange={(e) => {
-                      setNickname(e.target.value);
-                      setIsNicknameAvailable(null);
-                      setNicknameMessage("");
-                    }}
-                />
-                <button type="button" className="btn btn-outline-secondary" onClick={handleCheckNickname}>
-                  중복 확인
-                </button>
-              </div>
-              {nicknameMessage && (
-                  <p className={`small ${isNicknameAvailable ? "text-success" : "text-danger"}`}>
-                    {nicknameMessage}
-                  </p>
-              )}
+                <label className="fw-bold mt-3">닉네임 *</label>
+                <div className="input-group">
+                    <input
+                        className="form-control"
+                        value={nickname}
+                        onChange={(e) => {
+                            setNickname(e.target.value);
+                            nicknameCheck.reset();
+                        }}
+                    />
+                    <button
+                        type="button"
+                        className="btn btn-outline-secondary"
+                        onClick={() => nicknameCheck.check(nickname)}
+                        disabled={nicknameCheck.isChecking}
+                    >
+                        중복 확인
+                    </button>
+                </div>
+
+                {nicknameCheck.message && (
+                    <p className={`small ${nicknameCheck.isAvailable ? "text-success" : "text-danger"}`}>
+                        {nicknameCheck.message}
+                    </p>
+                )}
 
               <AddressSelect onChange={setAddress} />
 

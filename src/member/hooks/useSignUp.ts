@@ -1,5 +1,5 @@
-import {checkMembernameApi, checkNicknameApi, signUp} from "@/member/services/memberApi";
-import {SignUpRequest} from "@/member/types/memberRequest";
+import {checkMembernameApi, checkNicknameApi, signUp} from "@/member/services/memberService";
+import {SignUpRequest} from "@/member/types/memberRequestType";
 
 export function useSignUp() {
     const checkMembername = (membername: string) => {
