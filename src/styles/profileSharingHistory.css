@@ -1,17 +1,17 @@
-.card {
+/* .card {
     border: none;
     border-radius: 10px;
     overflow: hidden;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
     position: relative;
-}
+} */
 
 /* Pulse animation */
-@keyframes cardPulse {
+/* @keyframes cardPulse {
     0% { transform: translateY(-6px) scale(1.02); }
     50% { transform: translateY(-8px) scale(1.04); }
     100% { transform: translateY(-6px) scale(1.02); }
-}
+} */
 
 .card:hover {
     animation: cardPulse 1.4s ease-in-out infinite;
