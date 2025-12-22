@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { getQuestionAnswers } from "@/community/question/services/readQuestionApi";
 import { QuestionAnswerResponse, QuestionDetailResponse } from "@/community/question/types/readQuestion";
 import { getQuestionDetail } from "@/community/question/services/readQuestionApi";
-import { profileApi } from "@/profile/services/profileService";
+import { profileApi } from "@/profile/services/profileApi";
 
 
 export interface QuestionComment {
