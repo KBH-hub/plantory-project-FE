@@ -1,14 +1,5 @@
 import AddressSelect from "@/global/components/AddressSelect";
-
-type MemberFormValues = {
-    membername: string;
-    nickname: string;
-    phone: string;
-    address: string;
-    password: string;
-    pwCheck: string;
-    noticeEnabled: boolean;
-};
+import {MemberFormValues} from "@/member/types/memberType";
 
 type DuplicateCheckLike = {
     isAvailable: boolean | null;
@@ -78,6 +69,11 @@ const MemberForm = ({
                     </button>
                 )}
             </div>
+            {idCheck.message && (
+                <p className={`small ${idCheck.isAvailable ? "text-success" : "text-danger"}`}>
+                    {idCheck.message}
+                </p>
+            )}
 
             {/* 닉네임 */}
             <label className="fw-bold mt-3">닉네임 *</label>
@@ -101,6 +97,7 @@ const MemberForm = ({
                     {nicknameCheck.message}
                 </p>
             )}
+            <br/>
 
             {/* 주소 */}
             <AddressSelect

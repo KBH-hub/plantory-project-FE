@@ -12,6 +12,7 @@ function SharingList() {
     interestCount,
     keyword,
     setKeyword,
+    userAddress,
     setUserAddress,
     isLastPage,
     loadMore,
@@ -33,6 +34,7 @@ function SharingList() {
                   value={keyword}
                   onChange={(e) => setKeyword(e.target.value)}
                 />
+
                 <button
                   className="input-group-text"
                   onClick={() => setKeyword(keyword.trim())}
@@ -50,9 +52,13 @@ function SharingList() {
           </div>
         </div>
 
-        <div className="container-fluid px-4 mt-3">
-          <AddressSelect onChange={(address) => { setUserAddress(address);}}/>
+        <div style={{ margin:25, maxWidth: 620 }}>
+        <AddressSelect
+            value={userAddress}
+            onChange={(address) => setUserAddress(address)}
+        />
         </div>
+
 
         <div className="container-fluid px-4 mt-3">
           <h5 className="fw-bold">주목할 만한 나눔</h5>

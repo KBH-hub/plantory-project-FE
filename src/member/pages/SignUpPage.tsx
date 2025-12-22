@@ -4,17 +4,9 @@ import { showModal } from "@/global/utils/showModal";
 import { useSubmitWithAlert } from "@/global/hooks/useSubmitWithAlert";
 import { useSignUp } from "@/member/hooks/useSignUp";
 import { useDuplicateCheck } from "@/member/hooks/useDuplicateCheck";
-import type { SignUpRequest } from "@/member/types/memberRequestType";
+import type { SignUpRequest } from "@/member/types/memberType";
 import MemberForm from "@/member/components/MemberForm";
-
-type MemberFormValues = {
-    membername: string;
-    nickname: string;
-    phone: string;
-    address: string;
-    password: string;
-    pwCheck: string;
-};
+import {MemberFormValues} from "@/member/types/memberType";
 
 const SignUpPage = () => {
     const navigate = useNavigate();
@@ -22,12 +14,13 @@ const SignUpPage = () => {
     const { checkMembername, checkNickname, submit } = useSignUp();
 
     const [values, setValues] = useState<MemberFormValues>({
+        noticeEnabled: false,
         membername: "",
         nickname: "",
         phone: "",
         address: "",
         password: "",
-        pwCheck: "",
+        pwCheck: ""
     });
 
     const idCheck = useDuplicateCheck({ checkFn: checkMembername, emptyMessage: "아이디를 입력해주세요.", successMessage: "사용 가능한 아이디입니다.", failMessage: "이미 사용 중인 아이디입니다." });
