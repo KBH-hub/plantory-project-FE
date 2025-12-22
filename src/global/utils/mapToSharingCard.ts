@@ -12,6 +12,6 @@ export function mapToSharingCard( item: ProfileSharingHistoryResponse
     commentCount: item.commentCount,
     createdAt: item.createdAt,
     updatedAt: item.createdAt, 
-    fileUrl: item.thumbnail || 
+    fileUrl: item.thumbnail || "/image/default.png",
   };
 }
