@@ -207,8 +207,8 @@ export default function ProfileInfo() {
     function handleRowClick(item: ProfileWrittenItem) {
         if (!isPostsTab) return;
 
-        if (item.category === "SHARING") navigate(`/readSharing/${item.id}`);
-        else if (item.category === "QUESTION") navigate(`/readSharing/${item.id}`);
+        if (item.category === "SHARING") navigate(`/sharing/${item.id}`);
+        else if (item.category === "QUESTION") navigate(`/sharing/${item.id}`);
 
     }
 
