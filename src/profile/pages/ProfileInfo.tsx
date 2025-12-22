@@ -64,7 +64,6 @@ export default function ProfileInfo() {
         pageSize: rowsPerPage,
         onChange: (p) => setCurrentPage(p),
     });
-    // 라우팅: /profile (내프로필) , /profile/:memberId (공개프로필)
     const urlMemberId = params.memberId ? Number(params.memberId) : null;
     const isMyRoute = urlMemberId == null;
 
