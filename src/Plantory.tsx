@@ -31,9 +31,9 @@ import CreateQuestion from "./community/question/pages/CreateQuestion";
 import ProfileSharingHistory from "./profile/pages/ProfileSharingHistory";
 import WeightManagement from "./admin/pages/WeightManagement";
 import ProfileInfo from "@/profile/pages/ProfileInfo";
-import UpdateProfile from "@/profile/pages/UpdateProfile";
 import ReadQuestion from "./community/question/pages/ReadQuestion";
 import ProfileInterest from "./profile/pages/ProfileInterest";
+import UpdateProfile from "@/profile/pages/UpdateProfile";
 
 export default function App() {
     const initialized = useAuthStore((s) => s.initialized);
@@ -79,7 +79,8 @@ export default function App() {
                         <Route path="/plantCalendar" element={<PlantCalendar />} />
                         <Route path="/myPlantManagement" element={<MyPlantManagement />} />
                         <Route path="/profile" element={<ProfileInfo />} />
-                        <Route path="/profile/update/:memberId" element={<UpdateProfile />} />
+                        <Route path="/publicProfile/:memberId" element={<ProfileInfo />} />
+                        <Route path="/profile/update" element={<UpdateProfile />} />
                     </Route>
 
                     {/* ADMIN */}

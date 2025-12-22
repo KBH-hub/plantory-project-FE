@@ -1,5 +1,5 @@
-import React from "react";
-import ProfileImage from "@/global/components/ProfileImage";
+import React, {FC, useRef} from "react";
+import ProfileImage, {ProfileImageHandle} from "@/global/components/ProfileImage";
 import MemberForm from "@/member/components/MemberForm";
 import ChangePasswordModal from "@/profile/components/modals/ChangePasswordModal";
 import WithdrawModal from "@/profile/components/modals/WithdrawModal";
@@ -29,24 +29,25 @@ type Props = {
     onCancel: () => void;
 };
 
-const UpdateProfile: React.FC<Props> = ({
-                                                loading,
-                                                values,
-                                                profileImageUrl,
-                                                nicknameCheck,
-                                                idCheckDummy,
-                                                onChange,
-                                                onFileChange,
-                                                onSubmit,
-                                                onCheckNickname,
-                                                showPwModal,
-                                                showWithdrawModal,
-                                                onOpenPwModal,
-                                                onClosePwModal,
-                                                onOpenWithdrawModal,
-                                                onCloseWithdrawModal,
-                                                onCancel,
-                                            }) => {
+const UpdateProfile: FC<Props> = ({
+                                            loading,
+                                            values,
+                                            profileImageUrl,
+                                            nicknameCheck,
+                                            idCheckDummy,
+                                            onChange,
+                                            onFileChange,
+                                            onSubmit,
+                                            onCheckNickname,
+                                            showPwModal,
+                                            showWithdrawModal,
+                                            onOpenPwModal,
+                                            onClosePwModal,
+                                            onOpenWithdrawModal,
+                                            onCloseWithdrawModal,
+                                            onCancel,
+                                        }) => {
+    useRef<ProfileImageHandle | null>(null);
     if (loading) {
         return (
             <div className="container py-5">
@@ -56,7 +57,7 @@ const UpdateProfile: React.FC<Props> = ({
     }
 
     return (
-        <div className="bg-light">
+        <div>
             <div className="container mt-4 pb-4">
                 <h4 className="fw-bold border-bottom pb-2">내 프로필</h4>
                 <p className="text-muted small mt-1">나의 식물 &gt; 내 프로필 &gt; 내 정보 변경</p>
@@ -67,6 +68,7 @@ const UpdateProfile: React.FC<Props> = ({
                         size={150}
                         onFileChange={onFileChange}
                     />
+
                 </div>
 
                 <div className="mt-4 px-3">

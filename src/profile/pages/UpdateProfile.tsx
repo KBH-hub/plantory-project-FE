@@ -1,13 +1,13 @@
 // /profile/pages/UpdateProfile.tsx
 import React from "react";
 import { useUpdateProfile } from "@/profile/hooks/useUpdateProfile";
-import UpdateProfile from "@/profile/components/UpdateProfile";
+import UpdateProfileForm from "@/profile/components/UpdateProfile";
 
-const UpdateProfile: React.FC = () => {
+const UpdateProfilePage: React.FC = () => {
     const vm = useUpdateProfile();
 
     return (
-        <UpdateProfile
+        <UpdateProfileForm
             loading={vm.loading}
             values={vm.values}
             profileImageUrl={vm.profileImageUrl}
@@ -28,4 +28,4 @@ const UpdateProfile: React.FC = () => {
     );
 };
 
-export default UpdateProfile;
+export default UpdateProfilePage;

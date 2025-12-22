@@ -34,17 +34,33 @@ function fmtKST(iso?: string | null) {
 }
 
 function toRateText(sharingRate?: number | string | null) {
-    if (typeof sharingRate === "number") return `${sharingRate.toFixed(2)}%`;
-    if (typeof sharingRate === "string" && sharingRate.trim() !== "") {
-        const n = Number(sharingRate);
-        if (!Number.isNaN(n)) return `${n.toFixed(2)}%`;
-    }
-    return "0.00%";
+    const n =
+        typeof sharingRate === "number"
+            ? sharingRate
+            : typeof sharingRate === "string"
+                ? Number(sharingRate)
+                : NaN;
+
+    if (!Number.isFinite(n)) return "0%";
+
+    return `${parseFloat(n.toFixed(2))}%`;
 }
+
 
 export default function ProfileInfo() {
     const navigate = useNavigate();
     const params = useParams<{ memberId?: string }>();
+
+    const urlMemberId: number | null = (() => {
+        const raw = params.memberId;
+        if (!raw) return null;
+        const n = Number(raw);
+        return Number.isFinite(n) ? n : null;
+    })();
+
+    const isPublicRoute = urlMemberId != null;
+    const isValidMemberId = !isPublicRoute || Number.isFinite(urlMemberId);
+
     const [currentPage, setCurrentPage] = useState(1);
     const [totalCount, setTotalCount] = useState(0);
     const me = useAuthStore((s) => s.user);
@@ -59,10 +75,6 @@ export default function ProfileInfo() {
         pageSize: rowsPerPage,
         onChange: (p) => setCurrentPage(p),
     });
-    // 라우팅: /profile (내프로필) , /profile/:memberId (공개프로필)
-    const urlMemberId = params.memberId ? Number(params.memberId) : null;
-    const isMyRoute = urlMemberId == null;
-
     const [profile, setProfile] = useState<ProfileInfo | null>(null);
     const isMe = profile && me?.memberId === profile.memberId;
 
@@ -82,7 +94,6 @@ export default function ProfileInfo() {
 
     const isPostsTab = currentTab === "profilePosts";
 
-    // 체크박스 선택(쓴 글 탭에서만)
     const [selectedMap, setSelectedMap] = useState<Record<number, { category: string }>>({});
 
     const categoryOptions = useMemo(() => {
@@ -100,32 +111,35 @@ export default function ProfileInfo() {
         ];
     }, [isPostsTab]);
 
-    // 탭 전환 시 초기화
-    useEffect(() => {
+    function switchTab(tab: TabKey) {
+        setCurrentTab(tab);
+
+        const nextIsPostsTab = tab === "profilePosts";
+
         setCurrentPage(1);
         setSelectedMap({});
-        setCategory(isPostsTab ? "ALL" : "COMMENT_ALL");
-    }, [isPostsTab]);
+        setCategory(nextIsPostsTab ? "ALL" : "COMMENT_ALL");
+    }
 
-    // (A) 프로필 정보/사진/카운트 로딩: 최초 1회(또는 urlMemberId 변경 시)
+
     useEffect(() => {
         (async () => {
             try {
-                // 1) 프로필 정보
-                const data = isMyRoute
-                    ? await profileApi.getMyProfile()
-                    : await profileApi.getPublicProfile(urlMemberId as number);
+                if (!isValidMemberId) {
+                    await showModal.alert("잘못된 프로필 경로입니다.");
+                    navigate("/profile");
+                    return;
+                }
+
+                const data = isPublicRoute
+                    ? await profileApi.getPublicProfile(urlMemberId as number)
+                    : await profileApi.getMyProfile();
 
                 setProfile(data);
 
-                // 2) 사진
-                console.log("로그인 사용자 memberId:", me?.memberId);
-                console.log("프로필 memberId:", data.memberId);
-                console.log("isMe:", me?.memberId === data.memberId);
-                const pic = await profileApi.getPicture(data.memberId); // 백엔드가 memberId를 기대한다면 여길 data.memberId로 바꿔야 함
+                const pic = await profileApi.getPicture(data.memberId);
                 setProfileImageUrl(pic?.imageUrl ?? null);
 
-                // 3) 카운트
                 const counts = await profileApi.getCounts();
                 setInterestCount(counts.interestCount ?? 0);
                 setSharingHistoryCount(counts.sharingCount ?? 0);
@@ -134,9 +148,9 @@ export default function ProfileInfo() {
                 await showModal.alert("프로필 정보를 불러오지 못했습니다.");
             }
         })();
-    }, [isMyRoute, me?.memberId, urlMemberId]);
+    }, [isPublicRoute, isValidMemberId, urlMemberId, me?.memberId, navigate]);
 
-    // (B) 목록 로딩: 프로필ID가 준비된 뒤, 탭/페이지/검색/카테고리 바뀔 때마다
+
     useEffect(() => {
         if (!profile?.memberId) return;
 
@@ -152,7 +166,6 @@ export default function ProfileInfo() {
                 setContent(res.list ?? []);
                 setTotalCount(res.total ?? 0);
 
-                // 삭제 후 total이 줄어서 currentPage가 범위를 넘으면 보정
                 const maxPage = Math.max(1, Math.ceil((res.total ?? 0) / rowsPerPage));
                 if (currentPage > maxPage) setCurrentPage(maxPage);
             } catch (e) {
@@ -192,11 +205,11 @@ export default function ProfileInfo() {
     }
 
     function handleRowClick(item: ProfileWrittenItem) {
-        // 쓴 글 탭에서만 이동
         if (!isPostsTab) return;
 
         if (item.category === "SHARING") navigate(`/readSharing/${item.id}`);
-        else if (item.category === "QUESTION") navigate(`/readSharing/${item.id}`); // 질문 상세가 따로면 여기 변경
+        else if (item.category === "QUESTION") navigate(`/readSharing/${item.id}`);
+
     }
 
     async function handleDeleteWritten() {
@@ -230,8 +243,6 @@ export default function ProfileInfo() {
 
             await showModal.alert("삭제되었습니다.");
             setSelectedMap({});
-            // 재조회: currentPage를 그대로 재설정해서 useEffect를 강제로 트리거하려면 별도 state가 필요.
-            // 가장 깔끔한 방식: reloadKey를 둔다.
             setReloadKey((k) => k + 1);
         } catch (e) {
             console.error(e);
@@ -239,10 +250,8 @@ export default function ProfileInfo() {
         }
     }
 
-    // 삭제 후 재조회 트리거용
     const [reloadKey, setReloadKey] = useState(0);
     useEffect(() => {
-        // reloadKey가 바뀌면 목록 재조회
         if (!profile?.memberId) return;
         (async () => {
             try {
@@ -258,7 +267,6 @@ export default function ProfileInfo() {
                 console.error(e);
             }
         })();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [reloadKey]);
 
     if (!profile) {
@@ -308,7 +316,7 @@ export default function ProfileInfo() {
                                     <button
                                         type="button"
                                         className="btn btn-outline-primary btn-sm w-100"
-                                        onClick={() => navigate(`/profile/update/${profile.memberId}`)}
+                                        onClick={() => navigate(`/profile/update`)}
                                     >
                                         내 정보 변경
                                     </button>
@@ -337,14 +345,14 @@ export default function ProfileInfo() {
                         <div className="col d-flex align-items-center gap-3">
               <span
                   className={`${isPostsTab ? "tab-active fw-semibold text-dark" : "text-secondary"} cursor-pointer`}
-                  onClick={() => setCurrentTab("profilePosts")}
+                  onClick={() => switchTab("profilePosts")}
               >
                 쓴 글
               </span>
                             <span>|</span>
                             <span
                                 className={`${!isPostsTab ? "tab-active fw-semibold text-dark" : "text-secondary"} cursor-pointer`}
-                                onClick={() => setCurrentTab("profileComments")}
+                                onClick={() => switchTab("profileComments")}
                             >
                 댓글 단 글
               </span>
