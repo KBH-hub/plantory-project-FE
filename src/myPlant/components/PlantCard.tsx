@@ -6,7 +6,7 @@ export default function PlantCard({ plant: p, onClick }: PlantCardProps) {
             {p.img ? (
                 <img src={p.img} className="card-img-top rounded-top" alt="plant" style={{ height: 260 }} />
             ) : (
-                <div className="bg-light d-flex justify-content-center align-items-center" style={{ height: 260 }}>
+                <div className="bg-white shadow-sm d-flex justify-content-center align-items-center" style={{ height: 260 }}>
                     <i className="bi bi-image fs-1 text-muted" />
                 </div>
             )}
