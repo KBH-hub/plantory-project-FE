@@ -1,16 +1,18 @@
 import { useEffect, useState, useCallback } from "react";
 import { getSharingDetail, getSharingComments } from "@/community/sharing/services/readSharingApi";
 import { SharingDetailResponse, SharingCommentResponse } from "@/community/sharing/types/readSharing";
+import { profileApi } from "@/profile/services/profileService";
 
 export function useSharingDetail(sharingId?: number) {
   const [data, setData] = useState<SharingDetailResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+  const [authorProfileImage, setAuthorProfileImage] = useState<string | null>(null);
 
   useEffect(() => {
     if (!sharingId) return;
 
-    const loadSharingDetail = async () => {
+    const load = async () => {
       try {
         setLoading(true);
         setError(null);
@@ -24,15 +26,30 @@ export function useSharingDetail(sharingId?: number) {
       }
     };
 
-    loadSharingDetail();
+    load();
   }, [sharingId]);
+
+  useEffect(() => {
+    if (!data?.memberId) return;
+
+    profileApi
+      .getPicture(data.memberId)
+      .then((res) => {
+        setAuthorProfileImage(res?.imageUrl ?? null);
+      })
+      .catch(() => {
+        setAuthorProfileImage(null);
+      });
+  }, [data?.memberId]);
 
   return {
     data,
     loading,
     error,
+    authorProfileImage,
   };
 }
+
 
 export function useSharingComments(sharingId?: number) {
   const [comments, setComments] = useState<SharingCommentResponse[]>([]);
@@ -44,15 +61,8 @@ export function useSharingComments(sharingId?: number) {
   }, [sharingId]);
 
   useEffect(() => {
-    if (!sharingId) return;
-
-    const fetch = async () => {
-      const res = await getSharingComments(sharingId);
-      setComments(res);
-    };
-
-    fetch();
-  }, [sharingId]);
+    reload();
+  }, [reload]);
 
   return { comments, reload };
 }

@@ -5,13 +5,16 @@ import Comments from "@/community/components/Comments";
 import { useAuthStore } from "@/global/stores/useAuthStore";
 import ReadCommunityLayout from "@/community/layouts/ReadCommunityLayout";
 import { addSharingComments, updateSharingComments, deleteSharingComments } from "../services/readSharingApi";
+
 import "@/styles/readSharing.css"
+import ProfileImage from "@/global/components/ProfileImage";
 
 function ReadSharing() {
   const { sharingId } = useParams<{ sharingId: string }>();
-  const { data, loading } = useSharingDetail(Number(sharingId));
+  const { data, loading, authorProfileImage } = useSharingDetail(Number(sharingId));
   const { comments, reload } = useSharingComments(Number(sharingId));
   const loginUser = useAuthStore((s) => s.user);
+
   
   if (loading || !data) return <div>로딩중...</div>;
 
@@ -38,8 +41,8 @@ function ReadSharing() {
       authorProfile={
         <div className="d-flex align-items-center">
           <div className="me-3">
-            {/* 프로필 이미지 컴포넌트 */}
-            <div className="bg-secondary rounded-circle" style={{ width: 48, height: 48 }} />
+            <ProfileImage src={authorProfileImage} size={48} disabled />
+            {/* <div  style={{ width: 48, height: 48 }} /> */}
           </div>
           <strong>{data.nickname}</strong>
         </div>
