@@ -26,7 +26,8 @@ function SharingCard({ item, variant = "default" }: SharingCardProps) {
           style={{
             height: isRecommended ? 355 : 380,
             objectFit: "cover",
-          }} alt={item.title}
+          }} 
+          // alt={item.title}
         />
 
         <div className="card-body p-3">

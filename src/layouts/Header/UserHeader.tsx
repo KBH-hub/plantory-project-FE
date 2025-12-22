@@ -60,12 +60,12 @@ export default function UserHeader() {
               <ul className="dropdown-menu ph-dropdown">
                 <li>
                   <Link to="/sharingList" className="dropdown-item ph-dropdown-item">
-                    나눔 게시판
+                    나눔 커뮤니티
                   </Link>
                 </li>
                 <li>
                   <Link className="dropdown-item ph-dropdown-item" to="/questionList">
-                    질문 게시판
+                    질문 커뮤니티
                   </Link>
                 </li>
               </ul>
