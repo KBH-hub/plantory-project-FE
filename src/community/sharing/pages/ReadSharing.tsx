@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useSharingComments, useSharingDetail } from "@/community/sharing/hooks/useReadSharing";
 import SharingBtnAction from "@/community/sharing/components/SharingBtnAction";
 import Comments from "@/community/components/Comments";
@@ -38,15 +38,18 @@ function ReadSharing() {
         </>
       }
 
+
       authorProfile={
-        <div className="d-flex align-items-center">
-          <div className="me-3">
-            <ProfileImage src={authorProfileImage} size={48} disabled />
-            {/* <div  style={{ width: 48, height: 48 }} /> */}
+        <Link to={`/publicProfile/${data.memberId}`} className="text-decoration-none text-dark">
+          <div className="d-flex align-items-center">
+            <div className="me-3">
+              <ProfileImage src={authorProfileImage} size={48} disabled />
+            </div>
+            <strong>{data.nickname}</strong>
           </div>
-          <strong>{data.nickname}</strong>
-        </div>
+        </Link>
       }
+
 
       scoreInfo={
         <small className="text-success fw-bold">

@@ -1,55 +1,20 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import ReadCommunityLayout from "@/community/layouts/ReadCommunityLayout";
-import {
-  getQuestionDetail,
-  getQuestionAnswers,
-  addQuestionAnswer,
-  updateQuestionAnswer,
-  deleteQuestionAnswer,
-} from "@/community/question/services/readQuestionApi";
-import { QuestionDetailResponse, QuestionAnswerResponse } from "@/community/question/types/readQuestion";
+import { addQuestionAnswer, updateQuestionAnswer, deleteQuestionAnswer } from "@/community/question/services/readQuestionApi";
 import QuestionBtnAction from "@/community/question/components/QuestionBtnAction";
 import { useAuthStore } from "@/global/stores/useAuthStore";
 import Comments from "@/community/components/Comments";
+import ProfileImage from "@/global/components/ProfileImage";
+import { useQuestionComments, useQuestionDetail } from "../hooks/useReadQuestion";
 
 function ReadQuestion() {
   const { questionId } = useParams<{ questionId: string }>();
   const numericQuestionId = Number(questionId);
   const loginUser = useAuthStore((s) => s.user);
 
-  const [data, setData] = useState<QuestionDetailResponse | null>(null);
-  const [answers, setAnswers] = useState<QuestionAnswerResponse[]>([]);
-  const [loading, setLoading] = useState(true);
-  
-  const commentItems = answers.map((a) => ({
-    commentId: a.answerId,    
-    writerId: a.writerId,
-    nickname: a.nickname,
-    content: a.content,
-    createdAt: a.createdAt,
-    updatedAt: a.updatedAt,
-    }));
+  const { data, loading, authorProfileImage } = useQuestionDetail(numericQuestionId);
 
-  useEffect(() => {
-    if (!numericQuestionId) return;
-
-    (async () => {
-      try {
-        const res = await getQuestionDetail(numericQuestionId);
-        setData(res);
-        const answerRes = await getQuestionAnswers(numericQuestionId);
-        setAnswers(answerRes);
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, [numericQuestionId]);
-
-  const reloadAnswers = async () => {
-    const res = await getQuestionAnswers(numericQuestionId);
-    setAnswers(res);
-  };
+  const { comments, reload } = useQuestionComments(numericQuestionId);
 
   if (loading || !data) return <div>로딩중...</div>;
 
@@ -64,21 +29,22 @@ function ReadQuestion() {
       loginMemberId={loginUser?.memberId}
 
       authorProfile={
-        <div className="d-flex align-items-center">
-          <div className="me-3">
-            {/* <ProfileImage memberId={data.memberId} size={48} /> */}
+        <Link to={`/publicProfile/${data.memberId}`} className="text-decoration-none text-dark">
+          <div className="d-flex align-items-center">
+            <div className="me-3">
+              <ProfileImage src={authorProfileImage} size={48} disabled />
+            </div>
+            <strong>{data.nickname}</strong>
           </div>
-          <strong>{data.nickname}</strong>
-        </div>
+        </Link>
       }
-
       actions={<QuestionBtnAction data={data} />}
 
       comments={
         <Comments
           targetId={numericQuestionId}
-          comments={commentItems}
-          reload={reloadAnswers}
+          comments={comments}
+          reload={reload}
           loginMemberId={loginUser?.memberId}
           loginNickname={loginUser?.nickname}
           onAdd={addQuestionAnswer}
