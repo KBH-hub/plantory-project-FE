@@ -96,6 +96,7 @@ export default function App() {
                     >
                         <Route path="/admin/memberManagement" element={<MemberManagement />} />
                         <Route path="/admin/reportManagement" element={<ReportManagement />} />
+                        <Route path="/admin/profile/:memberId" element={<ProfileInfo />} />
                         <Route path="/admin/weightManagement" element={<WeightManagement />} />
                     </Route>
                 </Routes>

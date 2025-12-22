@@ -43,7 +43,7 @@ function ReadCommunityLayout({
           <div className="card-body">
 
             <div className="row g-3">
-              <div className="col-md-4">
+              <div className="col-md-4" >
                <ImageCarousel images={images} />
               </div>
 
@@ -79,7 +79,7 @@ function ReadCommunityLayout({
                   
                   <div className="col-3">
                     <br />
-                    {authorProfile}
+                    {authorProfile}                   
                   </div>
 
                   <div className="col-2 text-start">

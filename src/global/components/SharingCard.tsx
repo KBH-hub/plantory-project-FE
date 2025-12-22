@@ -16,18 +16,22 @@ function SharingCard({ item, variant = "default" }: SharingCardProps) {
     <div className={ isRecommended ? "flex-shrink-0" : "col-12 col-sm-6 col-md-4"}
       style={isRecommended ? { width: 320 } : undefined}
     >
-      <Link
-        to={`/sharing/${item.sharingId}`}
-        className="card text-reset text-decoration-none h-100"
-      >
-        <img
-          src={item.fileUrl}
-          className="card-img-top"
-          style={{
-            height: isRecommended ? 355 : 380,
-            objectFit: "cover",
-          }} alt={item.title}
-        />
+      <Link to={`/sharing/${item.sharingId}`} className="card text-reset text-decoration-none h-100">
+      
+      <div className="bg-white shadow-sm d-flex justify-content-center align-items-center" style={{ height: isRecommended ? 355 : 380 }}>
+        {item.fileUrl ? (
+          <img
+            src={item.fileUrl}
+            className="card-img-top"
+            style={{
+              height: "100%",
+              objectFit: "cover",
+            }}
+          />
+        ) : (
+          <i className="bi bi-image fs-1 text-muted" />
+        )}
+      </div>
 
         <div className="card-body p-3">
           <span className={`badge ${isDone ? "bg-secondary" : "bg-success"}`}>

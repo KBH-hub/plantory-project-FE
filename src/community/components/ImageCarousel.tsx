@@ -15,8 +15,8 @@ function ImageCarousel({
 
   if (images.length === 0) {
     return (
-      <div className="text-muted text-center py-5"  style={{ height }}>
-        등록된 이미지가 없습니다.
+      <div className="bg-light d-flex justify-content-center align-items-center"  style={{ height }}>
+        <i className="bi bi-image fs-1 text-muted"></i>
       </div>
     );
   }
