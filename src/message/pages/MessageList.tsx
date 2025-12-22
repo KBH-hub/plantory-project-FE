@@ -5,7 +5,7 @@ import { useMessageList } from "@/message/hooks/useMessageList";
 import { usePaginator } from "@/global/hooks/usePaginator";
 import { useSelection } from "@/message/hooks/useSelection";
 import { useDeleteSelectedMessages } from "@/message/hooks/useDeleteSelectedMessages";
-import { BoxType, TargetType } from "@/message/enums/messageEnums";
+import { BoxType, TargetType } from "@/message/enums/messageEnum";
 import { deleteSelectedMessages } from "@/message/services/messageApi";
 
 export default function MessageList() {

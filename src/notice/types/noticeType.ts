@@ -1,4 +1,4 @@
-import type { NoticeTargetType } from "@/global/enum/noticeTypes";
+import type { NoticeTargetType } from "@/global/enum/noticeEnum";
 
 export interface noticeType {
   noticeId: number;   

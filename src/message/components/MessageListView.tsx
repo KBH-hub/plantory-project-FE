@@ -1,5 +1,5 @@
 import React from "react";
-import type { BoxType, TargetType } from "@/message/enums/messageEnums";
+import type { BoxType, TargetType } from "@/message/enums/messageEnum";
 import type { MessageListResponse } from "@/message/types/messageType";
 import MessageItem from "@/message/components/MessageItem";
 
