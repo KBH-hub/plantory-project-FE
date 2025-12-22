@@ -36,9 +36,7 @@ const ProfileImage = forwardRef<ProfileImageHandle, Props>(
             inputRef.current?.click();
         };
 
-        useImperativeHandle(ref, () => ({
-            openFilePicker,
-        }));
+        useImperativeHandle(ref, () => ({ openFilePicker }));
 
         const onChangeFile: React.ChangeEventHandler<HTMLInputElement> = (e) => {
             const file = e.target.files?.[0] ?? null;

@@ -34,13 +34,18 @@ function fmtKST(iso?: string | null) {
 }
 
 function toRateText(sharingRate?: number | string | null) {
-    if (typeof sharingRate === "number") return `${sharingRate.toFixed(2)}%`;
-    if (typeof sharingRate === "string" && sharingRate.trim() !== "") {
-        const n = Number(sharingRate);
-        if (!Number.isNaN(n)) return `${n.toFixed(2)}%`;
-    }
-    return "0.00%";
+    const n =
+        typeof sharingRate === "number"
+            ? sharingRate
+            : typeof sharingRate === "string"
+                ? Number(sharingRate)
+                : NaN;
+
+    if (!Number.isFinite(n)) return "0%";
+
+    return `${parseFloat(n.toFixed(2))}%`;
 }
+
 
 export default function ProfileInfo() {
     const navigate = useNavigate();
@@ -82,7 +87,6 @@ export default function ProfileInfo() {
 
     const isPostsTab = currentTab === "profilePosts";
 
-    // 체크박스 선택(쓴 글 탭에서만)
     const [selectedMap, setSelectedMap] = useState<Record<number, { category: string }>>({});
 
     const categoryOptions = useMemo(() => {
@@ -100,32 +104,27 @@ export default function ProfileInfo() {
         ];
     }, [isPostsTab]);
 
-    // 탭 전환 시 초기화
     useEffect(() => {
         setCurrentPage(1);
         setSelectedMap({});
         setCategory(isPostsTab ? "ALL" : "COMMENT_ALL");
     }, [isPostsTab]);
 
-    // (A) 프로필 정보/사진/카운트 로딩: 최초 1회(또는 urlMemberId 변경 시)
     useEffect(() => {
         (async () => {
             try {
-                // 1) 프로필 정보
                 const data = isMyRoute
                     ? await profileApi.getMyProfile()
                     : await profileApi.getPublicProfile(urlMemberId as number);
 
                 setProfile(data);
 
-                // 2) 사진
                 console.log("로그인 사용자 memberId:", me?.memberId);
                 console.log("프로필 memberId:", data.memberId);
                 console.log("isMe:", me?.memberId === data.memberId);
-                const pic = await profileApi.getPicture(data.memberId); // 백엔드가 memberId를 기대한다면 여길 data.memberId로 바꿔야 함
+                const pic = await profileApi.getPicture(data.memberId);
                 setProfileImageUrl(pic?.imageUrl ?? null);
 
-                // 3) 카운트
                 const counts = await profileApi.getCounts();
                 setInterestCount(counts.interestCount ?? 0);
                 setSharingHistoryCount(counts.sharingCount ?? 0);
@@ -136,7 +135,6 @@ export default function ProfileInfo() {
         })();
     }, [isMyRoute, me?.memberId, urlMemberId]);
 
-    // (B) 목록 로딩: 프로필ID가 준비된 뒤, 탭/페이지/검색/카테고리 바뀔 때마다
     useEffect(() => {
         if (!profile?.memberId) return;
 
@@ -152,7 +150,6 @@ export default function ProfileInfo() {
                 setContent(res.list ?? []);
                 setTotalCount(res.total ?? 0);
 
-                // 삭제 후 total이 줄어서 currentPage가 범위를 넘으면 보정
                 const maxPage = Math.max(1, Math.ceil((res.total ?? 0) / rowsPerPage));
                 if (currentPage > maxPage) setCurrentPage(maxPage);
             } catch (e) {
@@ -192,11 +189,10 @@ export default function ProfileInfo() {
     }
 
     function handleRowClick(item: ProfileWrittenItem) {
-        // 쓴 글 탭에서만 이동
         if (!isPostsTab) return;
 
         if (item.category === "SHARING") navigate(`/readSharing/${item.id}`);
-        else if (item.category === "QUESTION") navigate(`/readSharing/${item.id}`); // 질문 상세가 따로면 여기 변경
+        else if (item.category === "QUESTION") navigate(`/readSharing/${item.id}`);
     }
 
     async function handleDeleteWritten() {
@@ -230,8 +226,6 @@ export default function ProfileInfo() {
 
             await showModal.alert("삭제되었습니다.");
             setSelectedMap({});
-            // 재조회: currentPage를 그대로 재설정해서 useEffect를 강제로 트리거하려면 별도 state가 필요.
-            // 가장 깔끔한 방식: reloadKey를 둔다.
             setReloadKey((k) => k + 1);
         } catch (e) {
             console.error(e);
