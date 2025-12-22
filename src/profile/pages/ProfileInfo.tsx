@@ -50,6 +50,17 @@ function toRateText(sharingRate?: number | string | null) {
 export default function ProfileInfo() {
     const navigate = useNavigate();
     const params = useParams<{ memberId?: string }>();
+
+    const urlMemberId: number | null = (() => {
+        const raw = params.memberId;
+        if (!raw) return null;
+        const n = Number(raw);
+        return Number.isFinite(n) ? n : null;
+    })();
+
+    const isPublicRoute = urlMemberId != null;
+    const isValidMemberId = !isPublicRoute || Number.isFinite(urlMemberId);
+
     const [currentPage, setCurrentPage] = useState(1);
     const [totalCount, setTotalCount] = useState(0);
     const me = useAuthStore((s) => s.user);
@@ -64,9 +75,6 @@ export default function ProfileInfo() {
         pageSize: rowsPerPage,
         onChange: (p) => setCurrentPage(p),
     });
-    const urlMemberId = params.memberId ? Number(params.memberId) : null;
-    const isMyRoute = urlMemberId == null;
-
     const [profile, setProfile] = useState<ProfileInfo | null>(null);
     const isMe = profile && me?.memberId === profile.memberId;
 
@@ -103,24 +111,32 @@ export default function ProfileInfo() {
         ];
     }, [isPostsTab]);
 
-    useEffect(() => {
+    function switchTab(tab: TabKey) {
+        setCurrentTab(tab);
+
+        const nextIsPostsTab = tab === "profilePosts";
+
         setCurrentPage(1);
         setSelectedMap({});
-        setCategory(isPostsTab ? "ALL" : "COMMENT_ALL");
-    }, [isPostsTab]);
+        setCategory(nextIsPostsTab ? "ALL" : "COMMENT_ALL");
+    }
+
 
     useEffect(() => {
         (async () => {
             try {
-                const data = isMyRoute
-                    ? await profileApi.getMyProfile()
-                    : await profileApi.getPublicProfile(urlMemberId as number);
+                if (!isValidMemberId) {
+                    await showModal.alert("잘못된 프로필 경로입니다.");
+                    navigate("/profile");
+                    return;
+                }
+
+                const data = isPublicRoute
+                    ? await profileApi.getPublicProfile(urlMemberId as number)
+                    : await profileApi.getMyProfile();
 
                 setProfile(data);
 
-                console.log("로그인 사용자 memberId:", me?.memberId);
-                console.log("프로필 memberId:", data.memberId);
-                console.log("isMe:", me?.memberId === data.memberId);
                 const pic = await profileApi.getPicture(data.memberId);
                 setProfileImageUrl(pic?.imageUrl ?? null);
 
@@ -132,7 +148,8 @@ export default function ProfileInfo() {
                 await showModal.alert("프로필 정보를 불러오지 못했습니다.");
             }
         })();
-    }, [isMyRoute, me?.memberId, urlMemberId]);
+    }, [isPublicRoute, isValidMemberId, urlMemberId, me?.memberId, navigate]);
+
 
     useEffect(() => {
         if (!profile?.memberId) return;
@@ -192,6 +209,7 @@ export default function ProfileInfo() {
 
         if (item.category === "SHARING") navigate(`/readSharing/${item.id}`);
         else if (item.category === "QUESTION") navigate(`/readSharing/${item.id}`);
+
     }
 
     async function handleDeleteWritten() {
@@ -232,10 +250,8 @@ export default function ProfileInfo() {
         }
     }
 
-    // 삭제 후 재조회 트리거용
     const [reloadKey, setReloadKey] = useState(0);
     useEffect(() => {
-        // reloadKey가 바뀌면 목록 재조회
         if (!profile?.memberId) return;
         (async () => {
             try {
@@ -251,7 +267,6 @@ export default function ProfileInfo() {
                 console.error(e);
             }
         })();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [reloadKey]);
 
     if (!profile) {
@@ -301,7 +316,7 @@ export default function ProfileInfo() {
                                     <button
                                         type="button"
                                         className="btn btn-outline-primary btn-sm w-100"
-                                        onClick={() => navigate(`/profile/update/${profile.memberId}`)}
+                                        onClick={() => navigate(`/profile/update`)}
                                     >
                                         내 정보 변경
                                     </button>
@@ -330,14 +345,14 @@ export default function ProfileInfo() {
                         <div className="col d-flex align-items-center gap-3">
               <span
                   className={`${isPostsTab ? "tab-active fw-semibold text-dark" : "text-secondary"} cursor-pointer`}
-                  onClick={() => setCurrentTab("profilePosts")}
+                  onClick={() => switchTab("profilePosts")}
               >
                 쓴 글
               </span>
                             <span>|</span>
                             <span
                                 className={`${!isPostsTab ? "tab-active fw-semibold text-dark" : "text-secondary"} cursor-pointer`}
-                                onClick={() => setCurrentTab("profileComments")}
+                                onClick={() => switchTab("profileComments")}
                             >
                 댓글 단 글
               </span>

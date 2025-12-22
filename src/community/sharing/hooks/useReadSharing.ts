@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { getSharingDetail, getSharingComments } from "@/community/sharing/services/readSharingApi";
-import { profileApi } from "@/profile/services/profileService";
+import { profileApi } from "@/profile/services/profileApi";
 import { SharingDetailResponse, SharingCommentResponse } from "@/community/sharing/types/readSharingType";
 
 

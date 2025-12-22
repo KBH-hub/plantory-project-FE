@@ -47,9 +47,7 @@ const UpdateProfile: FC<Props> = ({
                                             onCloseWithdrawModal,
                                             onCancel,
                                         }) => {
-    const profileImgRef = useRef<ProfileImageHandle | null>(null);
-
-
+    useRef<ProfileImageHandle | null>(null);
     if (loading) {
         return (
             <div className="container py-5">
@@ -59,7 +57,7 @@ const UpdateProfile: FC<Props> = ({
     }
 
     return (
-        <div className="bg-light">
+        <div>
             <div className="container mt-4 pb-4">
                 <h4 className="fw-bold border-bottom pb-2">내 프로필</h4>
                 <p className="text-muted small mt-1">나의 식물 &gt; 내 프로필 &gt; 내 정보 변경</p>
@@ -71,14 +69,6 @@ const UpdateProfile: FC<Props> = ({
                         onFileChange={onFileChange}
                     />
 
-                    <button
-                        type="button"
-                        className="btn btn-primary btn-sm mt-2"
-                        onClick={() => profileImgRef.current?.openFilePicker()}
-                        disabled={loading}
-                    >
-                        프로필 사진 변경
-                    </button>
                 </div>
 
                 <div className="mt-4 px-3">
