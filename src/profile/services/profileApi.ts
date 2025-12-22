@@ -1,4 +1,3 @@
-// src/profile/services/profileApi.ts
 import { axiosInstance } from "@/global/services/jjwt/axiosInstance";
 import type {
     ChangePasswordReq,
