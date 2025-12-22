@@ -319,12 +319,12 @@ export default function ProfileInfoPage() {
                                 </div>
                             )}
 
-                            <div className="text-center" style={{ cursor: "pointer" }} onClick={() => navigate(`/profileInsert`)}>
+                            <div className="text-center" style={{ cursor: "pointer" }} onClick={() => navigate(`/profileInterest`)}>
                                 <p className="fw-bold m-0">관심 나눔글</p>
                                 <span className="fw-bold">{interestCount}개</span>
                             </div>
 
-                            <div className="text-center" style={{ cursor: "pointer" }} onClick={() => navigate(`/profileSharingHistory?memberId=${profile.memberId}`)}>
+                            <div className="text-center" style={{ cursor: "pointer" }} onClick={() => navigate(`/sharingHistory`)}>
                                 <p className="fw-bold m-0">나눔 내역</p>
                                 <span className="fw-bold">{sharingHistoryCount}개</span>
                             </div>

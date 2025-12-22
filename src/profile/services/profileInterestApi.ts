@@ -1,5 +1,5 @@
 import { axiosInstance } from "@/global/services/api/axiosInstance";
-import { ProfileInterestResponse, ProfileInterestParams } from "@/member/types/profileInterest";
+import { ProfileInterestResponse, ProfileInterestParams } from "@/profile/types/profileInterest";
 
 
 export const getProfileInterestList = async ( params: ProfileInterestParams ): Promise<ProfileInterestResponse[]> => {

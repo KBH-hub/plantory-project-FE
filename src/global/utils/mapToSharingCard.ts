@@ -1,4 +1,4 @@
-import { ProfileSharingHistoryResponse } from "@/member/types/sharingHistory";
+import { ProfileSharingHistoryResponse } from "@/profile/types/sharingHistory";
 import { SharingCardListResponse } from "@/community/sharing/types/sharingList";
 
 export function mapToSharingCard( item: ProfileSharingHistoryResponse

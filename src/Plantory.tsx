@@ -28,12 +28,12 @@ import RootRedirectRoute from "@/routes/RootRedirectRoute";
 import AuthLayout from "@/layouts/AuthLayout";
 import MemberManagementPage from "@/admin/pages/MemberManagementPage";
 import CreateQuestion from "./community/question/pages/CreateQuestion";
-import ProfileSharingHistory from "./member/pages/ProfileSharingHistory";
+import ProfileSharingHistory from "./profile/pages/ProfileSharingHistory";
 import WeightManagementPage from "./admin/pages/WeightManagementPage";
 import ProfileInfoPage from "@/profile/pages/ProfileInfoPage";
 import UpdateProfilePage from "@/profile/pages/UpdateProfilePage";
 import ReadQuestion from "./community/question/pages/ReadQuestion";
-import ProfileInterest from "./member/pages/ProfileInterest";
+import ProfileInterest from "./profile/pages/ProfileInterest";
 
 export default function App() {
     const initialized = useAuthStore((s) => s.initialized);
