@@ -3,15 +3,15 @@ import { useAuthStore } from "@/global/stores/useAuthStore";
 
 import MainLayout from "./layouts/MainLayout";
 
-import LoginPage from "@/member/pages/LoginPage";
+import Login from "@/member/pages/Login";
 import Dashboard from "@/dashboard/pages/Dashboard";
 import MessageList from "@/message/pages/MessageList";
 import MessageDetail from "@/message/pages/MessageDetail";
 import PrivateRoute from "./routes/PrivateRoute";
-import SignUpPage from "@/member/pages/SignUpPage";
-import AuthInitializer from "@/routes/AuthInitializer";
+import SignUp from "@/member/pages/SignUp";
+import AuthInitializerRoute from "@/routes/AuthInitializerRoute";
 import SharingList from "@/community/sharing/pages/SharingList";
-import TermsOfServicePage from "@/member/pages/TermsOfServicePage";
+import TermsOfService from "@/member/pages/TermsOfService";
 import ReadSharing from "./community/sharing/pages/ReadSharing";
 import PlantDictionary from "@/dictionary/pages/PlantDictionary";
 import DictionaryDetail from "@/dictionary/pages/DictionaryDetail";
@@ -26,12 +26,12 @@ import RoleRoute from "@/routes/RoleRoute";
 import AdminLayout from "@/layouts/AdminLayout";
 import RootRedirectRoute from "@/routes/RootRedirectRoute";
 import AuthLayout from "@/layouts/AuthLayout";
-import MemberManagementPage from "@/admin/pages/MemberManagementPage";
+import MemberManagement from "@/admin/pages/MemberManagement";
 import CreateQuestion from "./community/question/pages/CreateQuestion";
 import ProfileSharingHistory from "./member/pages/ProfileSharingHistory";
-import WeightManagementPage from "./admin/pages/WeightManagementPage";
-import ProfileInfoPage from "@/profile/pages/ProfileInfoPage";
-import UpdateProfilePage from "@/profile/pages/UpdateProfilePage";
+import WeightManagement from "./admin/pages/WeightManagement";
+import ProfileInfo from "@/profile/pages/ProfileInfo";
+import UpdateProfile from "@/profile/pages/UpdateProfile";
 import ReadQuestion from "./community/question/pages/ReadQuestion";
 import ProfileInterest from "./member/pages/ProfileInterest";
 
@@ -39,16 +39,16 @@ export default function App() {
     const initialized = useAuthStore((s) => s.initialized);
 
     return (
-        <AuthInitializer>
+        <AuthInitializerRoute>
             {!initialized ? (
                 <div>로딩중...</div>
             ) : (
                 <Routes>
                     <Route element={<AuthLayout />}>
                         <Route path="/" element={<RootRedirectRoute />} />
-                        <Route path="/login" element={<LoginPage />} />
-                        <Route path="/signup" element={<SignUpPage />} />
-                        <Route path="/termsOfServicePage" element={<TermsOfServicePage />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/signup" element={<SignUp />} />
+                        <Route path="/termsOfServicePage" element={<TermsOfService />} />
                     </Route>
                     {/* USER */}
                     <Route
@@ -78,8 +78,8 @@ export default function App() {
                         <Route path="/dryDictionaryDetail/:cntntsNo" element={<DryDictionaryDetail />} />
                         <Route path="/plantCalendar" element={<PlantCalendar />} />
                         <Route path="/myPlantManagement" element={<MyPlantManagement />} />
-                        <Route path="/profile" element={<ProfileInfoPage />} />
-                        <Route path="/profile/update/:memberId" element={<UpdateProfilePage />} />
+                        <Route path="/profile" element={<ProfileInfo />} />
+                        <Route path="/profile/update/:memberId" element={<UpdateProfile />} />
                     </Route>
 
                     {/* ADMIN */}
@@ -92,12 +92,12 @@ export default function App() {
                             </PrivateRoute>
                         }
                     >
-                        <Route path="/admin/memberManagement" element={<MemberManagementPage />} />
+                        <Route path="/admin/memberManagement" element={<MemberManagement />} />
                         {/*<Route path="/admin/reportManagement" element={<ReportManagement />} />*/}
-                        <Route path="/admin/weightManagement" element={<WeightManagementPage />} />
+                        <Route path="/admin/weightManagement" element={<WeightManagement />} />
                     </Route>
                 </Routes>
             )}
-        </AuthInitializer>
+        </AuthInitializerRoute>
     );
 }

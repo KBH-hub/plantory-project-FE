@@ -1,6 +1,6 @@
 import React from "react";
-import { MODAL_STATE, type ModalState } from "@/myPlant/enums/plantCalendarEnums";
-import type { DiaryFormErrors, DiaryDetailResponse, MyPlantItem } from "@/myPlant/types/plantCalendar";
+import { MODAL_STATE, type ModalState } from "@/myPlant/enums/plantCalendarEnum";
+import type { DiaryFormErrors, DiaryDetailResponse, MyPlantItem } from "@/myPlant/types/plantCalendarType";
 import DiaryRegModal from "@/myPlant/components/modals/DiaryRegModal";
 import ImageAddModal from "@/myPlant/components/modals/ImageAddModal";
 import DiaryDetailModal from "@/myPlant/components/modals/DiaryDetailModal";

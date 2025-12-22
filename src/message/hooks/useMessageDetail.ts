@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getMessageDetail } from "@/message/services/messageService";
-import type { MessageDetailResponse } from "@/message/types/message";
+import { getMessageDetail } from "@/message/services/messageApi";
+import type { MessageDetailResponse } from "@/message/types/messageType";
 
 export function useMessageDetail(messageId: number | null) {
   const [detail, setDetail] = useState<MessageDetailResponse | null>(null);

@@ -1,4 +1,4 @@
-import { Image } from "@/global/types/image";
+import { ImageType } from "@/global/types/imageType";
 import { ManageDemand, ManageLevel } from "@/community/sharing/enum/manageTypes";
 
 export interface SharingDetailResponse {
@@ -23,7 +23,7 @@ export interface SharingDetailResponse {
   createdAt: string;
   updatedAt?: string;
 
-  images: Image[];
+  images: ImageType[];
   interested: boolean;
 
   reviewFlag: string | null;

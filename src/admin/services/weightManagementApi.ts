@@ -1,4 +1,4 @@
-import { axiosInstance } from "@/global/services/api/axiosInstance";
+import { axiosInstance } from "@/global/services/jjwt/axiosInstance";
 import type {
   CareCountsResponse,
   RateConfig,
@@ -7,7 +7,7 @@ import type {
   WeightListResult,
   WeightWeightsLatest,
   WeightWeightsSaveRequest,
-} from "@/admin/types/weightManagementTypes";
+} from "@/admin/types/weightManagementType";
 
 const BASE = "/api/weightManagement";
 

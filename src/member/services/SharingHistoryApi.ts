@@ -1,5 +1,5 @@
-import { axiosInstance } from "@/global/services/api/axiosInstance";
-import { ProfileSharingHistoryResponse, ProfileSharingHistoryParams } from "@/member/types/sharingHistory";
+import { axiosInstance } from "@/global/services/jjwt/axiosInstance";
+import { ProfileSharingHistoryResponse, ProfileSharingHistoryParams } from "@/member/types/sharingHistoryType";
 
 export const getMySharingHistory = async ( params: ProfileSharingHistoryParams ): Promise<ProfileSharingHistoryResponse[]> => {
   const res = await axiosInstance.get<ProfileSharingHistoryResponse[]>(

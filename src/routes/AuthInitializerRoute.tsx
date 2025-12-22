@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import axios from "axios";
 import { useAuthStore } from "@/global/stores/useAuthStore";
-import { meApi } from "@/global/services/api/auth";
+import { meApi } from "@/global/services/authApi";
 
-export default function AuthInitializer({ children }: { children: React.ReactNode }) {
+export default function AuthInitializerRoute({ children }: { children: React.ReactNode }) {
     const initialized = useAuthStore((s) => s.initialized);
 
     useEffect(() => {

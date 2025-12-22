@@ -1,11 +1,11 @@
 import "@/styles/login.css";
-import { loginApi, meApi } from "@/global/services/api/auth";
+import { loginApi, meApi } from "@/global/services/authApi";
 import { Role, useAuthStore } from "@/global/stores/useAuthStore";
 import { useNavigate, Link } from "react-router-dom";
 import fixmeImg from "@/assets/images/fixme.png";
 import fixmeImg2 from "@/assets/images/fixme2.png";
 
-export default function LoginPage() {
+export default function Login() {
     const navigate = useNavigate();
 
     const authLogin = useAuthStore((s) => s.login);

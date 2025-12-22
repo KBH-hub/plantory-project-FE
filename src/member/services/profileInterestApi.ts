@@ -1,5 +1,5 @@
-import { axiosInstance } from "@/global/services/api/axiosInstance";
-import { ProfileInterestResponse, ProfileInterestParams } from "@/member/types/profileInterest";
+import { axiosInstance } from "@/global/services/jjwt/axiosInstance";
+import { ProfileInterestResponse, ProfileInterestParams } from "@/member/types/profileInterestType";
 
 
 export const getProfileInterestList = async ( params: ProfileInterestParams ): Promise<ProfileInterestResponse[]> => {

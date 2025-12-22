@@ -1,6 +1,6 @@
-import type { notice } from "@/notice/types/notice";
+import type { noticeType } from "@/notice/types/noticeType";
 
-export function buildNoticeHref(n: notice): string {
+export function buildNoticeHref(n: noticeType): string {
   const id = (n as any)?.targetId;
   switch (String((n as any)?.targetType || "")) {
     case "SHARING":

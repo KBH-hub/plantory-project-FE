@@ -1,4 +1,4 @@
-import type { DictionaryCardItem, DryItem } from "@/dictionary/types/dictionary";
+import type { DictionaryCardItem, DryItem } from "@/dictionary/types/dictionaryType";
 
 export const CONCURRENCY = 10;
 

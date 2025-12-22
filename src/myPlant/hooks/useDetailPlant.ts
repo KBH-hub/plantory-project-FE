@@ -1,8 +1,8 @@
 import { useState } from "react";
 import defaultImg from "@/assets/images/default.png";
 import { showModal } from "@/global/utils/showModal";
-import type { PlantForm, PlantVm, UseDetailPlantParams } from "@/myPlant/types/myPlantManagement";
-import { deleteMyPlant, deleteWatering, updateMyPlant } from "@/myPlant/services/myPlantManagementServices";
+import type { PlantForm, PlantVm, UseDetailPlantParams } from "@/myPlant/types/myPlantManagementType";
+import { deleteMyPlant, deleteWatering, updateMyPlant } from "@/myPlant/services/myPlantManagementApi";
 import { formatDate, isValidWaterDates, toLocalDateTimeStr } from "@/myPlant/utils/managementDate";
 
 export function useDetailPlant({ onRefresh }: UseDetailPlantParams) {

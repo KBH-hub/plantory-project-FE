@@ -1,5 +1,5 @@
 import React from "react";
-import type { CalendarCell } from "@/myPlant/types/plantCalendar";
+import type { CalendarCell } from "@/myPlant/types/plantCalendarType";
 
 type Props = {
     cells: CalendarCell[];

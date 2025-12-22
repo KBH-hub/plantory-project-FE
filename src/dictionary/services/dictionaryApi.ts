@@ -1,5 +1,5 @@
-import { axiosInstance } from "@/global/services/api/axiosInstance";
-import type { GardenApiResponse, GardenDictionaryResponse, GardenDetailItem, GardenFileItem, DryApiResponse, DryDetailItem, DryDetailResponse } from "@/dictionary/types/dictionary";
+import { axiosInstance } from "@/global/services/jjwt/axiosInstance";
+import type { GardenApiResponse, GardenDictionaryResponse, GardenDetailItem, GardenFileItem, DryApiResponse, DryDetailItem, DryDetailResponse } from "@/dictionary/types/dictionaryType";
 
 
 function asArray<T>(v: T | T[] | null | undefined): T[] {

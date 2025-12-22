@@ -1,4 +1,4 @@
-export interface Image {
+export interface ImageType {
   imageId: number;
   memberId: number;
   targetType: "SHARING" | "QUESTION" | string;

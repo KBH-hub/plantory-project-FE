@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { registerSharingReview } from "@/community/sharing/services/updateReview";
-import { ReviewRequest } from "@/community/sharing/types/updateReview";
+import { registerSharingReview } from "@/community/sharing/services/updateReviewApi";
+import { ReviewRequest } from "@/community/sharing/types/updateReviewType";
 import { formatDate } from "@/global/utils/date";
 import { showModal } from "@/global/utils/showModal";
 import { useUpdateReview } from "@/community/sharing/hooks/useUpdateReview";

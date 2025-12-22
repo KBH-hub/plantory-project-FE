@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDuplicateCheck } from "@/member/hooks/useDuplicateCheck";
 import { showModal } from "@/global/utils/showModal";
-import { profileApi } from "@/profile/services/profileService";
+import { profileApi } from "@/profile/services/profileApi";
 import type { ProfileInfo } from "@/profile/types/profileType";
 import type { MemberFormValues } from "@/member/types/memberType"
 

@@ -7,12 +7,12 @@ import {
     getWateringList,
     registerDiary,
     updateWateringCheck,
-} from "@/myPlant/services/myPlantServices";
+} from "@/myPlant/services/myPlantApi";
 import { showModal } from "@/global/utils/showModal";
-import { MODAL_STATE, MAX_PHOTO_FILES, type ModalState } from "@/myPlant/enums/plantCalendarEnums";
+import { MODAL_STATE, MAX_PHOTO_FILES, type ModalState } from "@/myPlant/enums/plantCalendarEnum";
 import { buildDayRangeISO, buildMonthRangeISO, pad2, toLocalYmd, ymdFromDate } from "@/myPlant/utils/calenderDate";
 import { normalizeDiary, normalizeMyPlant, normalizeWater } from "@/myPlant/utils/plantCalendarNormalize";
-import type { CalendarCell, DiaryFormErrors, DiaryDetailResponse, DiaryListItem, MyPlantItem, WateringItem } from "@/myPlant/types/plantCalendar";
+import type { CalendarCell, DiaryFormErrors, DiaryDetailResponse, DiaryListItem, MyPlantItem, WateringItem } from "@/myPlant/types/plantCalendarType";
 
 export function usePlantCalendar() {
     const [currentYear, setCurrentYear] = useState<number>(() => new Date().getFullYear());

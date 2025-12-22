@@ -1,4 +1,4 @@
-import type { DateRange } from "@/admin/types/weightManagementTypes";
+import type { DateRange } from "@/admin/types/weightManagementType";
 
 type Props = {
   title: string;

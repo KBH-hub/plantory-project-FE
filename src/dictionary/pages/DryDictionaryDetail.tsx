@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getDryDictionaryDetail } from "@/dictionary/services/dictionaryServices";
-import type { DryDetailItem } from "@/dictionary/types/dictionary";
+import { getDryDictionaryDetail } from "@/dictionary/services/dictionaryApi";
+import type { DryDetailItem } from "@/dictionary/types/dictionaryType";
 import DryDetailView from "@/dictionary/components/DryDetailView";
 
 function clean(v: unknown) {

@@ -1,6 +1,6 @@
 import React from "react";
-import type { MyPlantItem } from "@/myPlant/types/plantCalendar";
-import type { DiaryFormErrors } from "@/myPlant/types/plantCalendar";
+import type { MyPlantItem } from "@/myPlant/types/plantCalendarType";
+import type { DiaryFormErrors } from "@/myPlant/types/plantCalendarType";
 
 export function cn(...args: Array<string | false | null | undefined>) {
     return args.filter(Boolean).join(" ");

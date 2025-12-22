@@ -1,9 +1,9 @@
 import { useState } from "react";
 import defaultImg from "@/assets/images/default.png";
 import { showModal } from "@/global/utils/showModal";
-import { createMyPlant } from "@/myPlant/services/myPlantManagementServices";
+import { createMyPlant } from "@/myPlant/services/myPlantManagementApi";
 import { isValidWaterDates, toLocalDateTimeStr } from "@/myPlant/utils/managementDate";
-import type { PlantForm, UseAddPlantParams } from "@/myPlant/types/myPlantManagement";
+import type { PlantForm, UseAddPlantParams } from "@/myPlant/types/myPlantManagementType";
 
 export function useAddPlant({ onRefresh }: UseAddPlantParams) {
     const [opened, setOpened] = useState(false);

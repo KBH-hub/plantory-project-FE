@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ProfileSharingHistoryResponse, ProfileSharingTab } from "@/member/types/sharingHistory";
+import { ProfileSharingHistoryResponse, ProfileSharingTab } from "@/member/types/sharingHistoryType";
 import { getMySharingHistory, getReceivedSharingHistory } from "@/member/services/SharingHistoryApi";
 import { usePaginator } from "@/global/hooks/usePaginator";
 

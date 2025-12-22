@@ -1,6 +1,6 @@
 import React from "react";
 import { buildDetailUrl, splitPipes } from "@/dictionary/utils/dictionaryUtils";
-import { DictionaryCardItem } from"@/dictionary/types/dictionary";
+import { DictionaryCardItem } from "@/dictionary/types/dictionaryType";
 
 type Props = {
   item: DictionaryCardItem;

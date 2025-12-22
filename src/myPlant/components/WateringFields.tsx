@@ -1,4 +1,4 @@
-import type { WateringFieldsProps } from "@/myPlant/types/myPlantManagement";
+import type { WateringFieldsProps } from "@/myPlant/types/myPlantManagementType";
 
 export default function WateringFields({ form, onChange }: WateringFieldsProps) {
     return (

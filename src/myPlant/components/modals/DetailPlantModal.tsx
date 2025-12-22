@@ -1,5 +1,5 @@
 import Modal from "@/myPlant/components/modals/MenagementModal";
-import type { DetailPlantModalProps } from "@/myPlant/types/myPlantManagement";
+import type { DetailPlantModalProps } from "@/myPlant/types/myPlantManagementType";
 import PhotoPicker from "@/myPlant/components/PhotoPicker";
 import WateringFields from "@/myPlant/components/WateringFields";
 

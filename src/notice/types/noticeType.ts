@@ -1,6 +1,6 @@
 import type { NoticeTargetType } from "@/global/enum/noticeTypes";
 
-export interface notice {
+export interface noticeType {
   noticeId: number;   
   receiverId: number;
   targetType: NoticeTargetType;

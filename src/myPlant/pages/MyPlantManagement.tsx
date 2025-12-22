@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import type { PlantVm } from "@/myPlant/types/myPlantManagement";
+import type { PlantVm } from "@/myPlant/types/myPlantManagementType";
 
 import ManagementHeader from "@/myPlant/components/ManagementHeader";
 import PlantGrid from "@/myPlant/components/PlantGrid";

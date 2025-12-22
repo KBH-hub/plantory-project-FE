@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CreateSharingForm  } from "@/community/sharing/types/createSharing";
+import { CreateSharingForm  } from "@/community/sharing/types/createSharingType";
 import { createSharing, updateSharing } from "@/community/sharing/services/createSharingApi";
 import { getSharingDetail } from "@/community/sharing/services/readSharingApi";
 import { showModal } from "@/global/utils/showModal";

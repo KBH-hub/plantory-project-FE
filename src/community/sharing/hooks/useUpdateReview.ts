@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getSharingReviewInfo } from "@/community/sharing/services/updateReview";
-import { ReviewInfoResponse} from "@/community/sharing/types/updateReview";
+import { getSharingReviewInfo } from "@/community/sharing/services/updateReviewApi";
+import { ReviewInfoResponse} from "@/community/sharing/types/updateReviewType";
 import { showModal } from "@/global/utils/showModal";
 
 export function useUpdateReview(sharingId?: number) {

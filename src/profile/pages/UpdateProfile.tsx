@@ -1,9 +1,9 @@
-// /profile/pages/UpdateProfilePage.tsx
+// /profile/pages/UpdateProfile.tsx
 import React from "react";
 import { useUpdateProfile } from "@/profile/hooks/useUpdateProfile";
 import UpdateProfile from "@/profile/components/UpdateProfile";
 
-const UpdateProfilePage: React.FC = () => {
+const UpdateProfile: React.FC = () => {
     const vm = useUpdateProfile();
 
     return (
@@ -28,4 +28,4 @@ const UpdateProfilePage: React.FC = () => {
     );
 };
 
-export default UpdateProfilePage;
+export default UpdateProfile;

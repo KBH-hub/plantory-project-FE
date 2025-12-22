@@ -1,5 +1,5 @@
-import { axiosInstance } from "@/global/services/api/axiosInstance"
-import { SharingCardListResponse, SharingSearchRequest } from "@/community/sharing/types/sharingList";
+import { axiosInstance } from "@/global/services/jjwt/axiosInstance"
+import { SharingCardListResponse, SharingSearchRequest } from "@/community/sharing/types/sharingListType";
 
 export const getSharingList = async (params:SharingSearchRequest) : Promise<SharingCardListResponse[]> => {
   return (await axiosInstance.get<SharingCardListResponse[]>("/api/sharings", {params})).data;

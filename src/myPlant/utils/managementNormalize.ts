@@ -1,4 +1,4 @@
-import type { PlantVm } from "@/myPlant/types/myPlantManagement";
+import type { PlantVm } from "@/myPlant/types/myPlantManagementType";
 import { addDays, daysBetween } from "./managementDate";
 
 export function normalizePlant(r: any): PlantVm {

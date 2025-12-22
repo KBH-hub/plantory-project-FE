@@ -47,7 +47,7 @@ export interface RegisterDiaryPayload {
   files?: File[];
 }
 
-import type { ModalState } from "@/myPlant/enums/plantCalendarEnums";
+import type { ModalState } from "@/myPlant/enums/plantCalendarEnum";
 
 export type DiaryFormErrors = Partial<{
     myplantId: string;

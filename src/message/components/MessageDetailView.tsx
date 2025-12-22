@@ -1,4 +1,4 @@
-import type { MessageDetailResponse } from "@/message/types/message";
+import type { MessageDetailResponse } from "@/message/types/messageType";
 import { formatDateTime } from "@/global/utils/formatDateTime";
 
 type Props = {

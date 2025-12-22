@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { createPaginator } from "@/global/utils/pagination";
-import type { paginationArgs, PaginatorUpdateArgs } from "@/global/types/pagination";
+import type { paginationArgs, PaginatorUpdateArgs } from "@/global/types/paginationType";
 
 export function usePaginator({ containerRef, current, totalItems, pageSize, onChange }: paginationArgs) {
     const paginatorRef = useRef<{ update: (p?: PaginatorUpdateArgs) => void } | null>(null);

@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useRef, useState} from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { usePaginator } from "@/global/hooks/usePaginator";
 import { useDebouncedValue } from "@/global/hooks/useDebouncedValue";
-import { profileApi } from "@/profile/services/profileService";
+import { profileApi } from "@/profile/services/profileApi";
 import type { CategoryKey, ProfileInfo, ProfileWrittenItem, TabKey } from "@/profile/types/profileType";
 import { showModal } from "@/global/utils/showModal";
 import { useAuthStore } from "@/global/stores/useAuthStore";
@@ -42,7 +42,7 @@ function toRateText(sharingRate?: number | string | null) {
     return "0.00%";
 }
 
-export default function ProfileInfoPage() {
+export default function ProfileInfo() {
     const navigate = useNavigate();
     const params = useParams<{ memberId?: string }>();
     const [currentPage, setCurrentPage] = useState(1);

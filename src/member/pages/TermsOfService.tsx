@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function TermsOfServicePage() {
+export default function TermsOfService() {
     const navigate = useNavigate();
 
     const [agree1, setAgree1] = useState(false);

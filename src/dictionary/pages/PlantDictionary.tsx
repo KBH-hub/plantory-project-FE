@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { usePaginator } from "@/global/hooks/usePaginator";
-import { getGardenDictionaryPage } from "@/dictionary/services/dictionaryServices";
-import type { GardenItem } from "@/dictionary/types/dictionary";
+import { getGardenDictionaryPage } from "@/dictionary/services/dictionaryApi";
+import type { GardenItem } from "@/dictionary/types/dictionaryType";
 import GardenSearchBar from "@/dictionary/components/DictionarySearchBar";
 import GardenList from "@/dictionary/components/DictionaryList";
 import { asArray, byQuery, withSearchKey } from "@/dictionary/utils/dictionaryUtils";

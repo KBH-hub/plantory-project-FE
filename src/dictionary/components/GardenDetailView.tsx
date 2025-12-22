@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import type { GardenDetailItem, GardenFileItem } from "@/dictionary/types/dictionary";
+import type { GardenDetailItem, GardenFileItem } from "@/dictionary/types/dictionaryType";
 
 function safeText(v: unknown) {
   const s = v == null ? "" : String(v).trim();

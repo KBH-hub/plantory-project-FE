@@ -1,6 +1,6 @@
-import { axiosInstance } from "@/global/services/api/axiosInstance";
-import { SharingDetailResponse, SharingCommentResponse } from "@/community/sharing/types/readSharing";
-import { DictionarySearchItem, DictionaryPlantDetail } from "@/community/sharing/types/readSharing";
+import { axiosInstance } from "@/global/services/jjwt/axiosInstance";
+import { SharingDetailResponse, SharingCommentResponse } from "@/community/sharing/types/readSharingType";
+import { DictionarySearchItem, DictionaryPlantDetail } from "@/community/sharing/types/readSharingType";
 
 export const getSharingDetail = async ( sharingId: number ): Promise<SharingDetailResponse> => {
     return ((await axiosInstance.get<SharingDetailResponse>(`/api/sharings/${sharingId}`)).data)

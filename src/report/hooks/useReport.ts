@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { searchUserByNickname, registerReport } from "@/report/services/reportService";
+import { searchUserByNickname, registerReport } from "@/report/services/reportApi";
 import { showModal } from "@/global/utils/showModal";
 import { useBootstrapModal } from "@/global/hooks/useBootstrapModal";
 

@@ -8,7 +8,7 @@ import MemberSearchModal from "@/report/components/MemberSearchModal";
 import { useNotice } from "@/notice/hooks/useNotice";
 import { useReportFlow } from "@/report/hooks/useReport";
 import useLogout from "@/global/hooks/useLogout";
-import UserDropdown from "../../auth/componets/UserDropdown";
+import UserDropdown from "../../global/components/UserDropdown";
 export default function UserHeader() {
   const user = useAuthStore((s) => s.user);
   const handleLogout = useLogout();

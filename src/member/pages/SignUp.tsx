@@ -8,7 +8,7 @@ import type { SignUpRequest } from "@/member/types/memberType";
 import MemberForm from "@/member/components/MemberForm";
 import {MemberFormValues} from "@/member/types/memberType";
 
-const SignUpPage = () => {
+const SignUp = () => {
     const navigate = useNavigate();
     const { submitWithAlert } = useSubmitWithAlert<SignUpRequest>();
     const { checkMembername, checkNickname, submit } = useSignUp();
@@ -83,4 +83,4 @@ const SignUpPage = () => {
     );
 };
 
-export default SignUpPage;
+export default SignUp;

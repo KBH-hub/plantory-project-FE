@@ -4,7 +4,7 @@ import ListControlPanel from "../components/ListControlPanel";
 import WeightConfigSection from "../components/WeightConfigSection";
 import WeightListSection from "../components/WeightListSection";
 
-export default function WeightManagementPage() {
+export default function WeightManagement() {
   const vm = useWeightManagement();
 
   return (

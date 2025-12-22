@@ -6,7 +6,7 @@ import { usePaginator } from "@/global/hooks/usePaginator";
 import { useSelection } from "@/message/hooks/useSelection";
 import { useDeleteSelectedMessages } from "@/message/hooks/useDeleteSelectedMessages";
 import { BoxType, TargetType } from "@/message/enums/messageEnums";
-import { deleteSelectedMessages } from "@/message/services/messageService";
+import { deleteSelectedMessages } from "@/message/services/messageApi";
 
 export default function MessageList() {
   const navigate = useNavigate();

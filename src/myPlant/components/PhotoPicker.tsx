@@ -1,5 +1,5 @@
 import defaultImg from "@/assets/images/default.png";
-import type { PhotoPickerProps } from "@/myPlant/types/myPlantManagement";
+import type { PhotoPickerProps } from "@/myPlant/types/myPlantManagementType";
 
 export default function PhotoPicker({ title, preview, inputWidth, inputMaxWidth, onChangeFile, rightSlot }: PhotoPickerProps) {
     return (
