@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ReadCommunityLayout from "@/community/layouts/ReadCommunityLayout";
 import { addQuestionAnswer, updateQuestionAnswer, deleteQuestionAnswer } from "@/community/question/services/readQuestionApi";
 import QuestionBtnAction from "@/community/question/components/QuestionBtnAction";
@@ -29,14 +29,15 @@ function ReadQuestion() {
       loginMemberId={loginUser?.memberId}
 
       authorProfile={
-        <div className="d-flex align-items-center">
-          <div className="me-3">
-            <ProfileImage src={authorProfileImage} size={48} disabled />
+        <Link to={`/publicProfile/${data.memberId}`} className="text-decoration-none text-dark">
+          <div className="d-flex align-items-center">
+            <div className="me-3">
+              <ProfileImage src={authorProfileImage} size={48} disabled />
+            </div>
+            <strong>{data.nickname}</strong>
           </div>
-          <strong>{data.nickname}</strong>
-        </div>
+        </Link>
       }
-
       actions={<QuestionBtnAction data={data} />}
 
       comments={

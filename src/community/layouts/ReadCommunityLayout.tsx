@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import { timeAgo } from "@/global/utils/date";
 import ImageCarousel from "@/community/components/ImageCarousel";
-import { Link } from "react-router-dom";
 
 interface Props {
   pageTitle: string;
@@ -80,9 +79,7 @@ function ReadCommunityLayout({
                   
                   <div className="col-3">
                     <br />
-                    <Link to="/profile" className="text-decoration-none text-dark">
-                      {authorProfile}
-                    </Link>
+                    {authorProfile}                   
                   </div>
 
                   <div className="col-2 text-start">
