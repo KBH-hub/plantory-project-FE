@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import SharingCard from "@/global/components/SharingCard";
 import { usePaginator } from "@/global/hooks/usePaginator";
 import { mapToSharingCard } from "@/global/utils/mapToSharingCard";
-import { getProfileInterestList } from "@/member/services/profileInterestApi";
-import { ProfileInterestResponse } from "@/member/types/profileInterestType";
+import { getProfileInterestList } from "@/profile/services/profileInterestApi";
+import { ProfileInterestResponse } from "@/profile/types/profileInterest";
 import {ProfileSharingHistoryResponse} from "@/member/types/sharingHistoryType";
 
 function ProfileInterest() {
