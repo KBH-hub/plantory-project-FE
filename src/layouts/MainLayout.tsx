@@ -6,7 +6,7 @@ export default function MainLayout() {
     return (
         <>
             <UserHeader />
-            <main className="min-vh-100">
+            <main className="min-vh-100 bg-light">
                 <Outlet />
             </main>
             <Footer />
