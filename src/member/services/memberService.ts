@@ -1,4 +1,4 @@
-import {SignUpRequest} from "@/member/types/memberRequestType";
+import {SignUpRequest} from "@/member/types/memberType";
 import {axiosInstance} from "@/global/services/api/axiosInstance";
 
 export const signUp = (data: SignUpRequest) => {

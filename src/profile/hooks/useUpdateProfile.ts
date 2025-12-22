@@ -5,16 +5,7 @@ import { useDuplicateCheck } from "@/member/hooks/useDuplicateCheck";
 import { showModal } from "@/global/utils/showModal";
 import { profileApi } from "@/profile/services/profileService";
 import type { ProfileInfo } from "@/profile/types/profileType";
-
-export type MemberFormValues = {
-    membername: string;
-    nickname: string;
-    phone: string;
-    address: string;
-    password: string;
-    pwCheck: string;
-    noticeEnabled: boolean;
-};
+import type { MemberFormValues } from "@/member/types/memberType"
 
 export function useUpdateProfile() {
     const navigate = useNavigate();

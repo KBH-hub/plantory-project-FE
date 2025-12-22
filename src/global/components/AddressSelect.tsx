@@ -1,4 +1,5 @@
 import koreaData from "@/data/korea.json";
+import {ChangeEvent} from "react";
 
 type Props = {
     value?: string;
@@ -12,12 +13,22 @@ const AddressSelect = ({ value = "", onChange }: Props) => {
 
     const sigunguList: string[] = sido ? koreaData[sido as keyof typeof koreaData] : [];
 
-    const handleSidoChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleSidoChange = (e: ChangeEvent<HTMLSelectElement>) => {
         const nextSido = e.target.value;
-        onChange(nextSido ? `${nextSido}` : "");
+
+        if (!nextSido) {
+            onChange("");
+            return;
+        }
+
+        const nextSigunguList = koreaData[nextSido as keyof typeof koreaData];
+        const firstSigungu = nextSigunguList?.[0] ?? "";
+
+        onChange(firstSigungu ? `${nextSido} ${firstSigungu}` : nextSido);
     };
 
-    const handleSigunguChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+
+    const handleSigunguChange = (e: ChangeEvent<HTMLSelectElement>) => {
         const nextSigungu = e.target.value;
         if (!sido) return onChange("");
         onChange(`${sido} ${nextSigungu}`);
@@ -27,7 +38,7 @@ const AddressSelect = ({ value = "", onChange }: Props) => {
         <div className="row g-2">
             <div className="col-6">
                 <select className="form-select" value={sido} onChange={handleSidoChange}>
-                    <option value="">시/도</option>
+                    <option value="" >시/도</option>
                     {Object.keys(koreaData).map((key) => (
                         <option key={key} value={key}>
                             {key}
@@ -38,7 +49,7 @@ const AddressSelect = ({ value = "", onChange }: Props) => {
 
             <div className="col-6">
                 <select className="form-select" value={sigungu} onChange={handleSigunguChange} disabled={!sido}>
-                    <option value="">시/군/구</option>
+                    <option disabled selected value="">시/군/구</option>
                     {sigunguList.map((sg) => (
                         <option key={sg} value={sg}>
                             {sg}
