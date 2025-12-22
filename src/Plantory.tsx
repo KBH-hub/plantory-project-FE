@@ -81,6 +81,7 @@ export default function App() {
                         <Route path="/profile" element={<ProfileInfo />} />
                         <Route path="/publicProfile/:memberId" element={<ProfileInfo />} />
                         <Route path="/profile/update" element={<UpdateProfile />} />
+                        <Route path="/sharing/:id" element={<ReadSharing />} />
                     </Route>
 
                     {/* ADMIN */}

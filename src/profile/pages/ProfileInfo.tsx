@@ -47,6 +47,20 @@ function toRateText(sharingRate?: number | string | null) {
 }
 
 
+type PostCategory = "SHARING" | "QUESTION";
+type CommentCategory = "COMMENT" | "ANSWER";
+
+function isPostItem(item: ProfileWrittenItem): item is ProfileWrittenItem & { category: PostCategory } {
+    return item.category === "SHARING" || item.category === "QUESTION";
+}
+
+function isCommentItem(
+    item: ProfileWrittenItem
+): item is ProfileWrittenItem & { category: CommentCategory; targetId: number } {
+    return (item.category === "COMMENT" || item.category === "ANSWER") && typeof item.targetId === "number";
+}
+
+
 export default function ProfileInfo() {
     const navigate = useNavigate();
     const params = useParams<{ memberId?: string }>();
@@ -205,12 +219,29 @@ export default function ProfileInfo() {
     }
 
     function handleRowClick(item: ProfileWrittenItem) {
-        if (!isPostsTab) return;
+        if (isPostsTab) {
+            if (!isPostItem(item)) return;
 
-        if (item.category === "SHARING") navigate(`/readSharing/${item.id}`);
-        else if (item.category === "QUESTION") navigate(`/readSharing/${item.id}`);
+            const base = item.category === "SHARING" ? "/sharing" : "/question";
+            navigate(`${base}/${item.id}`);
+            return;
+        }
 
+        if (!isCommentItem(item)) {
+            console.log(item);
+            showModal.alert("원글 정보를 찾을 수 없습니다. (댓글 데이터에 targetId가 필요합니다)");
+            return;
+        }
+
+        const base =
+            item.targetCategory === "QUESTION"
+                ? "/question"
+                : "/sharing";
+
+        navigate(`${base}/${item.targetId}`);
     }
+
+
 
     async function handleDeleteWritten() {
         if (!isPostsTab) {

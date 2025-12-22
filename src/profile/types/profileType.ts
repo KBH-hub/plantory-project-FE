@@ -45,8 +45,11 @@ export type ProfileWrittenItem = {
     nickname?: string | null;
     category: "SHARING" | "QUESTION" | "COMMENT" | "ANSWER" | string;
     title?: string | null;
-    createdAt?: string | null; // ISO
+    createdAt?: string | null;
+    targetId?: number | null;
+    targetCategory?: "SHARING" | "QUESTION" | null;
 };
+
 
 export type ProfileWrittenRes = {
     total: number;
