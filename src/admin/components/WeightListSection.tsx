@@ -10,8 +10,19 @@ type Props = {
 export default function WeightListSection({ items, pagerRef, latest }: Props) {
   return (
     <>
-      <div className="table-container bg-light">
-        <table className="table table-hover mb-0 text-center align-middle">
+      <div className="table-wrapper" style={{ maxHeight: 600, overflowY: "auto" }}>
+        <table
+          className="table table-hover bg-white rounded-3 shadow-sm text-center align-middle mb-0"
+          style={{ tableLayout: "fixed", width: "100%" }}
+        >
+          <colgroup>
+            <col style={{ width: 160 }} />
+            <col style={{ width: 160 }} />
+            <col style={{ width: 120 }} />
+            <col style={{ width: 120 }} />
+            <col style={{ width: 220 }} />
+          </colgroup>
+
           <thead className="table-secondary small">
             <tr>
               <th>아이디</th>
@@ -21,6 +32,7 @@ export default function WeightListSection({ items, pagerRef, latest }: Props) {
               <th>관심 필요 식물 수(최근 7일)</th>
             </tr>
           </thead>
+
           <tbody>
             {items.length === 0 ? (
               <tr>
@@ -32,8 +44,14 @@ export default function WeightListSection({ items, pagerRef, latest }: Props) {
             ) : (
               items.map((m) => (
                 <tr key={m.memberId} className="user-row" data-member-id={m.memberId}>
-                  <td>{m.membername}</td>
-                  <td>{m.nickname}</td>
+                  <td title={m.membername ?? ""}>
+                    <span className="d-inline-block text-truncate w-100">{m.membername}</span>
+                  </td>
+
+                  <td title={m.nickname ?? ""}>
+                    <span className="d-inline-block text-truncate w-100">{m.nickname}</span>
+                  </td>
+
                   <td>{(m.searchWeight * 10).toFixed(0)}</td>
                   <td>{(m.questionWeight * 10).toFixed(0)}</td>
                   <td>{m.plantsNeedingAttention > 0 ? m.plantsNeedingAttention : 0}</td>
@@ -45,13 +63,14 @@ export default function WeightListSection({ items, pagerRef, latest }: Props) {
       </div>
 
       <div className="d-flex justify-content-center mt-4">
-        <ul ref={pagerRef} className="pagination" />
+        <ul ref={pagerRef} className="pagination mb-0" />
       </div>
 
       {latest ? (
         <div className="small text-muted mt-2">
-          현재 저장된 비중: 검색어 {(latest.searchWeight * 10).toFixed(0)} / 질문수{" "}
-          {(latest.questionWeight * 10).toFixed(0)}
+          현재 저장된 비중:
+          검색어 {(latest.searchWeight * 10).toFixed(0)} /
+          질문수{" "} {(latest.questionWeight * 10).toFixed(0)}
         </div>
       ) : null}
     </>
