@@ -4,11 +4,11 @@ export function buildNoticeHref(n: notice): string {
   const id = (n as any)?.targetId;
   switch (String((n as any)?.targetType || "")) {
     case "SHARING":
-      return `/readSharing/${id}`;
+      return `/sharing/${id}`;
     case "SHARING_REVIEW":
       return `/sharing/${id}/review`;
     case "QUESTION":
-      return `/readQuestion/${id}`;
+      return `/question/${id}`;
     case "MESSAGE":
       return `/messageDetail/${id}`;
     case "WATERING":
