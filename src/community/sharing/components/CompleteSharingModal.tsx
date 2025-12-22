@@ -1,4 +1,4 @@
-import { SharingPartner } from "@/community/sharing/types/completeSharing";
+import { SharingPartner } from "@/community/sharing/types/completeSharingType";
 
 type Step = "select" | "confirm" | "result";
 

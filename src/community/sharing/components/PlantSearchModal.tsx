@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { searchPlants, getGardenDetail, getDryDetail } from "@/community/sharing/services/readSharingApi";
-import { DictionarySearchItem, DictionaryPlantDetail } from "@/community/sharing/types/readSharing";
+import { DictionarySearchItem, DictionaryPlantDetail } from "@/community/sharing/types/readSharingType";
 
 interface Props {
   onSelect: (data: DictionaryPlantDetail) => void;

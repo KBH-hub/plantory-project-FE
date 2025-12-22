@@ -1,5 +1,5 @@
 import React from "react";
-import type { DiaryDetailResponse } from "@/myPlant/types/plantCalendar";
+import type { DiaryDetailResponse } from "@/myPlant/types/plantCalendarType";
 
 type Props = {
     detail: DiaryDetailResponse | null;

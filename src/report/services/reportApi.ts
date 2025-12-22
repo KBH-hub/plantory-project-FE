@@ -1,5 +1,5 @@
-import { axiosInstance } from "@/global/services/api/axiosInstance";
-import { reportMembers } from "@/report/types/report"
+import { axiosInstance } from "@/global/services/jjwt/axiosInstance";
+import { reportMembers } from "@/report/types/reportType"
 
 export const searchUserByNickname = async (nickname: string): Promise<reportMembers[]> => {
     const res = await axiosInstance.get("/api/report/users", {

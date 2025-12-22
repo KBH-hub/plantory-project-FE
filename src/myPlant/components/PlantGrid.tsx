@@ -1,4 +1,4 @@
-import type { PlantGridProps } from "@/myPlant/types/myPlantManagement";
+import type { PlantGridProps } from "@/myPlant/types/myPlantManagementType";
 import PlantCard from "@/myPlant/components/PlantCard";
 
 export default function PlantGrid({ loading, items, onOpenDetail }: PlantGridProps) {

@@ -1,4 +1,4 @@
-import { BoxType, TargetType } from "@/message/enums/messageEnums";
+import { BoxType, TargetType } from "@/message/enums/messageEnum";
 
 export interface MessageListResponse {
   messageId: number;

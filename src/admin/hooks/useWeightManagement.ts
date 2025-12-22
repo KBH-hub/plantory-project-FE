@@ -7,7 +7,7 @@ import type {
   RateConfig,
   WeightListItemUI,
   WeightWeightsLatest,
-} from "@/admin/types/weightManagementTypes";
+} from "@/admin/types/weightManagementType";
 
 import {
   getCareCounts,
@@ -16,7 +16,7 @@ import {
   getWeightList,
   saveRateConfig,
   saveWeights,
-} from "@/admin/services/weightManagementService";
+} from "@/admin/services/weightManagementApi";
 
 import { showModal } from "@/global/utils/showModal";
 

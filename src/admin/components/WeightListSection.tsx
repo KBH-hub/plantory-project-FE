@@ -1,5 +1,5 @@
 import type { RefObject } from "react";
-import type { WeightListItemUI, WeightWeightsLatest } from "@/admin/types/weightManagementTypes";
+import type { WeightListItemUI, WeightWeightsLatest } from "@/admin/types/weightManagementType";
 
 type Props = {
   items: WeightListItemUI[];

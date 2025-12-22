@@ -6,7 +6,7 @@ import MessageRegisterModal from "@/global/components/MessageRegisterModal";
 import { useRegisterMessage } from "@/message/hooks/useRegisterMessage";
 import { showModal } from "@/global/utils/showModal";
 import { deleteQuestion } from "@/community/question/services/readQuestionApi"
-import { ReplyForm } from "@/message/types/message";
+import { ReplyForm } from "@/message/types/messageType";
 import { QuestionDetailResponse } from "@/community/question/types/readQuestion"
 
 interface Props {

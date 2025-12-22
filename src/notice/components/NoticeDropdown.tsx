@@ -1,8 +1,8 @@
 import { formatDateTime } from "@/global/utils/formatDateTime";
-import type { notice } from "@/notice/types/notice";
+import type { noticeType } from "@/notice/types/noticeType";
 
 type Props = {
-  alarms: notice[];
+  alarms: noticeType[];
   alarmCount: number;
   onItemClick: (noticeId: number, href: string) => void;
   onClearAll: () => void;

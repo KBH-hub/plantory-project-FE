@@ -1,22 +1,22 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getNoticeList, markNoticeRead, removeAllNotice } from "@/notice/services/noticeService";
+import { getNoticeList, markNoticeRead, removeAllNotice } from "@/notice/services/noticeApi";
 import { showModal } from "@/global/utils/showModal";
-import type { notice } from "@/notice/types/notice";
+import type { noticeType } from "@/notice/types/noticeType";
 import { buildNoticeHref } from "@/notice/utils/buildNoticeHref";
 import { useLocation } from "react-router-dom";
 
 export function useNotice() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [alarms, setAlarms] = useState<notice[]>([]);
+  const [alarms, setAlarms] = useState<noticeType[]>([]);
 
   const alarmCount = alarms.length;
 
   const refresh = useCallback(async () => {
     try {
       const data = await getNoticeList();
-      const mapped: notice[] = (data ?? []).map((n: notice) => ({
+      const mapped: noticeType[] = (data ?? []).map((n: noticeType) => ({
         ...n,
         href: (n as any).href ?? buildNoticeHref(n),
       }));

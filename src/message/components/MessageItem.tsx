@@ -1,4 +1,4 @@
-import { MessageItemRequest } from "@/message/types/message";
+import { MessageItemRequest } from "@/message/types/messageType";
 import { formatDateTime } from "@/global/utils/formatDateTime";
 
 const labelTargetType = (t: string) => {

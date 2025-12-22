@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useAuthStore } from "@/global/stores/useAuthStore";
-import { authAxios } from "@/global/services/api/authAxios";
+import { authAxios } from "@/global/services/jjwt/authAxios";
 
 export const axiosInstance = axios.create({
     baseURL: "http://localhost:9000",

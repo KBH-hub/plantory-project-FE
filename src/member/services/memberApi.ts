@@ -1,5 +1,5 @@
 import {SignUpRequest} from "@/member/types/memberType";
-import {axiosInstance} from "@/global/services/api/axiosInstance";
+import {axiosInstance} from "@/global/services/jjwt/axiosInstance";
 
 export const signUp = (data: SignUpRequest) => {
     return axiosInstance.post("/api/members/signUp", data);

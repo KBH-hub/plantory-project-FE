@@ -1,5 +1,6 @@
 import { ProfileSharingHistoryResponse } from "@/profile/types/sharingHistory";
-import { SharingCardListResponse } from "@/community/sharing/types/sharingList";
+import { SharingCardListResponse } from "@/community/sharing/types/sharingListType";
+
 
 export function mapToSharingCard( item: ProfileSharingHistoryResponse
 ): SharingCardListResponse {
@@ -11,6 +12,6 @@ export function mapToSharingCard( item: ProfileSharingHistoryResponse
     commentCount: item.commentCount,
     createdAt: item.createdAt,
     updatedAt: item.createdAt, 
-    fileUrl: item.thumbnail || "/image/default.png",
+    fileUrl: item.thumbnail || 
   };
 }

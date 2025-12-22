@@ -1,4 +1,4 @@
-import { axiosInstance } from "@/global/services/api/axiosInstance";
+import { axiosInstance } from "@/global/services/jjwt/axiosInstance";
 
 import type {
   DiaryDetailResponse,
@@ -7,7 +7,7 @@ import type {
   WateringItem,
   CalendarRangeRequest,
   RegisterDiaryPayload
-} from "@/myPlant/types/plantCalendar";
+} from "@/myPlant/types/plantCalendarType";
 
 export const getDiaryList = async (params: CalendarRangeRequest): Promise<DiaryListItem[]> => {
   const res = await axiosInstance.get("/api/plantingCalender/diary", { params });

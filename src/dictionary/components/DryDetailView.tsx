@@ -1,4 +1,4 @@
-import type { DryDetailItem } from "@/dictionary/types/dictionary";
+import type { DryDetailItem } from "@/dictionary/types/dictionaryType";
 
 function clean(v: unknown) {
   return v == null ? "" : String(v).trim();

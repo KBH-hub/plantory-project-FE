@@ -8,9 +8,9 @@ import { showModal } from "@/global/utils/showModal";
 import BtnAction from "@/community/components/BtnAction";
 import CompleteSharingModal from "./CompleteSharingModal";
 import MessageRegisterModal from "@/global/components/MessageRegisterModal";
-import { SharingDetailResponse } from "@/community/sharing/types/readSharing";
-import { SharingPartner } from "@/community/sharing/types/completeSharing";
-import { ReplyForm } from "@/message/types/message";
+import { SharingDetailResponse } from "@/community/sharing/types/readSharingType";
+import { SharingPartner } from "@/community/sharing/types/completeSharingType";
+import { ReplyForm } from "@/message/types/messageType";
 import { useRegisterMessage } from "@/message/hooks/useRegisterMessage";
 
 

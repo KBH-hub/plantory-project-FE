@@ -1,4 +1,4 @@
-import type { PlantCardProps } from "@/myPlant/types/myPlantManagement";
+import type { PlantCardProps } from "@/myPlant/types/myPlantManagementType";
 
 export default function PlantCard({ plant: p, onClick }: PlantCardProps) {
     return (

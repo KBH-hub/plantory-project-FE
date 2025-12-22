@@ -1,5 +1,5 @@
-import { axiosInstance } from "@/global/services/api/axiosInstance";
-import { SharingPartner } from "@/community/sharing/types/completeSharing";
+import { axiosInstance } from "@/global/services/jjwt/axiosInstance";
+import { SharingPartner } from "@/community/sharing/types/completeSharingType";
 
 export const getSharingPartners = async ( sharingId: number, receiverId: number ): Promise<SharingPartner[]> => {
   const res = await axiosInstance.get<SharingPartner[]>(`/api/sharings/${sharingId}/partners`,

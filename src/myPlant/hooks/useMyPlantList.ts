@@ -1,7 +1,7 @@
 // src/myPlant/hooks/useMyPlantList.ts
 import { useEffect, useState } from "react";
-import type { PlantVm, UseMyPlantListParams } from "@/myPlant/types/myPlantManagement";
-import { getMyPlantList } from "@/myPlant/services/myPlantManagementServices";
+import type { PlantVm, UseMyPlantListParams } from "@/myPlant/types/myPlantManagementType";
+import { getMyPlantList } from "@/myPlant/services/myPlantManagementApi";
 import { usePaginator } from "@/global/hooks/usePaginator";
 import { normalizePlant } from "@/myPlant/utils/managementNormalize";
 

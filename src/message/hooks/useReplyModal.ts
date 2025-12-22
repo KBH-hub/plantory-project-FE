@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import type { ReplyForm, MessageRegisterRequest, MessageDetailResponse } from "@/message/types/message";
+import type { ReplyForm, MessageRegisterRequest, MessageDetailResponse } from "@/message/types/messageType";
 import { buildReplyForm } from "@/message/utils/buildReplyForm";
 import { showModal } from "@/global/utils/showModal";
 

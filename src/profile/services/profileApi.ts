@@ -1,5 +1,5 @@
-// src/profile/services/profileService.ts
-import { axiosInstance } from "@/global/services/api/axiosInstance";
+// src/profile/services/profileApi.ts
+import { axiosInstance } from "@/global/services/jjwt/axiosInstance";
 import type {
     ChangePasswordReq,
     ChangePasswordRes,

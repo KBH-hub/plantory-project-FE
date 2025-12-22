@@ -1,4 +1,4 @@
-import { axiosInstance } from "@/global/services/api/axiosInstance"
+import { axiosInstance } from "@/global/services/jjwt/axiosInstance"
 
 export const createQuestion = async (formData: FormData): Promise<number> => {
   const res = await axiosInstance.post<number>("/api/questions",

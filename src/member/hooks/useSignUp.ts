@@ -1,4 +1,4 @@
-import {checkMembernameApi, checkNicknameApi, signUp} from "@/member/services/memberService";
+import {checkMembernameApi, checkNicknameApi, signUp} from "@/member/services/memberApi";
 import {SignUpRequest} from "@/member/types/memberType";
 
 export function useSignUp() {

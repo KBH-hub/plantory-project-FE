@@ -1,4 +1,4 @@
-import type { GardenItem } from "@/dictionary/types/dictionary";
+import type { GardenItem } from "@/dictionary/types/dictionaryType";
 
 export function asArray<T>(v: T | T[] | null | undefined): T[] {
   if (Array.isArray(v)) return v;

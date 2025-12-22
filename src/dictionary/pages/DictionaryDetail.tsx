@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getGardenDictionaryDetail } from "@/dictionary/services/dictionaryServices";
-import type { GardenDetailItem, GardenFileItem } from "@/dictionary/types/dictionary";
+import { getGardenDictionaryDetail } from "@/dictionary/services/dictionaryApi";
+import type { GardenDetailItem, GardenFileItem } from "@/dictionary/types/dictionaryType";
 import GardenDetailView from "@/dictionary/components/GardenDetailView";
 
 function pickUrl(f: GardenFileItem) {

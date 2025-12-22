@@ -1,9 +1,9 @@
 import React from "react";
 import ProfileImage from "@/global/components/ProfileImage";
 import MemberForm from "@/member/components/MemberForm";
-import ChangePasswordModal from "@/profile/components/ChangePasswordModal";
-import WithdrawModal from "@/profile/components/WithdrawModal";
-import { MemberFormValues } from "@/profile/hooks/useUpdateProfile";
+import ChangePasswordModal from "@/profile/components/modals/ChangePasswordModal";
+import WithdrawModal from "@/profile/components/modals/WithdrawModal";
+import { MemberFormValues } from "@/member/types/memberType";
 import {DuplicateCheckResult} from "@/member/hooks/useDuplicateCheck";
 
 type Props = {

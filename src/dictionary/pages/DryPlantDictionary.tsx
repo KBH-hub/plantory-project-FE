@@ -1,9 +1,9 @@
 import React, { useMemo, useRef } from "react";
 import { usePaginator } from "@/global/hooks/usePaginator";
-import { getDryDictionaryPage } from "@/dictionary/services/dictionaryServices";
+import { getDryDictionaryPage } from "@/dictionary/services/dictionaryApi";
 import DictionarySearchBar from "@/dictionary/components/DictionarySearchBar";
 import DictionaryList from "@/dictionary/components/DictionaryList";
-import type { DictionaryCardItem, DryApiResponse, DryItem } from "@/dictionary/types/dictionary";
+import type { DictionaryCardItem, DryApiResponse, DryItem } from "@/dictionary/types/dictionaryType";
 import {
   CONCURRENCY,
   adaptDryToCardItem,

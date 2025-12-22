@@ -1,4 +1,4 @@
-import type { ManagementHeaderProps } from "@/myPlant/types/myPlantManagement";
+import type { ManagementHeaderProps } from "@/myPlant/types/myPlantManagementType";
 
 export default function ManagementHeader({ keyword, onKeywordChange, onSearch, onOpenAdd }: ManagementHeaderProps) {
     return (

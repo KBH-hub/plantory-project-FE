@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getSharingList, getPopularSharingList, getInterestCount } from "@/community/sharing/services/sharingListApi";
-import { SharingCardListResponse, SharingSearchRequest } from "@/community/sharing/types/sharingList";
+import { SharingCardListResponse, SharingSearchRequest } from "@/community/sharing/types/sharingListType";
 
 export function useSharingList() {
   const [list, setList] = useState<SharingCardListResponse[]>([]);

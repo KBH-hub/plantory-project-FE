@@ -1,4 +1,4 @@
-import type { RateConfig } from "@/admin/types/weightManagementTypes";
+import type { RateConfig } from "@/admin/types/weightManagementType";
 
 type Props = {
   searchWeightInput: string;

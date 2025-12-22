@@ -1,4 +1,4 @@
-import { axiosInstance } from "@/global/services/api/axiosInstance";
+import { axiosInstance } from "@/global/services/jjwt/axiosInstance";
 
 import type {
   ApiMessage,
@@ -6,7 +6,7 @@ import type {
   MyPlantListItem,
   MyPlantListRequest,
   UpdateMyPlantPayload,
-} from "@/myPlant/types/myPlantManagement";
+} from "@/myPlant/types/myPlantManagementType";
 
 export const getMyPlantList = async (params: MyPlantListRequest): Promise<MyPlantListItem[]> => {
   const res = await axiosInstance.get("/api/myPlant/list", { params });

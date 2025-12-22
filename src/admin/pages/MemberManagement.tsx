@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { axiosInstance } from "@/global/services/api/axiosInstance";
+import { axiosInstance } from "@/global/services/jjwt/axiosInstance";
 
 type MemberRow = {
     memberId: number;
@@ -30,7 +30,7 @@ function formatCreatedAt(createdAt: string | null) {
     return String(createdAt).replace("T", " ").substring(0, 16);
 }
 
-export default function MemberManagementPage() {
+export default function MemberManagement() {
     const navigate = useNavigate();
 
     const apiBase = "/api/memberManagement/members";

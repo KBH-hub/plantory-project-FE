@@ -1,4 +1,4 @@
-import type { TodayWatering, TodayDiary } from "@/dashboard/types/dashboard";
+import type { TodayWatering, TodayDiary } from "@/dashboard/types/dashboardType";
 import { Link } from "react-router-dom";
 type Props = {waterings: TodayWatering[]; diaries: TodayDiary[]};
 

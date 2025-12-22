@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
-import { registerMessage } from "@/message/services/messageService";
-import type { MessageRegisterRequest } from "@/message/types/message";
+import { registerMessage } from "@/message/services/messageApi";
+import type { MessageRegisterRequest } from "@/message/types/messageType";
 
 type Options = {
   confirm?: (msg: string) => Promise<boolean>;

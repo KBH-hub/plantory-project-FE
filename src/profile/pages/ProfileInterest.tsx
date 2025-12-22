@@ -4,6 +4,7 @@ import { usePaginator } from "@/global/hooks/usePaginator";
 import { mapToSharingCard } from "@/global/utils/mapToSharingCard";
 import { getProfileInterestList } from "@/profile/services/profileInterestApi";
 import { ProfileInterestResponse } from "@/profile/types/profileInterest";
+import {ProfileSharingHistoryResponse} from "@/member/types/sharingHistoryType";
 
 function ProfileInterest() {
   const [keyword, setKeyword] = useState("");
@@ -86,7 +87,7 @@ function ProfileInterest() {
           items.map((item) => (
             <SharingCard
               key={item.sharingId}
-              item={mapToSharingCard(item)}
+              item={mapToSharingCard(item as ProfileSharingHistoryResponse)}
             />
           ))
         )}

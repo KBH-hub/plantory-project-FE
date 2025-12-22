@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/global/stores/useAuthStore";
-import { logoutApi } from "@/global/services/api/auth";
+import { logoutApi } from "@/global/services/authApi";
 
 export default function useLogout() {
     const navigate = useNavigate();

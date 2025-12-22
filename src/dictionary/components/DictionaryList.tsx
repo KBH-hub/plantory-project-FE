@@ -1,5 +1,5 @@
 import React from "react";
-import type { GardenItem } from "@/dictionary/types/dictionary";
+import type { GardenItem } from "@/dictionary/types/dictionaryType";
 import DictionaryCard from "@/dictionary/components/DictionaryCard";
 
 type Props = {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getMessageList } from "@/message/services/messageService";
-import type { MessageListResponse, MessageSearchRequest } from "@/message/types/message";
+import { getMessageList } from "@/message/services/messageApi";
+import type { MessageListResponse, MessageSearchRequest } from "@/message/types/messageType";
 
 export function useMessageList(params: MessageSearchRequest) {
   const [data, setData] = useState<MessageListResponse[]>([]);

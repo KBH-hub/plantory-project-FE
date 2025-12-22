@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import useLogout from "@/global/hooks/useLogout";
 import { showModal } from "@/global/utils/showModal";
-import { profileApi } from "@/profile/services/profileService";
+import { profileApi } from "@/profile/services/profileApi";
 
 type Props = {
     open: boolean;

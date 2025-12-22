@@ -1,4 +1,4 @@
-import { axiosInstance } from "@/global/services/api/axiosInstance"
+import { axiosInstance } from "@/global/services/jjwt/axiosInstance"
 import type { QuestionDetailResponse, QuestionAnswerResponse } from "@/community/question/types/readQuestion"
 
 export const getQuestionDetail = async ( questionId: number ): Promise<QuestionDetailResponse> => {

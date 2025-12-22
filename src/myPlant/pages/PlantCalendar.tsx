@@ -4,7 +4,7 @@ import CalendarHeader from "@/myPlant/components/CalendarHeader";
 import CalendarGrid from "@/myPlant/components/CalendarGrid";
 import DaySidePanel from "@/myPlant/components/DaySidePanel";
 import PlantCalendarModalHost from "@/myPlant/components/PlantCalendarModalHost";
-import { MODAL_STATE } from "@/myPlant/enums/plantCalendarEnums";
+import { MODAL_STATE } from "@/myPlant/enums/plantCalendarEnum";
 
 export default function PlantCalendar() {
     const { state, computed, actions } = usePlantCalendar();

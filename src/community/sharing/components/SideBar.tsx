@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { SharingCardListResponse } from "@/community/sharing/types/sharingList";
+import { SharingCardListResponse } from "@/community/sharing/types/sharingListType";
 type SharingSidebarProps = { interestCount: number; popular: SharingCardListResponse[];};
 
 function SharingSidebar({ interestCount, popular }: SharingSidebarProps) {
