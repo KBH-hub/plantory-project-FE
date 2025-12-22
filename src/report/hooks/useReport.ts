@@ -130,6 +130,7 @@ export function useReportFlow() {
     const fd = new FormData();
     fd.append("targetMemberId", String(targetMemberId));
     fd.append("content", content);
+    fd.append("status", "false")
     reportFiles.forEach((f) => fd.append("files", f));
 
     try {

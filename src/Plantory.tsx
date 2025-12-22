@@ -34,6 +34,7 @@ import ProfileInfo from "@/profile/pages/ProfileInfo";
 import ReadQuestion from "./community/question/pages/ReadQuestion";
 import ProfileInterest from "./profile/pages/ProfileInterest";
 import UpdateProfile from "@/profile/pages/UpdateProfile";
+import ReportManagement from "./admin/pages/ReportManagement";
 
 export default function App() {
     const initialized = useAuthStore((s) => s.initialized);
@@ -95,7 +96,7 @@ export default function App() {
                         }
                     >
                         <Route path="/admin/memberManagement" element={<MemberManagement />} />
-                        {/*<Route path="/admin/reportManagement" element={<ReportManagement />} />*/}
+                        <Route path="/admin/reportManagement" element={<ReportManagement />} />
                         <Route path="/admin/profile/:memberId" element={<ProfileInfo />} />
                         <Route path="/admin/weightManagement" element={<WeightManagement />} />
                     </Route>

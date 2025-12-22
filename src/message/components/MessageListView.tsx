@@ -134,7 +134,7 @@ export function MessageListView({
 
           <div className="card-body p-0">
             <div className="table-responsive">
-              <table className="table table-hover align-middle mb-0 table-fixed">
+              <table className="table table-hover align-middle mb-0 table-fixed text-center align-middle">
                 <thead className="table-light small">
                   <tr>
                     <th className="text-center" style={{ width: 44 }}>
@@ -149,7 +149,7 @@ export function MessageListView({
                       />
                     </th>
                     <th className="text-nowrap" style={{ width: 96 }}>
-                      읽음 상태
+                      수신자 읽음 상태
                     </th>
                     <th className="text-nowrap" style={{ width: 120 }}>
                       보낸 사람
@@ -160,7 +160,7 @@ export function MessageListView({
                     <th className="text-nowrap" style={{ width: 90 }}>
                       카테고리
                     </th>
-                    <th style={{ width: 300 }}>제목</th>
+                    <th style={{ width: 350 }}>제목</th>
                     <th>관련글</th>
                     <th className="text-nowrap" style={{ width: 170 }}>
                       시간
