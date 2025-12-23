@@ -4,6 +4,7 @@ import { Role, useAuthStore } from "@/global/stores/useAuthStore";
 import { useNavigate, Link } from "react-router-dom";
 import fixmeImg from "@/assets/images/fixme.png";
 import fixmeImg2 from "@/assets/images/fixme2.png";
+import logo from "@/assets/images/plantory_logo.png"
 
 export default function Login() {
     const navigate = useNavigate();
@@ -49,7 +50,7 @@ export default function Login() {
             <div className="container-fluid bg-dark min-vh-100">
                 <div className="row min-vh-100">
                     <div className="col-12 col-md-6 bg-success bg-opacity-50 login-panel d-flex flex-column justify-content-center align-items-start px-5">
-                        <h2 className="fw-bold mb-3 text-white">🌿 Plantory</h2>
+                        <img src={logo} alt="Plantory Logo" className="ph-logo-img bg-white bg-opacity-12" />
                         <p className="text-white mb-4 fs-4">로그인하여 서비스를 이용해보세요</p>
 
                         <div className="w-75">

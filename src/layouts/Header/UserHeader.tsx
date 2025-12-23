@@ -9,6 +9,7 @@ import { useNotice } from "@/notice/hooks/useNotice";
 import { useReportFlow } from "@/report/hooks/useReport";
 import useLogout from "@/global/hooks/useLogout";
 import UserDropdown from "../../global/components/UserDropdown";
+import logo from "@/assets/images/plantory_logo.png"
 export default function UserHeader() {
   const user = useAuthStore((s) => s.user);
   const handleLogout = useLogout();
@@ -44,7 +45,7 @@ export default function UserHeader() {
       >
         <div className="d-flex align-items-center justify-content-between w-100" style={{ minWidth: 1450 }}>
           <Link to="/dashboard" className="ph-logo" aria-label="대시보드로 이동">
-            <img src="/images/plantory_logo.png" alt="Plantory Logo" className="ph-logo-img" />
+            <img src={logo} alt="Plantory Logo" className="ph-logo-img" />
           </Link>
 
           <ul className="navbar-nav d-flex flex-row gap-4 mx-3 flex-grow-1 justify-content-center ph-menu">
