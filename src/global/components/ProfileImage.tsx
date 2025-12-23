@@ -82,7 +82,7 @@ const ProfileImage = forwardRef<ProfileImageHandle, Props>(
                             style={{ width: "100%", height: "100%", objectFit: "cover" }}
                         />
                     ) : (
-                        <span className="text-muted small">No Image</span>
+                        <i className="bi bi-person text-muted" />
                     )}
                 </div>
             </div>

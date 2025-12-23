@@ -23,7 +23,7 @@ function SharingList() {
     <div className="mx-auto" style={{ width: 1470 }}>
       <main className="py-4">
         <div className="container-fluid px-4">
-          <h5 className="fw-bold">나눔 커뮤니티</h5>
+          <h3 className="fw-bold">나눔 커뮤니티</h3>
 
           <div className="row g-2 mt-2">
             <div className="col-md-10">
