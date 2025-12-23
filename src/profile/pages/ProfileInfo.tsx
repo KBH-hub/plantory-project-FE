@@ -90,7 +90,7 @@ export default function ProfileInfo() {
         onChange: (p) => setCurrentPage(p),
     });
     const [profile, setProfile] = useState<ProfileInfo | null>(null);
-    const isMe = profile && me?.memberId === profile.memberId;
+    const isMe = profile && me?.memberId === profile.memberId || me?.role === 'ADMIN';
 
     const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
 
