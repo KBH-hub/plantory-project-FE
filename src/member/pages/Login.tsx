@@ -47,9 +47,9 @@ export default function Login() {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div className="container-fluid bg-dark min-vh-100">
+            <div className="container-fluidmin-vh-100">
                 <div className="row min-vh-100">
-                    <div className="col-12 col-md-6 bg-success bg-opacity-50 login-panel d-flex flex-column justify-content-center px-5">
+                    <div className="col-12 col-md-6 login-panel d-flex flex-column justify-content-center px-5" style={{ backgroundColor: "#18402F" }}>
                         <img src={logo} alt="Plantory Logo" className="ph-logo-img" style={{height:300}} />
                         <p className="text-white mb-4 fs-4">로그인하여 서비스를 이용해보세요</p>
 
