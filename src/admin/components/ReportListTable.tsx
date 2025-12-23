@@ -96,7 +96,6 @@ export function ReportListTable({
                   <td>
                     <button
                       className={`btn btn-sm ${done ? "btn-secondary" : "btn-danger"}`}
-                      disabled={done}
                       onClick={() => onOpenProcess(item.reportId, item.targetMemberId ?? null)}
                       type="button"
                     >
