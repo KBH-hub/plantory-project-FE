@@ -3,7 +3,7 @@ import { useAuthStore } from "@/global/stores/useAuthStore";
 import { authAxios } from "@/global/services/jjwt/authAxios";
 
 export const axiosInstance = axios.create({
-    baseURL: "http://localhost:9000",
+    baseURL: import.meta.env.VITE_API_BASE_URL,
     withCredentials: true,
 });
 
