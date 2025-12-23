@@ -147,12 +147,12 @@ export function useReportManagement() {
 
     let ok = false;
 
-    if(stopDays == 0){
+    if (stopDays == 0) {
       ok = await showModal.confirm(`[ id:${currentTargetMemberId} ]회원 정지를 해제하시겠습니까?`);
-    } else{
+    } else {
       ok = await showModal.confirm(`[ id:${currentTargetMemberId} ]회원을 ${stopDays}일 동안 정지하시겠습니까?`);
     }
-    if(!ok) return;
+    if (!ok) return;
 
     await submitReportProcess(currentReportId, {
       targetMemberId: currentTargetMemberId,
@@ -182,41 +182,25 @@ export function useReportManagement() {
   }, []);
 
   return {
-    limit,
-    offset,
-    setOffset,
-    status,
-    setStatus,
-    keyword,
-    setKeyword,
-    items,
-    total,
-    current,
-    loading,
-    selected,
-    selectedCount,
-    deleteDisabled,
-    allChecked,
-    toggleAll,
-    toggleOne,
-    pagerRef,
-    onSearch,
-    openDetail,
-    openProcess,
-    onSubmitProcess,
-    onDeleteSelected,
-    detailOpen,
-    setDetailOpen,
-    processOpen,
-    setProcessOpen,
-    detail,
-    detailImageUrl,
-    adminMemo,
-    setAdminMemo,
-    stopDays,
-    setStopDays,
-    currentReportId,
-    currentTargetMemberId,
-    isDone,
+    filter: { status, setStatus, keyword, setKeyword, onSearch },
+    table: {
+      items, loading, selected, allChecked,
+      toggleAll, toggleOne,
+      openDetail, openProcess,
+      isDone,
+      deleteDisabled,
+    },
+    pager: { pagerRef },
+    modal: {
+      detailOpen, setDetailOpen,
+      processOpen, setProcessOpen,
+      detail, detailImageUrl,
+      adminMemo, setAdminMemo,
+      stopDays, setStopDays,
+      currentReportId,
+      currentTargetMemberId,
+    },
+    actions: { onDeleteSelected, onSubmitProcess },
   };
+
 }
