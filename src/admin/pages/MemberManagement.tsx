@@ -1,8 +1,7 @@
-// MemberManagementPage.tsx
 import { useNavigate } from "react-router-dom";
-import { useMemberManagement } from "../hooks/useMemberManagement";
-import { MemberSearchBar } from "../components/MemberSearchBar";
-import { MemberTable } from "../components/MemberTable";
+import { useMemberManagement } from "@/admin/hooks/useMemberManagement";
+import { MemberSearchBar } from "@/admin/components/MemberSearchBar";
+import { MemberTable } from "@/admin/components/MemberTable";
 
 export default function MemberManagementPage() {
     const navigate = useNavigate();
