@@ -14,7 +14,7 @@ function SharingSidebar({ interestCount, popular }: SharingSidebarProps) {
             나의 관심 나눔 식물
           </div>
           <p className="mt-2 mb-0 text-center">
-            <i className="bi bi-heart" /> {interestCount}
+            <i className="bi bi-heart-fill text-danger" /> {interestCount}
           </p>
         </div>
       </Link>

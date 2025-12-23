@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { timeAgo } from "@/global/utils/date";
+import { formatDate } from "@/global/utils/date";
 import ImageCarousel from "@/community/components/ImageCarousel";
 
 interface Props {
@@ -51,7 +51,7 @@ function ReadCommunityLayout({
                 <div className="d-flex justify-content-between align-items-center mb-2">
                   <h5 className="fw-bold mb-1">{title}</h5>
                   <div className="text-muted small">
-                    {timeAgo(displayTime)}
+                    {formatDate(displayTime)}
                     {isEdited && <span className="ms-1">(수정됨)</span>}
                   </div>
                 </div>
