@@ -3,7 +3,6 @@ import { useAuthStore } from "@/global/stores/useAuthStore";
 import { authAxios } from "@/global/services/jjwt/authAxios";
 
 export const axiosInstance = axios.create({
-    baseURL: "http://localhost:9000",
     withCredentials: true,
 });
 
