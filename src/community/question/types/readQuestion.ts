@@ -6,8 +6,8 @@ export interface QuestionDetailResponse {
   content: string;
   createdAt: string;
   updatedAt?: string;
-  imageUrl?: string;
   images: {
+    imageId: number;
     fileUrl: string;
   }[];
 }

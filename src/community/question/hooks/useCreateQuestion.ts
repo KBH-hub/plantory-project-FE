@@ -59,7 +59,7 @@ export function useQuestionWrite(questionId?: number) {
         });
       } else {
         const savedId = await createQuestion(formData);
-        showModal.alert("수정되었습니다.", {
+        showModal.alert("등록되었습니다.", {
           callback: () => navigate(`/question/${savedId}`),
         });
       }
