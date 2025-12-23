@@ -5,7 +5,7 @@ import { ReportListTable } from "@/admin/components/ReportListTable";
 import { ReportDetailModal } from "@/admin/components/modal/ReportDetailModal";
 import { ReportProcessModal } from "@/admin/components/modal/ReportProcessModal";
 
-export default function ReportManagementPage() {
+export default function ReportManagement() {
   const { filter, table, pager, modal, actions } = useReportManagement();
 
   const onEnterSearch = useCallback(
