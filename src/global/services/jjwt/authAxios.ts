@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export const authAxios = axios.create({
-    baseURL: "http://localhost:9000",
+    baseURL: import.meta.env.VITE_API_BASE_URL,
     withCredentials: true,
 });
