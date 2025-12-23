@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import useLogout from "@/global/hooks/useLogout";
+import logo from "@/assets/images/plantory_logo.png"
 
 export default function AdminHeader() {
     const handleLogout = useLogout();
@@ -9,7 +10,7 @@ export default function AdminHeader() {
             <nav className="container d-flex align-items-center justify-content-between" style={{ height: 80 }}>
                 {/* 로고 */}
                 <Link to="/admin/memberManagement" className="fw-bold fs-4 text-decoration-none text-dark">
-                    🌿 Plantory Admin
+                    <img src={logo} alt="Plantory Logo" className="ph-logo-img" />
                 </Link>
 
                 {/* 관리자 메뉴 */}
