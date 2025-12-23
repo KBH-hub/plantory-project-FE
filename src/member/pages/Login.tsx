@@ -5,9 +5,13 @@ import { useNavigate, Link } from "react-router-dom";
 import fixmeImg from "@/assets/images/fixme.png";
 import fixmeImg2 from "@/assets/images/fixme2.png";
 import logo from "@/assets/images/plantory_login_logo.png"
+import { useState } from "react";
 
 export default function Login() {
     const navigate = useNavigate();
+
+    const [errorMessage, setErrorMessage] = useState("");
+
 
     const authLogin = useAuthStore((s) => s.login);
     const setUser = useAuthStore((s) => s.setUser);
@@ -27,21 +31,21 @@ export default function Login() {
             const role = data.user.role as Role;
 
             authLogin({
-              authUser: {
-                memberId: data.user.memberId,
-                membername: data.user.membername,
-                role,
-              },
-              accessToken: data.accessToken,
-              user: data.user,
+                authUser: {
+                    memberId: data.user.memberId,
+                    membername: data.user.membername,
+                    role,
+                },
+                accessToken: data.accessToken,
+                user: data.user,
             });
 
             setUser(data.user);
             setAccessToken(data.accessToken);
 
             navigate("/", { replace: true });
-        } catch (err) {
-            console.error("로그인 실패", err);
+        } catch (err: any) {
+            setErrorMessage(err.response.data.message);
         }
     };
 
@@ -50,7 +54,7 @@ export default function Login() {
             <div className="container-fluidmin-vh-100">
                 <div className="row min-vh-100">
                     <div className="col-12 col-md-6 login-panel d-flex flex-column justify-content-center px-5" style={{ backgroundColor: "#18402F" }}>
-                        <img src={logo} alt="Plantory Logo" className="ph-logo-img" style={{height:300}} />
+                        <img src={logo} alt="Plantory Logo" className="ph-logo-img" style={{ height: 300 }} />
                         <p className="text-white mb-4 fs-4">로그인하여 서비스를 이용해보세요</p>
 
                         <div className="w-75">
@@ -79,6 +83,16 @@ export default function Login() {
                                 <label className="form-check-label" htmlFor="keepLogin">
                                     로그인 상태 유지
                                 </label>
+                            </div>
+
+                            <div>
+                                {errorMessage && (
+                                    <p style={{ color: "red", marginTop: "8px" }}>
+                                        {errorMessage}
+                                    </p>
+                                )}
+
+
                             </div>
 
                             <button type="submit" className="btn btn-dark w-100 py-2 fs-5 mb-3 fw-bold">
