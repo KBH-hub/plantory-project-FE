@@ -424,11 +424,11 @@ export default function ProfileInfo() {
 
                 <div className="card-body p-0">
                     <div className="table-responsive">
-                        <table className="table table-hover align-middle mb-0 table-fixed">
+                        <table className="table table-hover align-middle mb-0 table-fixed text-center">
                             <thead className="table-light small">
                             <tr>
-                                <th className="text-center" style={{ width: 44 }}>
-                                    {isPostsTab && (
+                                <th className="text-center" style={{ width: 40 }}>
+                                    {isPostsTab && isMe && (
                                         <input
                                             className="form-check-input"
                                             type="checkbox"
@@ -439,7 +439,7 @@ export default function ProfileInfo() {
                                 </th>
                                 <th className="text-nowrap" style={{ width: 120 }}>작성자</th>
                                 <th className="text-nowrap" style={{ width: 120 }}>카테고리</th>
-                                <th style={{ width: 300 }}>제목</th>
+                                <th style={{ width: 350 }}>제목</th>
                                 <th className="text-nowrap" style={{ width: 170 }}>작성일</th>
                             </tr>
                             </thead>
@@ -463,7 +463,7 @@ export default function ProfileInfo() {
                                         onClick={() => handleRowClick(item)}
                                     >
                                         <td>
-                                            {isPostsTab ? (
+                                            {isPostsTab && isMe ? (
                                                 <input
                                                     type="checkbox"
                                                     className="form-check-input"
