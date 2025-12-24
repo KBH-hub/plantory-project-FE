@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { usePaginator } from "@/global/hooks/usePaginator";
 import { useDebouncedValue } from "@/global/hooks/useDebouncedValue";
@@ -317,11 +317,8 @@ export default function ProfileInfo() {
                 <div className="card-header bg-white">
                     <div className="row g-3 align-items-center">
                         <div className="col d-flex align-items-center gap-4">
-                            <div className="text-center">
-                                <span className="text-danger fw-semibold">나눔지수: {toRateText(profile.sharingRate)}</span>
-                            </div>
 
-                            <div className="text-center">
+                            <div className="text-center mx-auto">
                                 <div className="profile-img d-flex justify-content-center align-items-center position-relative" style={{ width: 150, height: 150 }}>
                                     {!profileImageUrl ? (
                                         <i className="bi bi-person fs-2 text-secondary" />
@@ -338,7 +335,10 @@ export default function ProfileInfo() {
                                 </div>
 
                                 <p className="fw-bold mb-0 mt-2">{profile.nickname ?? ""}</p>
-                                <small className="text-muted">{profile.address ?? ""}</small>
+                                <small className="text-muted">{profile.address ?? ""}</small><br />
+                                <small className="text-center">
+                                    <span className="text-success fw-semibold">나눔지수: {toRateText(profile.sharingRate)}</span>
+                                </small>
                             </div>
 
                             {/* 내 프로필일 때만 */}
@@ -357,16 +357,22 @@ export default function ProfileInfo() {
                                     </button>
                                 </div>
                             )}
+                            {isMe && (
+                                <div className="col d-flex align-items-center gap-3">
+                                    <div className="text-center" style={{ cursor: "pointer" }} onClick={() => navigate(`/profileInterest`)}>
+                                        <p className="fw-bold m-0">관심 나눔</p>
+                                        <span className="fw-bold">(관심 나눔글 수:{interestCount}개)</span>
+                                    </div>
+                                    <div className="text-center" style={{ cursor: "pointer" }} onClick={() => navigate(`/sharingHistory`)}>
+                                        <p className="fw-bold m-0">나눔 내역</p>
+                                        <span className="fw-bold">(나눔 완료 수: {sharingHistoryCount}개)</span>
+                                    </div>
+                                </div>
+                            )}
 
-                            <div className="text-center" style={{ cursor: "pointer" }} onClick={() => navigate(`/profileInterest`)}>
-                                <p className="fw-bold m-0">관심 나눔글</p>
-                                <span className="fw-bold">{interestCount}개</span>
-                            </div>
 
-                            <div className="text-center" style={{ cursor: "pointer" }} onClick={() => navigate(`/sharingHistory`)}>
-                                <p className="fw-bold m-0">나눔 내역</p>
-                                <span className="fw-bold">{sharingHistoryCount}개</span>
-                            </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -374,19 +380,19 @@ export default function ProfileInfo() {
                 <div className="card-header bg-white border-bottom">
                     <div className="row g-2 align-items-center">
                         <div className="col d-flex align-items-center gap-3">
-              <span
-                  className={`${isPostsTab ? "tab-active fw-semibold text-dark" : "text-secondary"} cursor-pointer`}
-                  onClick={() => switchTab("profilePosts")}
-              >
-                쓴 글
-              </span>
+                            <span
+                                className={`${isPostsTab ? "tab-active fw-semibold text-dark" : "text-secondary"} cursor-pointer`}
+                                onClick={() => switchTab("profilePosts")}
+                            >
+                                쓴 글
+                            </span>
                             <span>|</span>
                             <span
                                 className={`${!isPostsTab ? "tab-active fw-semibold text-dark" : "text-secondary"} cursor-pointer`}
                                 onClick={() => switchTab("profileComments")}
                             >
-                댓글 단 글
-              </span>
+                                댓글 단 글
+                            </span>
                         </div>
 
                         <div className="col-auto">
@@ -426,60 +432,60 @@ export default function ProfileInfo() {
                     <div className="table-responsive">
                         <table className="table table-hover align-middle mb-0 table-fixed text-center">
                             <thead className="table-light small">
-                            <tr>
-                                <th className="text-center" style={{ width: 40 }}>
-                                    {isPostsTab && isMe && (
-                                        <input
-                                            className="form-check-input"
-                                            type="checkbox"
-                                            checked={allChecked}
-                                            onChange={(e) => toggleAll(e.target.checked)}
-                                        />
-                                    )}
-                                </th>
-                                <th className="text-nowrap" style={{ width: 120 }}>작성자</th>
-                                <th className="text-nowrap" style={{ width: 120 }}>카테고리</th>
-                                <th style={{ width: 350 }}>제목</th>
-                                <th className="text-nowrap" style={{ width: 170 }}>작성일</th>
-                            </tr>
+                                <tr>
+                                    <th className="text-center" style={{ width: 40 }}>
+                                        {isPostsTab && isMe && (
+                                            <input
+                                                className="form-check-input"
+                                                type="checkbox"
+                                                checked={allChecked}
+                                                onChange={(e) => toggleAll(e.target.checked)}
+                                            />
+                                        )}
+                                    </th>
+                                    <th className="text-nowrap" style={{ width: 120 }}>작성자</th>
+                                    <th className="text-nowrap" style={{ width: 120 }}>카테고리</th>
+                                    <th style={{ width: 350 }}>제목</th>
+                                    <th className="text-nowrap" style={{ width: 170 }}>작성일</th>
+                                </tr>
                             </thead>
 
                             <tbody>
-                            {content.length === 0 ? (
-                                <tr>
-                                    <td colSpan={5}>
-                                        <div className="text-center text-muted py-5">
-                                            <i className="bi bi-box fs-3" />
-                                            <br />
-                                            표시할 데이터가 없습니다.
-                                        </div>
-                                    </td>
-                                </tr>
-                            ) : (
-                                content.map((item) => (
-                                    <tr
-                                        key={`${item.category}-${item.id}`}
-                                        style={{ cursor: isPostsTab ? "pointer" : "default" }}
-                                        onClick={() => handleRowClick(item)}
-                                    >
-                                        <td>
-                                            {isPostsTab && isMe ? (
-                                                <input
-                                                    type="checkbox"
-                                                    className="form-check-input"
-                                                    checked={Boolean(selectedMap[item.id])}
-                                                    onClick={(e) => e.stopPropagation()}
-                                                    onChange={(e) => toggleOne(item.id, item.category, e.target.checked)}
-                                                />
-                                            ) : null}
+                                {content.length === 0 ? (
+                                    <tr>
+                                        <td colSpan={5}>
+                                            <div className="text-center text-muted py-5">
+                                                <i className="bi bi-box fs-3" />
+                                                <br />
+                                                표시할 데이터가 없습니다.
+                                            </div>
                                         </td>
-                                        <td>{item.nickname ?? ""}</td>
-                                        <td>{categoryMap[item.category] ?? item.category}</td>
-                                        <td>{item.title ?? ""}</td>
-                                        <td>{fmtKST(item.createdAt)}</td>
                                     </tr>
-                                ))
-                            )}
+                                ) : (
+                                    content.map((item) => (
+                                        <tr
+                                            key={`${item.category}-${item.id}`}
+                                            style={{ cursor: isPostsTab ? "pointer" : "default" }}
+                                            onClick={() => handleRowClick(item)}
+                                        >
+                                            <td>
+                                                {isPostsTab && isMe ? (
+                                                    <input
+                                                        type="checkbox"
+                                                        className="form-check-input"
+                                                        checked={Boolean(selectedMap[item.id])}
+                                                        onClick={(e) => e.stopPropagation()}
+                                                        onChange={(e) => toggleOne(item.id, item.category, e.target.checked)}
+                                                    />
+                                                ) : null}
+                                            </td>
+                                            <td>{item.nickname ?? ""}</td>
+                                            <td>{categoryMap[item.category] ?? item.category}</td>
+                                            <td>{item.title ?? ""}</td>
+                                            <td>{fmtKST(item.createdAt)}</td>
+                                        </tr>
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>
