@@ -2,8 +2,11 @@ import axios from "axios";
 import { useAuthStore } from "@/global/stores/useAuthStore";
 import { authAxios } from "@/global/services/jjwt/authAxios";
 
+const envBaseUrl = (import.meta.env.VITE_API_BASE_URL ?? "").trim();
+const baseURL = envBaseUrl.length > 0 ? envBaseUrl : "";
+
 export const axiosInstance = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL,
+    baseURL,
     withCredentials: true,
 });
 
