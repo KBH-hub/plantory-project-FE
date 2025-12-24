@@ -44,8 +44,12 @@ export default function Login() {
             setAccessToken(data.accessToken);
 
             navigate("/", { replace: true });
-        } catch {
-            setErrorMessage("아이디 또는 비밀번호가 올바르지 않습니다.");
+        } catch (err: any) {
+            if (err.status === 401) {
+                setErrorMessage("아이디 또는 비밀번호가 틀렸습니다.");
+                return;
+            }
+            setErrorMessage(err.message);
         }
     };
 
