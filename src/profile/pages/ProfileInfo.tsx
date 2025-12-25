@@ -41,9 +41,9 @@ function toRateText(sharingRate?: number | string | null) {
                 ? Number(sharingRate)
                 : NaN;
 
-    if (!Number.isFinite(n)) return "0%";
+    if (!Number.isFinite(n)) return "0ph";
 
-    return `${parseFloat(n.toFixed(2))}%`;
+    return `${parseFloat(n.toFixed(2))}ph`;
 }
 
 
