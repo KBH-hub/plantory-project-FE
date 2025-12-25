@@ -56,7 +56,12 @@ const MemberForm = ({
                     className="form-control"
                     value={values.membername}
                     disabled={isEdit}
-                    onChange={(e) => onChange("membername", e.target.value)}
+                    maxLength={20}
+                    placeholder="5~20자, 영문/숫자, . _ - 사용 가능"
+                    onChange={(e) => {
+                        const next = e.target.value.replace(/\s/g, "");
+                        onChange("membername", next);
+                    }}
                 />
                 {!isEdit && (
                     <button
