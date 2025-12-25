@@ -59,10 +59,10 @@ const SignUp = () => {
                 onSuccess: () => navigate("/login"),
             },
             {
-                membername: values.membername.trim(),
-                nickname: values.nickname.trim(),
-                phone: values.phone,
-                password: values.password,
+                membername,
+                nickname,
+                phone,
+                password,
                 address: values.address,
             }
         );
