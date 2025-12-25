@@ -68,7 +68,8 @@ const MemberForm = ({
                         type="button"
                         className="btn btn-outline-secondary"
                         onClick={() => idCheck.check(values.membername)}
-                        disabled={idCheck.isChecking}
+                        disabled={idCheck.isChecking || !ID_REGEX.test(values.membername)}
+                        title={!ID_REGEX.test(values.membername) ? "아이디 형식을 확인하세요." : ""}
                     >
                         중복 확인
                     </button>
