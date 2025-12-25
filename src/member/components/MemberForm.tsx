@@ -1,5 +1,16 @@
 import AddressSelect from "@/global/components/AddressSelect";
-import {MemberFormValues} from "@/member/types/memberType";
+import { MemberFormValues } from "@/member/types/memberType";
+
+export const ID_REGEX = /^(?=.{5,20}$)[a-zA-Z0-9]+([._-]?[a-zA-Z0-9]+)*$/;
+export const PASSWORD_REGEX =
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[ !"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]).{8,}$/;
+export const formatKoreanPhone = (raw: string) => {
+    const digits = raw.replace(/\D/g, "").slice(0, 11);
+
+    if (digits.length <= 3) return digits;
+    if (digits.length <= 7) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+    return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`;
+};
 
 type DuplicateCheckLike = {
     isAvailable: boolean | null;
@@ -7,7 +18,6 @@ type DuplicateCheckLike = {
     message: string;
     check: (value: string) => Promise<void>;
     reset: () => void;
-    // useDuplicateCheck에 이미 있다면 타입에 추가
     isValidFor?: (currentValue: string) => boolean;
 };
 
@@ -38,9 +48,12 @@ const MemberForm = ({
                     }: MemberFormProps) => {
     const isEdit = mode === "edit";
     const shouldShowNotice = showNoticeToggle ?? isEdit;
-
-    // 기본값: signup은 비번 필드 보임, edit은 숨김
     const shouldShowPassword = showPasswordFields ?? !isEdit;
+
+    const isMembernameValid = ID_REGEX.test(values.membername);
+    const isPhoneValid = values.phone.length === 0 ? true : /^010-\d{3,4}-\d{4}$/.test(values.phone);
+    const isPasswordValid = values.password.length === 0 ? true : PASSWORD_REGEX.test(values.password);
+    const isPwMatch = values.pwCheck.length === 0 ? true : values.password === values.pwCheck;
 
     return (
         <form
@@ -68,13 +81,20 @@ const MemberForm = ({
                         type="button"
                         className="btn btn-outline-secondary"
                         onClick={() => idCheck.check(values.membername)}
-                        disabled={idCheck.isChecking || !ID_REGEX.test(values.membername)}
-                        title={!ID_REGEX.test(values.membername) ? "아이디 형식을 확인하세요." : ""}
+                        disabled={idCheck.isChecking || !isMembernameValid}
+                        title={!isMembernameValid ? "아이디 형식을 확인하세요." : ""}
                     >
                         중복 확인
                     </button>
                 )}
             </div>
+
+            {!isEdit && values.membername.length > 0 && !isMembernameValid && (
+                <p className="small text-danger">
+                    아이디는 5~20자, 영문/숫자 조합이며 . _ - 는 중간에만 사용할 수 있습니다.
+                </p>
+            )}
+
             {idCheck.message && (
                 <p className={`small ${idCheck.isAvailable ? "text-success" : "text-danger"}`}>
                     {idCheck.message}
@@ -98,27 +118,30 @@ const MemberForm = ({
                     중복 확인
                 </button>
             </div>
+
             {nicknameCheck.message && (
                 <p className={`small ${nicknameCheck.isAvailable ? "text-success" : "text-danger"}`}>
                     {nicknameCheck.message}
                 </p>
             )}
-            <br/>
+
+            <br />
 
             {/* 주소 */}
-            <AddressSelect
-                value={values.address}
-                onChange={(addr) => onChange("address", addr)}
-            />
-
+            <AddressSelect value={values.address} onChange={(addr) => onChange("address", addr)} />
 
             {/* 휴대전화 */}
             <input
                 className="form-control mt-3"
-                placeholder="휴대전화"
+                placeholder="휴대전화 (예: 010-1234-5678)"
+                inputMode="numeric"
                 value={values.phone}
-                onChange={(e) => onChange("phone", e.target.value)}
+                onChange={(e) => {
+                    const formatted = formatKoreanPhone(e.target.value);
+                    onChange("phone", formatted);
+                }}
             />
+            {!isPhoneValid && <p className="small text-danger">휴대전화 형식을 확인해주세요. (010-xxxx-xxxx)</p>}
 
             {/* 알림 설정 */}
             {shouldShowNotice && (
@@ -135,6 +158,7 @@ const MemberForm = ({
                 </>
             )}
 
+            {/* 비밀번호 */}
             {shouldShowPassword && (
                 <>
                     <input
@@ -144,6 +168,12 @@ const MemberForm = ({
                         value={values.password}
                         onChange={(e) => onChange("password", e.target.value)}
                     />
+                    {!isPasswordValid && (
+                        <p className="small text-danger">
+                            비밀번호는 최소 8자이며 영문자, 숫자, 특수문자를 각각 1개 이상 포함해야 합니다.
+                        </p>
+                    )}
+
                     <input
                         type="password"
                         className="form-control mt-3"
@@ -151,15 +181,15 @@ const MemberForm = ({
                         value={values.pwCheck}
                         onChange={(e) => onChange("pwCheck", e.target.value)}
                     />
+                    {!isPwMatch && <p className="small text-danger">비밀번호가 일치하지 않습니다.</p>}
                 </>
             )}
 
             {!hideSubmitButton && (
-                <button className="btn btn-success w-100 mt-4">
+                <button className="btn btn-success w-100 mt-4" type="submit">
                     {isEdit ? "저장" : "가입하기"}
                 </button>
             )}
-
         </form>
     );
 };
