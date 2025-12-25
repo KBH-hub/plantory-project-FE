@@ -33,6 +33,11 @@ const SignUp = () => {
     };
 
     const handleSubmit = async () => {
+        const membername = values.membername.trim();
+        const nickname = values.nickname.trim();
+        const phone = values.phone.trim();
+        const password = values.password;
+
         if (!idCheck.isValidFor(values.membername)) {
             await showModal.alert("아이디 중복 확인을 해주세요.");
             return;
