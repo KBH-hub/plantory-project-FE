@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import {meApi} from "@/global/services/authApi";
 
 export type Role = "USER" | "ADMIN";
 
@@ -15,6 +16,7 @@ export interface User extends AuthUser {
     sharingRate: number | null;
     skillRate: number | null;
     managementRate: number | null;
+    profileImageUrl: string | null;
     stopDay: string | null;
 }
 
@@ -24,8 +26,11 @@ interface AuthState {
     user: User | null;
     accessToken: string | null;
     initialized: boolean;
+    refreshMe: () => Promise<void>;
+
 
     login: (payload: { authUser: AuthUser; accessToken: string; user: User }) => void;
+    initFromMe: (payload: { user: User; accessToken: string }) => void;
 
     setUser: (user: User | null) => void;
     setAccessToken: (token: string | null) => void;
@@ -39,6 +44,33 @@ export const useAuthStore = create<AuthState>((set) => ({
     user: null,
     accessToken: null,
     initialized: false,
+
+    refreshMe: async () => {
+        const { data } = await meApi();
+        set((state) => ({
+            ...state,
+            isLogin: true,
+            authUser: {
+                memberId: data.user.memberId,
+                membername: data.user.membername,
+                role: data.user.role,
+            },
+            user: data.user,
+            accessToken: data.accessToken,
+        }));
+    },
+
+    initFromMe: ({ user, accessToken }) =>
+        set({
+            isLogin: true,
+            user,
+            authUser: {
+                memberId: user.memberId,
+                membername: user.membername,
+                role: user.role,
+            },
+            accessToken,
+        }),
 
     login: ({ authUser, accessToken, user }) =>
         set({

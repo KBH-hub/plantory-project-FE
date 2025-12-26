@@ -11,8 +11,8 @@ import useLogout from "@/global/hooks/useLogout";
 import UserDropdown from "../../global/components/UserDropdown";
 import logo from "@/assets/images/plantory_logo.png"
 export default function UserHeader() {
-  const user = useAuthStore((s) => s.user);
-  const handleLogout = useLogout();
+  useAuthStore((s) => s.user);
+  useLogout();
   const { alarms, alarmCount, moveNotice, clearAllNotice } = useNotice();
 
   const {

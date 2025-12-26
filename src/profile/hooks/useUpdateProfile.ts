@@ -6,9 +6,12 @@ import { showModal } from "@/global/utils/showModal";
 import { profileApi } from "@/profile/services/profileApi";
 import type { ProfileInfo } from "@/profile/types/profileType";
 import type { MemberFormValues } from "@/member/types/memberType"
+import { useAuthStore } from "@/global/stores/useAuthStore";
+
 
 export function useUpdateProfile() {
     const navigate = useNavigate();
+    const refreshMe = useAuthStore((s) => s.refreshMe);
 
     const [loading, setLoading] = useState(true);
     const [original, setOriginal] = useState<ProfileInfo | null>(null);
@@ -127,6 +130,8 @@ export function useUpdateProfile() {
             if (selectedFile) {
                 await profileApi.uploadProfileImage(selectedFile);
             }
+
+            await refreshMe();
 
             await showModal.alert("프로필이 수정되었습니다.");
             navigate(-1);

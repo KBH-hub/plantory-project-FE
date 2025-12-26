@@ -49,7 +49,7 @@ const AddressSelect = ({ value = "", onChange }: Props) => {
 
             <div className="col-6">
                 <select className="form-select" value={sigungu} onChange={handleSigunguChange} disabled={!sido}>
-                    <option disabled selected value="">시/군/구</option>
+                    <option disabled value="">시/군/구</option>
                     {sigunguList.map((sg) => (
                         <option key={sg} value={sg}>
                             {sg}

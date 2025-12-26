@@ -6,7 +6,7 @@ import type {
     ProfileInfo,
     ProfilePictureRes,
     ProfileWrittenRes,
-    UpdateProfileReq,
+
 } from "@/profile/types/profileType";
 
 export const profileApi = {
@@ -45,7 +45,7 @@ export const profileApi = {
         return res.data;
     },
 
-    updateProfile: async (payload: UpdateProfileReq) => {
+    updateProfile: async (payload: { nickname: string; phone: string; address: string; noticeEnabled: 0 | 1 }) => {
         const res = await axiosInstance.put("/api/profile", payload);
         return res.data;
     },
