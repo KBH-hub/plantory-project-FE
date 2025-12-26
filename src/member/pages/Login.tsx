@@ -48,12 +48,23 @@ export default function Login() {
 
             navigate("/", { replace: true });
         } catch (err: any) {
-            if (err.status === 401) {
+            const status = err?.response?.status;
+            const data = err?.response?.data;
+
+            if (status === 401) {
                 setErrorMessage("아이디 또는 비밀번호가 틀렸습니다.");
                 return;
             }
-            setErrorMessage(err.message);
+
+            if (status === 403 && data?.code === "SEC-403-LOCKED") {
+                setErrorMessage(data.message);
+                return;
+            }
+
+            // 그 외
+            setErrorMessage(data?.message ?? data?.error ?? err.message ?? "요청에 실패했습니다.");
         }
+
     };
 
     return (
