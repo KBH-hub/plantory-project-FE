@@ -4,7 +4,7 @@ type Props = {waterings: TodayWatering[]; diaries: TodayDiary[]};
 
 function MyPlantManage({ waterings, diaries }: Props) {
   return (
-    <Link to="/plantCalendar" className="card text-reset text-decoration-none h-100">
+    <Link to="/plantCalendar" className="text-decoration-none">
     <div className="card shadow-sm mb-3">
       <div className="card-header bg-dark text-white py-2">
         <h6 className="m-0 fw-bold">오늘의 식물 관리</h6>

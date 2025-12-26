@@ -315,8 +315,8 @@ export default function ProfileInfo() {
 
             <div className="card shadow-sm">
                 <div className="card-header bg-white">
-                    <div className="row g-3 align-items-center">
-                        <div className="col d-flex align-items-center gap-4">
+                    <div className="row g-3 justify-content-center">
+                        <div className="col-auto d-flex align-items-center gap-4">
 
                             <div className="text-center mx-auto">
                                 <div className="profile-img d-flex justify-content-center align-items-center position-relative" style={{ width: 150, height: 150 }}>
