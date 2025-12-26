@@ -33,6 +33,11 @@ export const deleteDiary = async (diaryId: number): Promise<void> => {
   await axiosInstance.delete(`/api/plantingCalender/diary/${encodeURIComponent(String(diaryId))}`);
 };
 
+export const createWatering = async (): Promise<{ message: string }> => {
+  const res = await axiosInstance.post<{ message: string }>("/api/plantingCalender/watering");
+  return res.data;
+};
+
 export const updateWateringCheck = async (wateringId: number): Promise<{ message: string }> => {
   const res = await axiosInstance.put("/api/plantingCalender/watering", null, {
     params: { wateringId },

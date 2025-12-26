@@ -4,6 +4,7 @@ import { showModal } from "@/global/utils/showModal";
 import { createMyPlant } from "@/myPlant/services/myPlantManagementApi";
 import { isValidWaterDates, toLocalDateTimeStr } from "@/myPlant/utils/managementDate";
 import type { PlantForm, UseAddPlantParams } from "@/myPlant/types/myPlantManagementType";
+import { createWatering } from "../services/myPlantApi";
 
 export function useAddPlant({ onRefresh }: UseAddPlantParams) {
     const [opened, setOpened] = useState(false);
@@ -81,6 +82,7 @@ export function useAddPlant({ onRefresh }: UseAddPlantParams) {
                 },
                 file ?? undefined
             );
+            await createWatering();
 
             showModal.alert("등록되었습니다.");
             close();
