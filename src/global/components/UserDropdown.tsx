@@ -31,7 +31,7 @@ export default function UserDropdown() {
                 ) : (
                     <i className="bi bi-person-circle fs-3" />
                 )}
-                <span className="ms-2">{user.nickname}</span> 연구원님
+                <span className="ms-2">{user.nickname}</span> 님
             </button>
 
             <ul className="dropdown-menu dropdown-menu-end ph-profile-menu">
