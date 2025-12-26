@@ -6,6 +6,7 @@ import fixmeImg from "@/assets/images/fixme.png";
 import fixmeImg2 from "@/assets/images/fixme2.png";
 import logo from "@/assets/images/plantory_login_logo.png"
 import { useState } from "react";
+import { createWatering } from "@/myPlant/services/myPlantApi";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -26,6 +27,8 @@ export default function Login() {
                 membername: formData.get("membername") as string,
                 password: formData.get("password") as string,
             });
+
+            await createWatering();
 
             const { data } = await meApi();
             const role = data.user.role as Role;

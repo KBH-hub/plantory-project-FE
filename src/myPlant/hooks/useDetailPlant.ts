@@ -4,6 +4,7 @@ import { showModal } from "@/global/utils/showModal";
 import type { PlantForm, PlantVm, UseDetailPlantParams } from "@/myPlant/types/myPlantManagementType";
 import { deleteMyPlant, deleteWatering, updateMyPlant } from "@/myPlant/services/myPlantManagementApi";
 import { formatDate, isValidWaterDates, toLocalDateTimeStr } from "@/myPlant/utils/managementDate";
+import { createWatering } from "../services/myPlantApi";
 
 export function useDetailPlant({ onRefresh }: UseDetailPlantParams) {
     const [opened, setOpened] = useState(false);
@@ -128,6 +129,8 @@ export function useDetailPlant({ onRefresh }: UseDetailPlantParams) {
                 },
                 { delFile: delFileId, file: file ?? undefined }
             );
+
+            await createWatering();
 
             showModal.alert("수정되었습니다.");
             close();
