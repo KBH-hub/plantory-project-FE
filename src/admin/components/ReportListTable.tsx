@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import type { ReportListItem } from "@/admin/types/reportManagementType";
-import { formatDateTime } from "@/global/utils/formatDateTime";
+import { formatDateTime, formatUTCDateTime } from "@/global/utils/formatDateTime";
 
 export function ReportListTable({
   items,

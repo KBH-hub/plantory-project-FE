@@ -1,5 +1,5 @@
 import type { MessageDetailResponse } from "@/message/types/messageType";
-import { formatDateTime } from "@/global/utils/formatDateTime";
+import { formatDateTime, formatUTCDateTime } from "@/global/utils/formatDateTime";
 
 type Props = {
   detail: MessageDetailResponse;
@@ -41,7 +41,7 @@ export default function MessageDetailView({ detail, onBack, onReply }: Props) {
                 <div className="text-muted me-3" style={{ width: 90 }}>
                   받은 시간
                 </div>
-                <div className="flex-grow-1">{formatDateTime(detail.createdAt)}</div>
+                <div className="flex-grow-1">{formatUTCDateTime(detail.createdAt)}</div>
               </div>
             </div>
 

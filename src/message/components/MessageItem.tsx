@@ -1,5 +1,5 @@
 import { MessageItemRequest } from "@/message/types/messageType";
-import { formatDateTime } from "@/global/utils/formatDateTime";
+import { formatDateTime, formatUTCDateTime } from "@/global/utils/formatDateTime";
 
 const labelTargetType = (t: string) => {
   switch (t) {
@@ -61,7 +61,7 @@ export default function MessageItem({ data, selectedIds, onToggleRow, onRowClick
             <td className="text-truncate">{relatedText}</td>
 
             <td className="text-nowrap" style={{ width: 170 }}>
-              {formatDateTime(item.createdAt)}
+              {formatUTCDateTime(item.createdAt)}
             </td>
           </tr>
         );

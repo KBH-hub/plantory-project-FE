@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import type { MemberRow } from "@/admin/types/memberManagementType";
 import { formatCreatedAt, getRemainDays } from "@/admin/utils/memberFormat";
+import { formatDateTime, formatDateTimePlus9, formatUTCDateTime } from "@/global/utils/formatDateTime";
 
 type Props = {
   items: MemberRow[];
@@ -79,8 +80,8 @@ export function MemberTable({ items, loading, onRowClick }: Props) {
 
                 <td>{getRemainDays(m.stopDay)}</td>
 
-                <td title={formatCreatedAt(m.createdAt)}>
-                  <span className="d-inline-block text-truncate w-100">{formatCreatedAt(m.createdAt)}</span>
+                <td title={formatUTCDateTime(m.createdAt)}>
+                  <span className="d-inline-block text-truncate w-100">{formatDateTimePlus9(m.createdAt)}</span>
                 </td>
               </tr>
             ))
