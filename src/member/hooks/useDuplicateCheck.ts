@@ -8,7 +8,6 @@ interface DuplicateCheckOptions {
     errorMessage?: string;
 }
 
-// ✅ 반환 타입을 export
 export type DuplicateCheckResult = {
     isAvailable: boolean | null;
     message: string;

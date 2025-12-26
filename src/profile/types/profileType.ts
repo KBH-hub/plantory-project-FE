@@ -7,14 +7,6 @@ export type ChangePasswordReq = {
 export type ChangePasswordRes = {
     success: boolean;
 };
-
-export type UpdateProfileReq = {
-    nickname?: string;
-    phone?: string;
-    address?: string;
-    noticeEnabled?: 0 | 1;
-};
-
 export type CategoryKey =
     | "ALL"
     | "SHARING"
