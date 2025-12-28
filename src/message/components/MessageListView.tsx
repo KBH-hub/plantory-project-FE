@@ -149,7 +149,7 @@ export function MessageListView({
                       />
                     </th>
                     <th className="text-nowrap" style={{ width: 96 }}>
-                      수신자 읽음 상태
+                      읽음 상태
                     </th>
                     <th className="text-nowrap" style={{ width: 120 }}>
                       보낸 사람
