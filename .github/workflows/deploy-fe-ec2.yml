@@ -2,6 +2,8 @@ name: Deploy FE to EC2
 
 on:
   workflow_dispatch:
+  #push: #여기서부턴 메인에 push하면 무조건 배포라서 지양하는 편이 좋음
+  #  branches: ["main"]
 
 jobs:
   deploy:
