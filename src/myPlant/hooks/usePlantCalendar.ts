@@ -10,7 +10,7 @@ import {
 } from "@/myPlant/services/myPlantApi";
 import { showModal } from "@/global/utils/showModal";
 import { MODAL_STATE, MAX_PHOTO_FILES, type ModalState } from "@/myPlant/enums/plantCalendarEnum";
-import { buildDayRangeISO, buildMonthRangeISO, pad2, toLocalYmd, ymdFromDate } from "@/myPlant/utils/calenderDate";
+import { buildDayRangeISO, buildMonthRangeISO, pad2, toLocalYmd, toUtcYmd, ymdFromDate } from "@/myPlant/utils/calenderDate";
 import { normalizeDiary, normalizeMyPlant, normalizeWater } from "@/myPlant/utils/plantCalendarNormalize";
 import type { CalendarCell, DiaryFormErrors, DiaryDetailResponse, DiaryListItem, MyPlantItem, WateringItem } from "@/myPlant/types/plantCalendarType";
 
@@ -71,13 +71,13 @@ export function usePlantCalendar() {
         const wList = (Array.isArray(rawWaters) ? rawWaters : []).map(normalizeWater);
 
         const dCount = dList.reduce<Record<string, number>>((acc, it) => {
-            const ymd = toLocalYmd((it as any).createdAt);
+            const ymd = toUtcYmd((it as any).createdAt);
             if (ymd) acc[ymd] = (acc[ymd] || 0) + 1;
             return acc;
         }, {});
 
         const wCount = wList.reduce<Record<string, number>>((acc, it) => {
-            const ymd = toLocalYmd((it as any).dateAt);
+            const ymd = toUtcYmd((it as any).dateAt);
             if (ymd) acc[ymd] = (acc[ymd] || 0) + 1;
             return acc;
         }, {});

@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState, useEffect } from "react";
 import type { ReportDetail } from "@/admin/types/reportManagementType";
 import { ModalShell } from "@/admin/components/ModalShell";
-import { formatDateTime } from "@/global/utils/formatDateTime";
+import { formatDateTime, formatUTCDateTime } from "@/global/utils/formatDateTime";
 
 function ImageLightbox({
   open,
@@ -140,7 +140,7 @@ export function ReportDetailModal({
               </tr>
               <tr>
                 <th>신고 일시</th>
-                <td>{formatDateTime(detail?.createdAt || "")}</td>
+                <td>{formatUTCDateTime(detail?.createdAt || "")}</td>
               </tr>
             </tbody>
           </table>

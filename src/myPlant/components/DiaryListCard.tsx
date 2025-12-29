@@ -1,6 +1,6 @@
 import React from "react";
 import type { DiaryListItem } from "@/myPlant/types/plantCalendarType";
-import { toLocalYmd } from "@/myPlant/utils/calenderDate";
+import { toLocalYmd, toUtcYmd } from "@/myPlant/utils/calenderDate";
 
 type Props = {
     diaries: DiaryListItem[];
@@ -47,7 +47,7 @@ export default function DiaryListCard({ diaries, selectedYmd, onOpenReg, onClick
                                             </div>
 
                                             <div className="d-flex align-items-center gap-3 ms-2">
-                                                <span className="badge bg-warning text-dark">{toLocalYmd(d.createdAt)}</span>
+                                                <span className="badge bg-warning text-dark">{toUtcYmd(d.createdAt)}</span>
                                                 <button
                                                     type="button"
                                                     className="btn btn-link text-secondary p-0"

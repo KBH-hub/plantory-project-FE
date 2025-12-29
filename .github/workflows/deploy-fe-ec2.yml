@@ -1,0 +1,27 @@
+name: Deploy FE to EC2
+
+on:
+  workflow_dispatch:
+  #push: #여기서부턴 메인에 push하면 무조건 배포라서 지양하는 편이 좋음
+  #  branches: ["main"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH Deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            set -e
+            cd ~/plantory-deploy
+
+            echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u "${{ secrets.GHCR_USERNAME }}" --password-stdin
+
+            docker compose -f docker-compose.prod.yml pull frontend
+            docker compose -f docker-compose.prod.yml up -d --no-deps --force-recreate frontend
+
+            docker image prune -f
