@@ -18,8 +18,8 @@ export const getMessageList = async ({
 export async function deleteSelectedMessages(boxType: BoxType, ids: number[]) {
   const endpoint =
     boxType === "SENT"
-      ? "/api/message/deleteSenderMessages"
-      : "/api/message/deleteMessages";
+      ? "/api/message/sender"
+      : "/api/message";
 
   await axiosInstance.delete(endpoint, { data: ids });
 }
@@ -30,7 +30,7 @@ export const getMessageDetail = async (messageId: number): Promise<MessageDetail
 };
 
 export async function registerMessage(payload:MessageRegisterRequest) {
-  const res = await axiosInstance.post(`/api/message/messageRegist`, payload);
+  const res = await axiosInstance.post(`/api/message`, payload);
   return res.data;
 }
 
