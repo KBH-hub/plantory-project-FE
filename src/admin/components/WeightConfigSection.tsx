@@ -59,12 +59,10 @@ export default function WeightConfigSection({
             </button>
           </div>
 
-          {/* 구분선 */}
           <div className="col-12">
             <hr className="my-2" />
           </div>
 
-          {/* ===== 숙련도 영역 ===== */}
           <div className="col-12">
             <div className="p-3 border rounded bg-light">
               <div className="d-flex align-items-center justify-content-between mb-2">
@@ -77,7 +75,6 @@ export default function WeightConfigSection({
                 </button>
               </div>
 
-              {/* 초기값 그룹 */}
               <div className="row g-3 align-items-center m-0">
                 <div className="col-auto">
                   <div className="fw-semibold text-muted mb-1">초기값</div>
@@ -96,7 +93,6 @@ export default function WeightConfigSection({
                   </div>
                 </div>
 
-                {/* S등급 그룹 */}
                 <div className="col-12" />
 
                 <div className="col-12">
@@ -163,7 +159,6 @@ export default function WeightConfigSection({
             </div>
           </div>
 
-          {/* ===== 요구관리도 영역 ===== */}
           <div className="col-12 mt-3">
             <div className="p-3 border rounded bg-light">
               <div className="d-flex align-items-center justify-content-between mb-2">
@@ -171,14 +166,12 @@ export default function WeightConfigSection({
                   <span className="badge text-bg-secondary me-2">요구관리도</span>
                   기준 값 설정
                 </div>
-                {/* 같은 저장 버튼을 쓰는 구조면 그대로 재사용 */}
                 <button onClick={onSaveRate} className="btn btn-primary btn-sm" type="button">
                   저장
                 </button>
               </div>
 
               <div className="row g-3 align-items-center m-0">
-                {/* 초기값 그룹 */}
                 <div className="col-auto">
                   <div className="fw-semibold text-muted mb-1">초기값</div>
                   <div className="d-flex align-items-center">
@@ -198,7 +191,6 @@ export default function WeightConfigSection({
                   </div>
                 </div>
 
-                {/* M등급 그룹 */}
                 <div className="col-12" />
 
                 <div className="col-12">
