@@ -62,7 +62,6 @@ const MemberForm = ({
                 onSubmit();
             }}
         >
-            {/* 아이디 */}
             <label className="fw-bold">아이디 *</label>
             <div className="input-group">
                 <input
@@ -101,7 +100,6 @@ const MemberForm = ({
                 </p>
             )}
 
-            {/* 닉네임 */}
             <label className="fw-bold mt-3">닉네임 *</label>
             <div className="input-group">
                 <input
@@ -127,10 +125,8 @@ const MemberForm = ({
 
             <br />
 
-            {/* 주소 */}
             <AddressSelect value={values.address} onChange={(addr) => onChange("address", addr)} />
 
-            {/* 휴대전화 */}
             <input
                 className="form-control mt-3"
                 placeholder="휴대전화 (예: 010-1234-5678)"
@@ -143,7 +139,6 @@ const MemberForm = ({
             />
             {!isPhoneValid && <p className="small text-danger">휴대전화 형식을 확인해주세요. (010-xxxx-xxxx)</p>}
 
-            {/* 알림 설정 */}
             {shouldShowNotice && (
                 <>
                     <label className="fw-bold mt-3">알림 설정</label>
@@ -158,7 +153,6 @@ const MemberForm = ({
                 </>
             )}
 
-            {/* 비밀번호 */}
             {shouldShowPassword && (
                 <>
                     <input

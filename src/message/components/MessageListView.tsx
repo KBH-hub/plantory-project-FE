@@ -9,19 +9,16 @@ type Props = {
   total: number | null;
   loading: boolean;
 
-  // search ui state
   draftTitle: string;
   draftTargetType: TargetType | "";
   onChangeDraftTitle: (v: string) => void;
   onChangeDraftTargetType: (v: TargetType | "") => void;
   onSubmitSearch: (e: React.FormEvent) => void;
 
-  // tab + delete
   onTabClick: (next: BoxType) => void;
   onDeleteSelected: () => void;
   deleteDisabled: boolean;
 
-  // selection
   checkAllRef: React.RefObject<HTMLInputElement | null>;
   allChecked: boolean;
   onToggleAll: (checked: boolean) => void;
@@ -29,7 +26,6 @@ type Props = {
   onToggleRow: (id: number, checked: boolean) => void;
   onRowClick: (messageId: number) => void;
 
-  // pagination
   pagerRef: React.RefObject<HTMLUListElement | null>;
 };
 

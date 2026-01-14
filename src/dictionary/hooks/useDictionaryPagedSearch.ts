@@ -71,14 +71,12 @@ export function useDictionaryPagedSearch<TItem, TView>(args: UseDictionaryPagedS
     if (mode !== "server") return;
     const pageNo = Math.floor(offset / limit) + 1;
     loadServerPage(pageNo, limit).catch(() => {});
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, offset, limit]);
 
   useEffect(() => {
     if (mode !== "client") return;
     const filtered = allCacheRef.current.filter(byQuery(qNorm));
     renderClientSlice(filtered, offset, limit);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, offset, limit, qNorm]);
 
   useEffect(() => {
@@ -86,7 +84,6 @@ export function useDictionaryPagedSearch<TItem, TView>(args: UseDictionaryPagedS
     setOffset(0);
     loadServerPage(1, limit).catch(() => {});
     return () => abortRef.current?.abort();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit]);
 
   async function loadServerPage(pageNo: number, numOfRows: number) {
@@ -237,7 +234,6 @@ export function useDictionaryPagedSearch<TItem, TView>(args: UseDictionaryPagedS
     onSearch,
     onReset,
 
-    // 필요하면 외부에서 쓰도록 노출
     loadServerPage,
   };
 }

@@ -1,4 +1,3 @@
-// /profile/hooks/useUpdateProfile.ts
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDuplicateCheck } from "@/member/hooks/useDuplicateCheck";

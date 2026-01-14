@@ -51,7 +51,6 @@ export default function App() {
                         <Route path="/signup" element={<SignUp />} />
                         <Route path="/termsOfServicePage" element={<TermsOfService />} />
                     </Route>
-                    {/* USER */}
                     <Route
                         element={
                             <PrivateRoute>
@@ -85,7 +84,6 @@ export default function App() {
                         <Route path="/sharing/:id" element={<ReadSharing />} />
                     </Route>
 
-                    {/* ADMIN */}
                     <Route
                         element={
                             <PrivateRoute>

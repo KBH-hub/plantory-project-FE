@@ -1,4 +1,3 @@
-// src/profile/components/WithdrawModal.tsx
 import React, { useEffect, useState } from "react";
 import useLogout from "@/global/hooks/useLogout";
 import { showModal } from "@/global/utils/showModal";
@@ -15,7 +14,6 @@ const WithdrawModal: React.FC<Props> = ({ open, onClose }) => {
 
     const logout = useLogout();
 
-    // 모달을 다시 열 때 체크 상태 초기화(UX)
     useEffect(() => {
         if (open) {
             setWithdrawAgree(false);

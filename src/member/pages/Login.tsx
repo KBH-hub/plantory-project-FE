@@ -61,7 +61,6 @@ export default function Login() {
                 return;
             }
 
-            // 그 외
             setErrorMessage(data?.message ?? data?.error ?? err.message ?? "요청에 실패했습니다.");
         }
 

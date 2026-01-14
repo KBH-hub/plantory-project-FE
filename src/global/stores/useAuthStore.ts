@@ -99,7 +99,6 @@ export const useAuthStore = create<AuthState>((set) => ({
             authUser: null,
             user: null,
             accessToken: null,
-            // initialized는 AuthInitializer가 관리 (건드리지 않음)
         }),
 
     setInitialized: (initialized) => set({ initialized }),

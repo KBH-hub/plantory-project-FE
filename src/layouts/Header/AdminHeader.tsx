@@ -8,12 +8,10 @@ export default function AdminHeader() {
     return (
         <header className="bg-white shadow-sm sticky-top">
             <nav className="container d-flex align-items-center justify-content-between" style={{ height: 80 }}>
-                {/* 로고 */}
                 <Link to="/admin/memberManagement" className="fw-bold fs-4 text-decoration-none text-dark">
                     <img src={logo} alt="Plantory Logo" className="ph-logo-img" />
                 </Link>
 
-                {/* 관리자 메뉴 */}
                 <ul className="d-flex gap-4 list-unstyled mb-0">
                     <li>
                         <Link to="/admin/memberManagement" className="text-decoration-none text-dark fw-bold">
@@ -32,7 +30,6 @@ export default function AdminHeader() {
                     </li>
                 </ul>
 
-                {/* 로그아웃 */}
                 <button className="btn btn-outline-danger btn-sm" onClick={handleLogout}>
                     로그아웃
                 </button>

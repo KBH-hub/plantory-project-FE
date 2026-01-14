@@ -56,7 +56,6 @@ const init = () => {
   if (initialized) return;
   initialized = true;
 
-  // Alert
   createIfNotExists(
     "customAlertModal",
     "custom-alert-modal",
@@ -74,7 +73,6 @@ const init = () => {
 
   disableDrag("#customAlertModal");
 
-  // Confirm
   createIfNotExists(
     "customConfirmModal",
     "custom-modal",

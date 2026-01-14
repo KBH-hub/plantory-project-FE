@@ -1,5 +1,5 @@
 import type { ReplyForm } from "@/message/types/messageType";
-import type { MessageDetailResponse } from "@/message/types/messageType"; // 실제 타입명으로 수정
+import type { MessageDetailResponse } from "@/message/types/messageType"; 
 
 export function buildReplyForm(detail?: MessageDetailResponse | null): ReplyForm {
   const to = detail?.senderNickname || String(detail?.senderId ?? "") || "(삭제된 쪽지)";

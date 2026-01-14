@@ -49,25 +49,21 @@ const SignUp = () => {
         const phone = values.phone.trim();
         const password = values.password;
 
-        // 아이디 형식
         if (!ID_REGEX.test(membername)) {
             await showModal.alert("아이디 형식을 확인해주세요. (5~20자, 영문/숫자, . _ - 중간만 허용)");
             return;
         }
 
-        // 전화번호 형식(필수로 받는다고 가정)
         if (!/^010-\d{3,4}-\d{4}$/.test(phone)) {
             await showModal.alert("휴대전화 형식을 확인해주세요. (예: 010-1234-5678)");
             return;
         }
 
-        // 비밀번호 규칙
         if (!PASSWORD_REGEX.test(password)) {
             await showModal.alert("비밀번호는 최소 8자이며 영문자, 숫자, 특수문자를 각각 1개 이상 포함해야 합니다.");
             return;
         }
 
-        // 비밀번호 확인
         if (values.password !== values.pwCheck) {
             await showModal.alert("비밀번호가 일치하지 않습니다.");
             return;
