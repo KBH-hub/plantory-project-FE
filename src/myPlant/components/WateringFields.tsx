@@ -36,11 +36,11 @@ export default function WateringFields({ form, onChange }: WateringFieldsProps) 
                         <input
                             type="date"
                             className="form-control"
-                            placeholder="마지막 물 준 일자"
+                            placeholder="마지막 물주기 일자"
                             value={form.endDate}
                             onChange={(e) => onChange({ ...form, endDate: e.target.value })}
                         />
-                        <label>마지막 물 준 일자</label>
+                        <label>마지막 물주기 일자</label>
                     </div>
                 </div>
             </div>
