@@ -11,7 +11,7 @@ export const createSharing = async ( formData: FormData ): Promise<number> => {
       },
     }
   );
-  return res.data; // sharingId
+  return res.data; 
 };
 
 
@@ -25,5 +25,5 @@ export const updateSharing = async ( sharingId: number, formData: FormData ): Pr
       },
     }
   );
-  return res.data; // true / false
+  return res.data;
 };

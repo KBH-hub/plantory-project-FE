@@ -1,4 +1,3 @@
-// src/myPlant/hooks/useMyPlantList.ts
 import { useEffect, useState } from "react";
 import type { PlantVm, UseMyPlantListParams } from "@/myPlant/types/myPlantManagementType";
 import { getMyPlantList } from "@/myPlant/services/myPlantManagementApi";

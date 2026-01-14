@@ -9,8 +9,8 @@ export interface CreateSharingForm {
 }
 
 export interface CreateSharingImage {
-  imageId?: number;      // 기존 이미지
-  file?: File;           // 신규 업로드
+  imageId?: number;     
+  file?: File;          
   previewUrl: string;
   status: "EXISTING" | "NEW";
 }

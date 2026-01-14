@@ -10,7 +10,7 @@ export const createQuestion = async (formData: FormData): Promise<number> => {
     }
   );
 
-  return res.data; // questionId
+  return res.data;
 };
 
 
@@ -24,7 +24,7 @@ export const updateQuestion = async ( questionId: number, formData: FormData): P
     }
   );
 
-  return res.data; // true / false
+  return res.data;
 };
 
 

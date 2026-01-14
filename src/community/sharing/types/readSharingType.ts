@@ -40,8 +40,8 @@ export interface SharingCommentResponse {
 }
 
 export interface DictionarySearchItem {
-  id: string;           // cntntsNo
-  plantName: string;    // cntntsSj
+  id: string;        
+  plantName: string;    
   fileUrl: string;      
   type: "garden" | "dry";
 }
