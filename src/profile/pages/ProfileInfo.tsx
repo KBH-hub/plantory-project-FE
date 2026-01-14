@@ -341,7 +341,6 @@ export default function ProfileInfo() {
                                 </small>
                             </div>
 
-                            {/* 내 프로필일 때만 */}
                             {isMe && (
                                 <div className="d-flex flex-column align-items-start gap-2">
                                     <button
