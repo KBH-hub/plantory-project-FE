@@ -2,16 +2,22 @@ import "../styles/login.css";
 import { login as loginApi } from "../api/auth";
 import { useAuthStore } from "../stores/useAuthStore";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function Login() {
     const navigate = useNavigate();
 
     const authLogin = useAuthStore((s) => s.login);
+    const [feedback, setFeedback] = useState<
+        { type: "success" | "error"; message: string } | null
+    >(null);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const formData = new FormData(e.currentTarget);
+
+        setFeedback(null);
 
         try {
             const res = await loginApi({
@@ -28,28 +34,53 @@ export default function Login() {
                 accessToken: res.data.accessToken,
             });
 
+            setFeedback({
+                type: "success",
+                message: "로그인에 성공했습니다. 대시보드로 이동합니다.",
+            });
             navigate("/dashboard");
 
         } catch (err) {
-            console.log(err);
+            const message = (() => {
+                if (err && typeof err === "object" && "response" in err) {
+                    const { response } = err as {
+                        response?: { data?: { message?: string } };
+                    };
+
+                    return (
+                        response?.data?.message ??
+                        "로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요."
+                    );
+                }
+
+                if (err instanceof Error) {
+                    return err.message;
+                }
+
+                return "로그인에 실패했습니다. 잠시 후 다시 시도해주세요.";
+            })();
+
+            setFeedback({
+                type: "error",
+                message,
+            });
         }
     };
 
     return (
         <form onSubmit={handleSubmit}>
-        <div className="container-fluid bg-dark min-vh-100">
-            <div className="row min-vh-100">
+            <div className="container-fluid bg-dark min-vh-100">
+                <div className="row min-vh-100">
 
-                {/* LEFT */}
-                <div className="col-12 col-md-6 bg-success bg-opacity-50 login-panel d-flex flex-column justify-content-center align-items-start px-5">
+                    {/* LEFT */}
+                    <div className="col-12 col-md-6 bg-success bg-opacity-50 login-panel d-flex flex-column justify-content-center align-items-start px-5">
 
-                    <h2 className="fw-bold mb-3 text-white">🌿 Plantory</h2>
-                    <p className="text-white mb-4 fs-4">
-                        로그인하여 서비스를 이용해보세요
-                    </p>
+                        <h2 className="fw-bold mb-3 text-white">🌿 Plantory</h2>
+                        <p className="text-white mb-4 fs-4">
+                            로그인하여 서비스를 이용해보세요
+                        </p>
 
-                    <div className="w-75">
-
+                        <div className="w-75">
 
                             <label className="text-white fw-bold">아이디</label>
                             <input
@@ -88,43 +119,55 @@ export default function Login() {
                                 로그인
                             </button>
 
-                        <p className="text-center text-white">
-                            아직 회원이 아니신가요?{" "}
-                            <a href="/signup" className="text-warning fw-bold">
-                                회원가입
-                            </a>
-                        </p>
-                    </div>
-                </div>
+                            {feedback && (
+                                <div
+                                    className={`alert mt-2 ${
+                                        feedback.type === "success"
+                                            ? "alert-success"
+                                            : "alert-danger"
+                                    }`}
+                                    role="alert"
+                                >
+                                    {feedback.message}
+                                </div>
+                            )}
 
-                {/* RIGHT */}
-                <div className="col-12 col-md-6 bg-white d-flex flex-column justify-content-center align-items-center">
-                    <h4 className="fw-bold text-center mb-4 px-4">
-                        식물 관리와 커뮤니티 참여를 통해 함께 성장해요 🌱
-                    </h4>
-
-                    <div className="d-flex flex-wrap justify-content-center gap-4">
-                        <div className="preview-img-box shadow">
-                            <img
-                                src="/src/assets/images/fixme.png"
-                                className="preview-img"
-                                alt="preview"
-                            />
-                        </div>
-
-                        <div className="preview-img-box shadow">
-                            <img
-                                src="/src/assets/images/fixme.png"
-                                className="preview-img"
-                                alt="preview"
-                            />
+                            <p className="text-center text-white">
+                                아직 회원이 아니신가요?{" "}
+                                <a href="/signup" className="text-warning fw-bold">
+                                    회원가입
+                                </a>
+                            </p>
                         </div>
                     </div>
-                </div>
 
+                    {/* RIGHT */}
+                    <div className="col-12 col-md-6 bg-white d-flex flex-column justify-content-center align-items-center">
+                        <h4 className="fw-bold text-center mb-4 px-4">
+                            식물 관리와 커뮤니티 참여를 통해 함께 성장해요 🌱
+                        </h4>
+
+                        <div className="d-flex flex-wrap justify-content-center gap-4">
+                            <div className="preview-img-box shadow">
+                                <img
+                                    src="/src/assets/images/fixme.png"
+                                    className="preview-img"
+                                    alt="preview"
+                                />
+                            </div>
+
+                            <div className="preview-img-box shadow">
+                                <img
+                                    src="/src/assets/images/fixme.png"
+                                    className="preview-img"
+                                    alt="preview"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </div>
-
 
         </form>
     );
